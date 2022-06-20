@@ -1,0 +1,487 @@
+import React, { useEffect, useState } from "react";
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  Dialog,
+  DialogTitle,
+  Divider,
+  FormControl,
+  Grid,
+  LinearProgress,
+  ListItem,
+  Select,
+  Typography,
+} from "@mui/material";
+import DatePicker from "react-datepicker";
+import { addDays } from "date-fns";
+import Form from "react-bootstrap/Form";
+import "react-datepicker/dist/react-datepicker.css";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import Review from "./Review";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCancel,
+  faLocation,
+  faMinus,
+  faPlus,
+  faSignIn,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
+import { getRating } from "Services/api/userAPI";
+import axiosIntercept from "Services/axios";
+import Description from "Component/Modal/Description";
+import "../Main.css";
+import { toast, ToastContainer } from "react-toastify";
+import UserLayout from "Component/Wrapper/UserLayout";
+import { useDispatch, useSelector } from "react-redux";
+import { viewSingleTourData } from "store/reducers/tourReducer";
+import Loader from "Layout/Loader";
+import { BOOKTOUR_INITIAL_VALUES } from "utils/Form/InitialValues/formInitial";
+
+export default function ViewTour(props) {
+  const token = localStorage.getItem("token");
+  const user = token ? JSON.parse(atob(token.split(".")[1])) : {};
+  const [reviews, setReview] = useState(0);
+  const navigate = useNavigate();
+  const query = useParams();
+  const tour_id = +query.id;
+  const [startDate, setStartDate] = useState(new Date());
+  const [excludeDays, setExcludeDays] = useState([addDays(new Date(), 5)]);
+  const [errMsg, setErrMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [open, setOpen] = useState(false);
+  const [available, setAvailable] = useState(false);
+  const [adult, setAdult] = useState(1);
+  const [children, setChildren] = useState(0);
+  const [infant, setInfant] = useState(0);
+  const [userData, setUserData] = useState({
+    maxPerson: adult + infant + children,
+    user: user.role === 4 ? user : 0,
+    maxDays: 0,
+    date: startDate,
+    package_id: tour_id,
+  });
+  const [initialValues,setInitialValues]= useState({
+    ...BOOKTOUR_INITIAL_VALUES,
+    user: user.role === 4 ? user : 0,
+    package_id: tour_id,
+  })
+  const dispatch = useDispatch();
+  const tourData = useSelector((state) => state.tour.value.viewTour);
+  const loading = useSelector((state) => state.tour.value.loading);
+  useEffect(() => {
+    dispatch(viewSingleTourData(tour_id));
+    console.log(tourData);
+    getRating(tour_id)
+      .then((res) => {
+        setReview(res.data.rating);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  const handleClickOpen = (id) => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOnChange = (event) => {
+    const { name, value } = event.target;
+    setUserData({
+      ...userData,
+      [name]: value,
+      maxPerson: adult + infant + children,
+      user: user.role === 4 ? user : 0,
+    });
+  };
+  const dateOnChange = (date) => {
+    if (
+      date.getTime() / 1000 >
+      new Date(tourData[0].endDate).getTime() / 1000
+    ) {
+      excludeDays.push(date);
+      setErrMsg(" You cant Book on " + date.toISOString().split("T")[0]);
+      setAvailable(false);
+    } else {
+      setStartDate(date);
+      setUserData({
+        ...userData,
+        date: date,
+      });
+      setErrMsg("");
+      setAvailable(true);
+    }
+    console.log(date);
+  };
+  const validatorFn = () => {
+    if (userData.maxPerson <= 0 || adult <= 0) {
+      setErrMsg("Total Person must not be negative and zero");
+    } else {
+      setErrMsg("");
+    }
+    if (userData.maxDays < tourData[0].total_days) {
+      setErrMsg("Must be equal to total days " + tourData[0].total_days);
+    } else {
+      setErrMsg("");
+    }
+  };
+  const submitForm = (event) => {
+    event.preventDefault();
+    validatorFn();
+    if (!errMsg) {
+      axiosIntercept
+        .post(`${process.env.REACT_APP_SERVER_URL}/book/tour`, {
+          userData,
+        })
+        .then((res) => {
+          alert(res.data);
+          setSuccessMsg(res.data);
+          navigate("/my/bookings", { replace: true });
+        })
+        .catch((err) => {
+          console.log(err.response);
+          toast("Not Allowed to Book");
+        });
+    } else {
+      toast("One or more field is not valid");
+    }
+  };
+
+  return (
+    <UserLayout>
+      <Box>
+        <ToastContainer />
+        <Box>
+          {!loading ? (
+            tourData.map((tour, index) => (
+              <Box className="mt-5" key={index}>
+                <Divider />
+                <Grid container spacing={1}>
+                  <Grid item xs={6}>
+                    <Box className="m-2">
+                      <img
+                        src={tour.tour_image}
+                        alt={tour.package_name}
+                        className="d-block w-100"
+                        height="300"
+                      />
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box className="m-2">
+                      <img
+                        src={tour.tour_image}
+                        alt={tour.package_name}
+                        className="d-block w-100"
+                        height="300"
+                      />
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Divider />
+                <Box className="m-2">
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                    className="m-2 text-danger"
+                  >
+                    Brand New {tour.package_name}
+                  </Typography>
+                  <Typography
+                    gutterBottom
+                    variant="subtitle1"
+                    className="m-2 text-primary"
+                  >
+                    <FontAwesomeIcon icon={faStar} />
+                    {reviews}{" "}
+                    <Link to="#" className="nav-link d-inline">
+                      {" "}
+                      Reviews{" "}
+                    </Link>
+                    <p className="text-danger d-inline">
+                      <FontAwesomeIcon icon={faLocation} />
+                      {tour.from}--{tour.to}
+                    </p>
+                  </Typography>
+                </Box>
+                <Divider />
+                <Grid container spacing={1}>
+                  <Grid item xs={7}>
+                    <Grid container className="mt-1 tour">
+                      <Grid container spacing={1} className="m-2">
+                        <Grid item xs={6}>
+                          <Grid container spacing={1}>
+                            <Grid container spacing={1}>
+                              <Grid item xs={1}>
+                                <FontAwesomeIcon
+                                  icon={faSignIn}
+                                  className="m-1 text-center"
+                                />
+                              </Grid>
+                              <Grid item xs={10}>
+                                <Typography variant="subtitle2">
+                                  Self Check In
+                                  <p>Check yourself in with the lockGrid.</p>
+                                </Typography>
+                              </Grid>
+                            </Grid>
+                            <Grid container spacing={1}>
+                              <Grid item xs={1}>
+                                <FontAwesomeIcon
+                                  icon={faCancel}
+                                  className="m-1 text-center"
+                                />
+                              </Grid>
+                              <Grid item xs={11}>
+                                <Typography variant="subtitle2">
+                                  Cancellation Policy
+                                  <p>Free Cancellation for 24 Hours</p>
+                                </Typography>
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Divider />
+                    <Grid container className="mt-1 tour">
+                      <Grid item xs={12} className="m-2 tour">
+                        <Typography variant="h6" className="d-block">
+                          Booking Dates
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12} className="m-2 tour">
+                        <DatePicker
+                          selected={new Date()}
+                          onChange={dateOnChange}
+                          minDate={new Date()}
+                          maxDate={new Date(tour.endDate)}
+                          excludeDates={excludeDays}
+                          placeholderText="Start Date"
+                          inline
+                          monthsShown={2}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Divider />
+                    <Grid container className="mt-1 tour">
+                      <Grid item xs={12}>
+                        <Typography variant="h6" className="mt-1 tour">
+                          {" "}
+                          Description About Tour{" "}
+                        </Typography>
+                        <Typography variant="body2" className="mt-1 tour">
+                          {tour.description}
+                        </Typography>
+                        <Button
+                          variant="outlined"
+                          color="error"
+                          className="m-2 tour"
+                          onClick={() => handleClickOpen(tour.tour_id)}
+                        >
+                          Read More
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={5} className="m-auto">
+                    <Card
+                      sx={{
+                        maxWidth: 500,
+                        margin: "10px",
+                        border: "2px solid lightblue",
+                        padding: "10px",
+                      }}
+                    >
+                      <Typography variant="h6">
+                        ₹​ {tour.cost} /person
+                      </Typography>
+                      <Box>
+                        {errMsg ? <Alert severity="error">{errMsg}</Alert> : ""}
+                        {successMsg ? (
+                          <Alert severity="success">{successMsg}</Alert>
+                        ) : (
+                          ""
+                        )}
+                        <Form onSubmit={(event) => submitForm(event)}>
+                          <Form.Group className="mb-3">
+                            <Form.Label>Current Date </Form.Label>
+                            <Form.Control
+                              type="date"
+                              name="date"
+                              id="date"
+                              min={new Date().toISOString().split("T")[0]}
+                              value={userData.date.toISOString().split("T")[0]}
+                              disabled
+                            />
+                          </Form.Group>
+                          <Form.Group className="mb-3">
+                            <Form.Label>Total Days</Form.Label>
+                            <Form.Control
+                              type="number"
+                              name="maxDays"
+                              id="maxDays"
+                              value={userData.maxDays}
+                              placeholder="Enter Total Days"
+                              onChange={(event) => handleOnChange(event)}
+                            />
+                          </Form.Group>
+                          <FormControl className="form-control m-2 ">
+                            <Form.Label htmlFor="maxPerson">
+                              Total Person
+                            </Form.Label>
+                            <Select
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              value={userData.maxPerson}
+                              label="Age"
+                              name="maxPerson"
+                              onClick={(event) => handleOnChange(event)}
+                            >
+                              <ListItem value={userData.maxPerson}>
+                                {userData.maxPerson} guests
+                              </ListItem>
+                              <ListItem value={15}>
+                                <Grid container spacing={1}>
+                                  <Grid item xs={5}>
+                                    <Grid item xs={6}>
+                                      Adults
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                      Ages : 13+
+                                    </Grid>
+                                  </Grid>
+                                  <Grid item xs={7}>
+                                    <Button
+                                      disabled={adult >= 5 ? true : false}
+                                      type="button"
+                                      className=" m-2"
+                                      onClick={() => setAdult(adult + 1)}
+                                    >
+                                      <FontAwesomeIcon icon={faPlus} />
+                                    </Button>
+                                    {adult}
+                                    <Button
+                                      type="button"
+                                      className=" m-2"
+                                      disabled={adult === 0 ? true : false}
+                                      onClick={() => setAdult(adult - 1)}
+                                    >
+                                      <FontAwesomeIcon icon={faMinus} />
+                                    </Button>{" "}
+                                  </Grid>
+                                </Grid>
+                              </ListItem>
+                              <ListItem value={14}>
+                                <Grid container spacing={1}>
+                                  <Grid item xs={5}>
+                                    <Grid item xs={6}>
+                                      Children
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                      Ages : 2 -12
+                                    </Grid>
+                                  </Grid>
+                                  <Grid item xs={7}>
+                                    <Button
+                                      disabled={children >= 2 ? true : false}
+                                      type="button"
+                                      className=" m-2"
+                                      onClick={() => setChildren(children + 1)}
+                                    >
+                                      <FontAwesomeIcon icon={faPlus} />
+                                    </Button>
+                                    {children}
+                                    <Button
+                                      type="button"
+                                      className=" m-2"
+                                      disabled={children === 0 ? true : false}
+                                      onClick={() => setChildren(children - 1)}
+                                    >
+                                      <FontAwesomeIcon icon={faMinus} />
+                                    </Button>{" "}
+                                  </Grid>
+                                </Grid>
+                              </ListItem>
+                              <ListItem value={10}>
+                                <Grid container spacing={1}>
+                                  <Grid item xs={5}>
+                                    <Grid item xs={6}>
+                                      Infants
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                      Ages : 0-2
+                                    </Grid>
+                                  </Grid>
+                                  <Grid item xs={7}>
+                                    <Button
+                                      disabled={infant >= 2 ? true : false}
+                                      type="button"
+                                      className=" m-2"
+                                      onClick={() => setInfant(infant + 1)}
+                                    >
+                                      <FontAwesomeIcon icon={faPlus} />
+                                    </Button>
+                                    {infant}
+                                    <Button
+                                      disabled={infant === 0 ? true : false}
+                                      type="button"
+                                      className=" m-2"
+                                      onClick={() => setInfant(infant - 1)}
+                                    >
+                                      <FontAwesomeIcon icon={faMinus} />
+                                    </Button>{" "}
+                                  </Grid>
+                                </Grid>
+                              </ListItem>
+                              <ListItem>
+                                This place has a maximum of 5 guests, not
+                                including infants.
+                              </ListItem>
+                            </Select>
+                          </FormControl>
+                          <Button
+                            variant="outlined"
+                            color={!available ? "error" : "success"}
+                            type="submit"
+                          >
+                            {!available ? "Check Availablity" : "Book Now"}
+                          </Button>
+                        </Form>
+                      </Box>
+                    </Card>
+                  </Grid>
+                </Grid>
+                <Divider />
+                <Grid container spacing={1} className="tour">
+                  <Typography variant="h6" className="mt-1 tour">
+                    Package Reviews:
+                  </Typography>
+                  <Divider />
+                  <Grid item xs={12} className="mt-1 tour">
+                    <Review tour={tour_id} />
+                  </Grid>
+                </Grid>
+              </Box>
+            ))
+          ) : (
+            <Loader />
+          )}
+        </Box>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+            Description
+          </DialogTitle>
+          <Divider />
+          <Description />
+        </Dialog>
+      </Box>
+    </UserLayout>
+  );
+}
+

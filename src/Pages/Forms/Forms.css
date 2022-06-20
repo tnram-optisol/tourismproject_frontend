@@ -1,0 +1,33 @@
+.login
+{
+width: 70%;
+margin: 10% auto;
+}
+
+.login input {
+    display: block;
+    padding: 10px;
+}
+
+.register {
+    margin: 7% auto;
+}
+
+.signup {
+    margin: 7% auto;
+    width: 70%;
+}
+
+.login .button,
+.signup .button {
+    display: block;
+    margin: 10px auto;
+}
+.login.form-control,
+.register .form-control {
+    margin: 10px;
+}
+
+.contact .form-control {
+    margin: 10px auto;
+}

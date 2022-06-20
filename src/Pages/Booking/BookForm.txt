@@ -1,0 +1,316 @@
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  Button,
+  Input,
+  Alert,
+  Typography,
+  Grid,
+  Container,
+} from "@mui/material";
+import Form from "react-bootstrap/Form";
+import axios from "axios";
+import AddCart from "@mui/icons-material/AddShoppingCart";
+import "./Forms.css";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import axiosIntercept from "Services/axios";
+import MyCarousel from "../../Layout/Carousel";
+import { toast, ToastContainer } from "react-toastify";
+
+const BookForm = (props) => {
+  const token = localStorage.getItem("token");
+  const user = token ? JSON.parse(atob(token.split(".")[1])) : {};
+  const query = useParams();
+  const id = query.id ? +query.id : 0;
+  const location = useLocation();
+  const bookingFor = location.state.data;
+  console.log(bookingFor);
+  const [tour, setTour] = useState({});
+  const [hotel, setHotel] = useState({});
+  let navigate = useNavigate();
+  const [userData, setUserData] = useState({
+    maxPerson: 0,
+    user: user.role === 4 ? user : 0,
+    package_id: id,
+  });
+  const [bookHotel, setBookHotel] = useState({
+    maxPerson: 0,
+    inDate: "",
+    outDate: "",
+    user: user.role === 4 ? user : 0,
+    roomId: id,
+  });
+
+  useEffect(() => {
+    if (id > 0) {
+      if (bookingFor === "tour") {
+        axios
+          .get(`${process.env.REACT_APP_SERVER_URL}/view/tour/${id}`, {
+            headers: {
+              Authorization: `Bearer `,
+            },
+          })
+          .then((res) => {
+            setTour(res.data[0]);
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        axios
+          .get(`${process.env.REACT_APP_SERVER_URL}/view/room/${id}`, {
+            headers: {
+              Authorization: `Bearer `,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            setHotel(res.data[0]);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    }
+  }, []);
+
+  const [errMsg, setErrMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+
+  const handleOnChange = (event) => {
+    const { name, value } = event.target;
+
+    if (bookingFor === "tour") {
+      setUserData({
+        ...userData,
+        [name]: value,
+        user: user.role === 4 ? user : 0,
+      });
+    } else {
+      setBookHotel({
+        ...bookHotel,
+        [name]: value,
+        user: user.role === 4 ? user : 0,
+      });
+    }
+  };
+
+  const validatorFn = () => {
+    if (bookingFor === "tour") {
+      if (userData.maxPerson <= 0) {
+        setErrMsg("Total Person must not be negative and zero");
+      } else {
+        setErrMsg("");
+      }
+    } else {
+      if (bookHotel.maxPerson <= 0) {
+        setErrMsg("Total Person must not be negative and zero");
+      } else {
+        setErrMsg("");
+      }
+      if (
+        new Date(bookHotel.outDate).getTime() / 1000 <
+        new Date(bookHotel.inDate).getTime() / 1000
+      ) {
+        setErrMsg(`Invalid Book Date Enter a Date before ${tour.endDate}`);
+      } else {
+        setErrMsg("");
+      }
+    }
+  };
+  const submitForm = (event) => {
+    event.preventDefault();
+    validatorFn();
+    if (bookingFor === "tour") {
+      if (errMsg === "") {
+        axiosIntercept
+          .post(`${process.env.REACT_APP_SERVER_URL}/book/tour`, {
+            userData,
+          })
+          .then((res) => {
+            alert(res.data);
+            setSuccessMsg(res.data);
+            navigate("/my/bookings", { replace: true });
+          })
+          .catch((err) => {
+            setErrMsg(err.response.data.errors[0].msg);
+          });
+      }
+    } else {
+      if (errMsg === "") {
+        axiosIntercept
+          .post(`${process.env.REACT_APP_SERVER_URL}/book/room`, {
+            bookHotel,
+          })
+          .then((res) => {
+            alert(res.data);
+            setSuccessMsg(res.data);
+            navigate("/my/bookings", { replace: true });
+          })
+          .catch((err) => {
+            toast(err.response.data);
+          });
+      }
+    }
+    if (user.role !== 4) {
+      setErrMsg("You Are not Allowed to book");
+    }
+  };
+
+  return (
+    <Box>
+      <ToastContainer />
+      {errMsg ? <Alert severity="error">{errMsg}</Alert> : ""}
+      {successMsg ? <Alert severity="success">{successMsg}</Alert> : ""}
+      <MyCarousel className="m-2" />
+      {id > 0 ? (
+        <Grid container spacing={2}>
+          {bookingFor === "tour" ? (
+            <>
+              <Grid item xs={6}>
+                <Container fluid className="m-2">
+                  <Typography variant="h6" className="text-center text-success">
+                    Booking For : {tour.package_name}
+                  </Typography>
+                  <Typography variant="h6" className="text-center text-success">
+                    Booking Start Date : {tour.startDate}
+                  </Typography>
+                  <Typography variant="h6" className="text-center text-success">
+                    Booking End Date : {tour.endDate}
+                  </Typography>
+                  <Typography variant="h6" className="text-center text-success">
+                    Booking Days : {tour.total_days}
+                  </Typography>
+                  <Typography variant="h6" className="text-center text-success">
+                    Booking Cost : ₹ {tour.cost} /person
+                  </Typography>
+                </Container>
+              </Grid>
+              <Grid item xs={6}>
+                <Container fluid className="m-2">
+                  <Form
+                    onSubmit={(event) => {
+                      submitForm(event);
+                    }}
+                  >
+                    <FormControl className="form-control m-2 ">
+                      <InputLabel htmlFor="maxPerson">Total Person</InputLabel>
+                      <Input
+                        type="number"
+                        id="maxPerson"
+                        min={1}
+                        name="maxPerson"
+                        value={userData.maxPerson}
+                        onChange={(event) => {
+                          handleOnChange(event);
+                        }}
+                        placeholder="Enter Max Person"
+                      />
+                    </FormControl>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      className="d-block btn btn-success m-auto"
+                      color="success"
+                      startIcon={<AddCart />}
+                    >
+                      Add tour
+                    </Button>
+                  </Form>
+                </Container>
+              </Grid>
+            </>
+          ) : (
+            <>
+              <Grid item xs={6}>
+                <Container fluid className="m-2">
+                  <Typography variant="h6" className="text-center text-success">
+                    Room Type : {hotel.room_name}
+                  </Typography>
+                  <Typography variant="h6" className="text-center text-danger">
+                    Max Person : {hotel.max_person}
+                  </Typography>
+                  <Typography variant="h6" className="text-center text-danger">
+                    Room Availability :
+                    {hotel.availablity ? "Available" : "Not Available"}
+                  </Typography>
+                  <Typography variant="h6" className="text-center text-success">
+                    Booking Cost : ₹ {hotel.room_price} /person
+                  </Typography>
+                </Container>
+              </Grid>
+              <Grid item xs={6}>
+                <Container fluid className="m-2">
+                  <Form
+                    onSubmit={(event) => {
+                      submitForm(event);
+                    }}
+                  >
+                    <FormControl className="form-control m-2 ">
+                      <Form.Label htmlFor="maxPerson">Total Person</Form.Label>
+                      <Form.Control
+                        type="number"
+                        id="maxPerson"
+                        min={1}
+                        name="maxPerson"
+                        value={bookHotel.maxPerson}
+                        onChange={(event) => {
+                          handleOnChange(event);
+                        }}
+                        placeholder="Enter Max Person"
+                      />
+                    </FormControl>
+                    <FormControl className="form-control m-2 ">
+                      <Form.Label htmlFor="inDate">Check In Date </Form.Label>
+                      <Form.Control
+                        type="date"
+                        id="inDate"
+                        min={new Date().toISOString().split("T")[0]}
+                        name="inDate"
+                        value={bookHotel.inDate}
+                        onChange={(event) => {
+                          handleOnChange(event);
+                        }}
+                        placeholder="Enter Max Person"
+                      />
+                    </FormControl>
+                    <FormControl className="form-control m-2 ">
+                      <Form.Label htmlFor="outDate">Check Out Date </Form.Label>
+                      <Form.Control
+                        type="date"
+                        id="outDate"
+                        min={new Date().toISOString().split("T")[0]}
+                        name="outDate"
+                        value={bookHotel.outDate}
+                        onChange={(event) => {
+                          handleOnChange(event);
+                        }}
+                        placeholder="Enter Max Person"
+                      />
+                    </FormControl>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      className="d-block btn btn-success m-auto"
+                      color="success"
+                      startIcon={<AddCart />}
+                    >
+                      Book Now
+                    </Button>
+                  </Form>
+                </Container>
+              </Grid>
+            </>
+          )}
+        </Grid>
+      ) : (
+        <h1>Book a package to view</h1>
+      )}
+    </Box>
+  );
+};
+
+export default BookForm;

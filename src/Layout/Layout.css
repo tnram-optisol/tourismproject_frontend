@@ -1,0 +1,17 @@
+.card-carousel {
+    display: flex;
+}
+
+.card-carousel>.card-img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.card-carousel>.my-card {
+    margin: 2px;
+    border: 1px solid red;
+    font-weight: bolder;
+    text-align: center;
+    border-radius: 5px;
+
+}

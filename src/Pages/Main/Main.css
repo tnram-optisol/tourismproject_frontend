@@ -1,0 +1,101 @@
+.tour {
+    margin: 9% auto;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.paginate {
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 5px;
+}
+
+.nav-link {
+    color: #27d327;
+}
+
+.nav-bar {
+    background-color: lightblue;
+}
+
+.review-form {
+    width: 100%;
+    padding: 10px;
+}
+
+.review-btn {
+    background-color: transparent;
+    border: none;
+}
+
+.on {
+    color: #008000;
+}
+
+.off {
+    color: #ff0000;
+}
+
+.detail {
+    margin: 5px auto;
+    padding: 10px;
+}
+
+.fa-icon {
+    margin: 2px;
+    font-weight: bolder;
+    width: 10%;
+}
+
+.button {
+    margin: auto auto;
+}
+
+.my-card {
+    margin: 5px;
+    border: 1px solid #add8e6;
+    font-weight: bolder;
+    text-align: center;
+    animation: slideInUp;
+    animation-duration: 1s;
+}
+
+.my-card>.card-img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.my.card:hover {
+    background-color: #add8e6;
+}
+
+.category {
+    color: #000000;
+    width: 100%;
+    margin: 2% auto;
+    position: fixed;
+    background-color: #f5f5f5;
+    opacity: 1;
+}
+
+.card-data:hover {
+    border: 1px solid #add8e6;
+    box-shadow: 5px 5px 5px 5px #d3d3d3;
+}
+
+.admin-nav {
+    color: white;
+}
+
+.admin-nav:hover {
+    color: gold;
+}
+
+button:hover {
+    border-radius: 10px;
+    background-color: transparent;
+}
+.form-control{
+    border-color: #008000;
+}
