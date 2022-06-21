@@ -14,8 +14,8 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 
 import "./Orders.css";
-function MyOrders(props) {
-  const location = useLocation();
+function MyOrders() {
+  const location:any = useLocation();
   const bookData = location.state;
   const { tourOrderExist, hotelOrderExist } = bookData;
   console.log(hotelOrderExist);
@@ -102,7 +102,6 @@ function MyOrders(props) {
                 </TableRow>
               </TableBody>
             </MyTable>
-            <MyTable></MyTable>
             <Container fixed className="text-center m-auto">
               <Button variant="outlined" color="error" className="m-2">
                 Export to PDF

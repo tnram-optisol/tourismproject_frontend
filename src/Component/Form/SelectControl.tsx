@@ -3,17 +3,22 @@ import { ErrorMessage, Field, useField } from "formik";
 import TextError from "./TextError";
 import Select from "react-select";
 
-function SelectControl(props) {
+interface Options {
+  label: string;
+  value: number;
+}
+
+function SelectControl(props: any) {
   const { label, name, options } = props;
   const [field, meta, helpers] = useField(props);
-  const optionsData = new Array([]);
+  const optionsData: Options[] = [];
   if (options) {
     for (let option of options) {
       optionsData.push({ label: option.category, value: option.id });
     }
   }
-  const category = [];
-  const selectCategory = (event) => {
+  const category: any[] = [];
+  const selectCategory = (event: any) => {
     for (let e of event) {
       if (!category.find((e) => e === e.value)) {
         category.push(e.value);
@@ -25,7 +30,7 @@ function SelectControl(props) {
     <div>
       <label htmlFor={name}>{label}</label>
       <Field name={name}>
-        {({ form, field }) => {
+        {({ form, field }: any) => {
           const { setFieldValue } = form;
           const { value } = field;
           return (

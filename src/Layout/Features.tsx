@@ -7,11 +7,6 @@ import MyCardHeader from "../Component/Cards/MyCardHeader";
 import MyCardMedia from "../Component/Cards/MyCardMedia";
 import "./Layout.css";
 export default function Features() {
-  // const [index, setIndex] = useState(0);
-
-  // const handleSelect = (selectedIndex, e) => {
-  //   setIndex(selectedIndex);
-  // };
   return (
     <Carousel className="m-2">
       <Carousel.Item>
@@ -26,7 +21,6 @@ export default function Features() {
                 "https://i.insider.com/611d03ffc040ad0018cede22?width=1000&format=jpeg&auto=webp"
               }
               alt={"wallet"}
-              className="card-img"
             />
             <CardContent>
               <MyCardBody

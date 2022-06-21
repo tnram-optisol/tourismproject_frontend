@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
 import {
   Box,
   Typography,
@@ -133,28 +132,28 @@ function Dashboard() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users
+                {users && !loading
                   ? users.map((user, index) => (
-                    <TableRow key={index}>
-                      <TableCell className="text-primary">
-                        {user.id}
-                      </TableCell>
-                      <TableCell className="text-primary">
-                        {user.name}
-                      </TableCell>
-                      <TableCell className="text-primary">
-                        {user.email}
-                      </TableCell>
-                      <TableCell className="text-primary">
-                        {user.role.role}
-                      </TableCell>
-                    </TableRow>
-                  ))
+                      <TableRow key={index}>
+                        <TableCell className="text-primary">
+                          {user.id}
+                        </TableCell>
+                        <TableCell className="text-primary">
+                          {user.name}
+                        </TableCell>
+                        <TableCell className="text-primary">
+                          {user.email}
+                        </TableCell>
+                        <TableCell className="text-primary">
+                          {user.role.role}
+                        </TableCell>
+                      </TableRow>
+                    ))
                   : ""}
               </TableBody>
             </MyTable>
           </Grid>
-          {orders.length > 0 ? (
+          {orders.length > 0 && !loading ? (
             <Grid container spacing={2}>
               <Grid item>
                 <Typography variant="h6" color="blue">

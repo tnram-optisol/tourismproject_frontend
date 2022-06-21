@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Box, CardContent, Divider, Typography } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBowlFood,
@@ -32,7 +31,7 @@ export default function ShowRooms(props: any) {
   const loading = useAppSelector((state) => state.hotel.value.loading);
   useEffect(() => {
     dispatch(getAdminRoomData(hotel_id));
-  }, [dispatch]);
+  }, [dispatch, hotel_id]);
   return (
     <AdminLayout>
       <Box className="tour_body">

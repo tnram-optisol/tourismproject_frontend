@@ -6,7 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { signIn } from "../../store/reducers/authReducer";
 
-function FormikContainer(props) {
+function FormikContainer(props: any) {
   const {
     initialValues,
     validationSchema,
@@ -20,7 +20,7 @@ function FormikContainer(props) {
     options,
   } = props;
   const dispatch = useDispatch();
-  const onSubmit = (values) => {
+  const onSubmit = (values: { [x: string]: string | Blob; file: any }) => {
     console.log("Form Submitted", values);
     if (values.file) {
       let formData = new FormData();
@@ -28,21 +28,21 @@ function FormikContainer(props) {
         formData.append(key, values[key]);
       }
       apiCall(formData)
-        .then((res) => {
+        .then((res: any) => {
           toast(res.data);
         })
-        .catch((err) => {
+        .catch((err: any) => {
           console.log(err);
         });
     } else {
       apiCall(values)
-        .then(async (res) => {
+        .then(async (res: any) => {
           if (endPoint === "/signIn") {
             localStorage.setItem("token", res.data.token);
             toast("Logged in Successfully");
             redirect("/");
             let user = await JSON.parse(
-              atob(localStorage.getItem("token").split(".")[1])
+              atob(localStorage.getItem("token")!.split(".")[1])
             );
             dispatch(
               signIn({
@@ -52,7 +52,9 @@ function FormikContainer(props) {
           } else {
             if (res.data.errors) {
               const data = res.data.errors;
-              data.map((e) => toast.error(e.msg));
+              data.map(
+                (e: any) => toast.error(e.msg)
+              );
             } else {
               toast(res.data);
             }
@@ -61,18 +63,19 @@ function FormikContainer(props) {
             }
           }
         })
-        .catch((err) => {
+        .catch((err: any) => {
           if (err.response.data.errors) {
             const data = err.response.data.errors;
-            data.map((e) => toast.error(e.msg));
+            data.map(
+              (e: any) => toast.error(e.msg)
+            );
           } else {
             toast(err.response.data);
           }
-          
         });
     }
   };
-  const handleOnChange = (event) => {
+  const handleOnChange = (event: any) => {
     console.log(event.target.value);
   };
   return (
@@ -89,12 +92,12 @@ function FormikContainer(props) {
             className={props.className}
             encType={encType ? "multipart/form" : "application/json"}
           >
-            {formData.map((el, index) => (
+            {formData.map((el: any, index: any) => (
               <FormControl
                 key={index}
                 control={el.control}
                 {...el}
-                onChange={(event) => handleOnChange(event)}
+                onChange={(event: any) => handleOnChange(event)}
                 options={el.control === "select" ? options : ""}
               />
             ))}

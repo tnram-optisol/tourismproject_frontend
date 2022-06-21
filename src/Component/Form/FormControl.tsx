@@ -6,7 +6,7 @@ import OptionsControl from "./OptionsControl";
 import SelectControl from "./SelectControl";
 import TextAreaControl from "./TextAreaControl";
 
-function FormControl(props) {
+function FormControl(props:any) {
   const { control, ...rest } = props;
   switch (control) {
     case "input":

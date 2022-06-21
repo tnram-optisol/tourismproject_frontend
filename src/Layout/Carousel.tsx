@@ -1,13 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 
 function MyCarousel() {
-  // const [index, setIndex] = useState(0);
-
-  // const handleSelect = (selectedIndex, e) => {
-  //   setIndex(selectedIndex);
-  // };
-
   return (
     <Carousel className="mt-3 mb-3">
       <Carousel.Item>

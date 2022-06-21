@@ -35,7 +35,7 @@ export default function Tours() {
     } else {
       dispatch(getUserTourData());
     }
-  }, [dispatch]);
+  }, [dispatch, query]);
   const filterData = (category: any) => {
     console.log(category);
     window.scrollTo(0, 0);
@@ -63,7 +63,6 @@ export default function Tours() {
                       alt={
                         data.tour.package_name
                       }
-                      className={"card-img ripple"}
                     />
                     <Link
                       to={`/tour/${data.tour.tour_id

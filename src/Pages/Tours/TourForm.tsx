@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { ToastContainer } from "react-toastify";
@@ -45,7 +44,7 @@ const TourForm = () => {
           console.log(err);
         });
     }
-  }, []);
+  }, [initialValues, tourId]);
 
   return (
     <AdminLayout>

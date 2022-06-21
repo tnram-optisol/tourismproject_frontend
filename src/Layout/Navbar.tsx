@@ -58,7 +58,6 @@ const NavBar = () => {
   });
 
   const searchTour = () => {
-    console.log(query);
     setSearchParams(query);
     navigate({
       pathname: "/tour",

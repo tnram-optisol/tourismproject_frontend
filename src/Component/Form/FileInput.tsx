@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { ErrorMessage, Field } from "formik";
 import TextError from "./TextError";
 
-function FileInput(props) {
+function FileInput(props:any) {
   const { label, name, value, ...rest } = props;
   return (
     <div>
       <label htmlFor={name}>{label}</label>
       <Field name={name}>
-        {({ form, field }) => {
+        {({ form, field }:any) => {
           const { setFieldValue } = form;
           const { value } = field;
           return (
@@ -19,7 +19,7 @@ function FileInput(props) {
               selected={value}
               accept="image/*"
               {...rest}
-              onChange={(event) => setFieldValue(name, event.target.files[0])}
+              onChange={(event) => setFieldValue(name, event.target.files![0])}
             />
           );
         }}

@@ -3,14 +3,14 @@ import { Field, ErrorMessage, useField } from "formik";
 import TextError from "./TextError";
 import { Rating } from "@mui/material";
 
-function InputControl(props) {
+function InputControl(props: any) {
   const { label, name, type, ...rest } = props;
   const [field, meta, helpers] = useField(props);
   return (
     <div>
       <label htmlFor={label}>{label}</label>
       <Field name={name}>
-        {({ form, field }) => {
+        {({ form, field }:any) => {
           const { setFieldValue } = form;
           const { value } = field;
           return name !== "rating" ? (

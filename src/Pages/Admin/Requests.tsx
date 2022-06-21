@@ -11,7 +11,6 @@ import React, { useEffect, } from "react";
 import {
   adminApproveRequest,
   adminRejectRequest,
-  getUserRequest,
 } from "Services/api/adminAPI";
 import MyTable from "Component/Table/MyTable";
 import { REQUEST_TABLE_FIELDS } from "utils/Table/tableFields";
@@ -102,20 +101,18 @@ function Requests() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {requestData.map((data, index) => (
+              {requestData.map((data: any, index) => (
                 <TableRow key={index}>
                   <TableCell>{data.user.role.role}</TableCell>
                   <TableCell>{data.user.name}</TableCell>
                   <TableCell>
-                    {data.hotel ? data.hotel.hotel_name : data.tour.package_name}
-                  </TableCell>
-                  <TableCell>
-                    {data.hotel
-                      ? data.hotel.hotel_license
-                      : data.tour.provider_license}
-                  </TableCell>
-                  <TableCell>
                     {data.status ? "Approved" : "Not Approved"}
+                  </TableCell>
+                  <TableCell>
+                    {data.hotel_name ? data.hotel_name : data.package_name}
+                  </TableCell>
+                  <TableCell>
+                    {data.hotel_license ? data.hotel_license : data.provider_license}
                   </TableCell>
                   <TableCell>
                     <Button

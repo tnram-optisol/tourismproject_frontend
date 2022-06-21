@@ -1,12 +1,11 @@
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Grid3x3 } from "@mui/icons-material";
 import { Button, Grid, ListItem, Select } from "@mui/material";
-import { ErrorMessage, Field, useField } from "formik";
+import { ErrorMessage, Field,useField } from "formik";
 import React, { useState } from "react";
 import TextError from "./TextError";
 
-function OptionsControl(props) {
+function OptionsControl(props: any) {
   const { label, name } = props;
   const [field, meta, helpers] = useField(props);
   const [adult, setAdult] = useState(1);
@@ -16,7 +15,7 @@ function OptionsControl(props) {
     <div>
       <label htmlFor={name}>{label}</label>
       <Field name={name}>
-        {({ form, field }) => {
+        {({ form, field }:any) => {
           const { setFieldValue } = form;
           const { value } = field;
           return (

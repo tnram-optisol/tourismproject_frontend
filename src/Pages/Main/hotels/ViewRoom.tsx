@@ -49,7 +49,8 @@ export default function ViewRooms() {
   });
   useEffect(() => {
     dispatch(viewSingleRoomData(room_id));
-  }, [dispatch]);
+  }, [dispatch, room_id]);
+  
   const validationSchema = () => {
     return Yup.object({
       maxPerson: Yup.number().min(1).required("Required"),

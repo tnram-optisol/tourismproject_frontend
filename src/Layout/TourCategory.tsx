@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Grid,
   LinearProgress,

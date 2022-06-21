@@ -1,5 +1,5 @@
-import { HotelModel, HotelOrdersModel } from "./hotelModel";
-import { TourModel, TourOrdersModel } from "./tourModel";
+import { HotelModel } from "./hotelModel";
+import { TourModel } from "./tourModel";
 import { UserModel } from "./userModel";
 
 export interface BannerModel {

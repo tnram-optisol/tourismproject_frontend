@@ -13,10 +13,12 @@ function TourOrders() {
   const dispatch = useAppDispatch();
   const tourOrders = useAppSelector((state) => state.tour.value.tourOrders);
   const loading = useAppSelector((state) => state.tour.value.loading);
-  const getAllOrders = () => {
+
+
+  useEffect(() => {
     dispatch(getAdminTourOrders());
-  };
-  useEffect(() => getAllOrders(), [dispatch]);
+  }, [dispatch]);
+  
   return (
     <AdminLayout>
       {!loading ? (

@@ -40,21 +40,20 @@ import FormControl from "Component/Form/FormControl";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
 
-
 export default function ViewTour(props: any) {
   const token = localStorage.getItem("token");
   const user = token ? JSON.parse(atob(token.split(".")[1])) : {};
   const [reviews, setReview] = useState(0);
   const navigate = useNavigate();
-  const query:any = useParams();
-  const tour_id = +query.id
+  const query: any = useParams();
+  const tour_id = +query.id;
   const [startDate, setStartDate] = useState(new Date());
   const [excludeDays, setExcludeDays] = useState([addDays(new Date(), 5)]);
   const [errMsg, setErrMsg] = useState("");
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
-  const tourData = useAppSelector(state => state.tour.value.viewTour);
-  const loading = useAppSelector(state => state.tour.value.loading);
+  const tourData = useAppSelector((state) => state.tour.value.viewTour);
+  const loading = useAppSelector((state) => state.tour.value.loading);
   const [initialValues, setInitialValues] = useState({
     ...BOOKTOUR_INITIAL_VALUES,
     user: user.role === 4 ? user : 0,
@@ -85,13 +84,13 @@ export default function ViewTour(props: any) {
         console.log(err);
       });
   }, [dispatch]);
-  const handleClickOpen = (id:any) => {
+  const handleClickOpen = (id: any) => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-  const dateOnChange = (date:Date) => {
+  const dateOnChange = (date: Date) => {
     if (
       date.getTime() / 1000 >
       new Date(tourData[0].endDate).getTime() / 1000
@@ -303,9 +302,7 @@ export default function ViewTour(props: any) {
           )}
         </Box>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>
-            Description
-          </DialogTitle>
+          <DialogTitle>Description</DialogTitle>
           <Divider />
           <Description />
         </Dialog>

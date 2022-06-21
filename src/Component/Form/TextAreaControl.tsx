@@ -2,7 +2,7 @@ import { ErrorMessage, Field, useField } from "formik";
 import React from "react";
 import TextError from "./TextError";
 
-function TextAreaControl(props) {
+function TextAreaControl(props: any) {
   const { label, name, ...rest } = props;
   const [field, meta, helpers] = useField(props);
   return (

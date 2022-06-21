@@ -38,7 +38,7 @@ export default function ShowTours() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [dispatch, page]);
   const tourPagination = (current:number) => {
     setPage(current);
     if (current < maxPage) {

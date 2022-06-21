@@ -3,16 +3,23 @@ import React, { useState } from "react";
 import ReactDatePicker from "react-datepicker";
 import TextError from "./TextError";
 
-function DateControl(props) {
+interface DateState {
+  startDate: Date;
+  endDate: Date | null;
+  closedOn: Date | null;
+}
+
+function DateControl(props: any) {
   const { label, name, type, ...rest } = props;
-  const [dates, setDate] = useState({
+  const [dates, setDate] = useState<DateState>({
     startDate: new Date(),
     endDate: null,
+    closedOn:null
   });
-  const handleDateChange = (name, dates) => {
+  const handleDateChange = (name: string | any, dates: Date | any) => {
     setDate({
       ...dates,
-      [name]: dates,
+      [name]: dates
     });
     return dates;
   };
@@ -20,7 +27,7 @@ function DateControl(props) {
     <div className="d-inline">
       <label htmlFor={name}>{label}</label>
       <Field name={name}>
-        {({ form, field }) => {
+        {({ form, field }: any) => {
           const { setFieldValue } = form;
           const { value } = field;
           return name !== "closedOn" ? (
@@ -30,7 +37,7 @@ function DateControl(props) {
               id={name}
               name={name}
               selected={value}
-              value={dates[name]}
+              value={name === 'startDate' ? dates.startDate : dates.endDate}
               {...field}
               {...rest}
               onChange={(val) =>
@@ -44,7 +51,7 @@ function DateControl(props) {
               id={name}
               name={name}
               selected={value}
-              value={dates[name]}
+              value={dates.closedOn}
               {...field}
               {...rest}
               onChange={(val) =>

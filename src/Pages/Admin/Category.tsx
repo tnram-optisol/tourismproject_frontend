@@ -34,7 +34,9 @@ function Category() {
   const getAllCategory = () => {
     dispatch(getAdminCategoryData())
   };
-  useEffect(() => getAllCategory, [dispatch]);
+  useEffect(() => {
+    dispatch(getAdminCategoryData());
+  }, [dispatch]);
   const deleteCategory = (id:number) => {
     adminRemoveCategory(id)
       .then((res) => {

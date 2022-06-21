@@ -15,16 +15,17 @@ import { useAppSelector } from "hooks/useAppSelector";
 export default function Hotel() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const hotels = useAppSelector(((state) => state.hotel.value.hotel));
-  const getAllHotels = () => {
+  const hotels = useAppSelector((state) => state.hotel.value.hotel);
+
+  useEffect(() => {
     dispatch(getUserHotelData());
-    console.log(hotels);
     window.scrollTo(0, 0);
-  };
-  useEffect(() => getAllHotels, [dispatch]);
-  const viewRooms = (id:number) => {
+  }, [dispatch]);
+
+  const viewRooms = (id: number) => {
     navigate(`/hotel/rooms/${id}`);
   };
+
   return (
     <UserLayout>
       <Box>
