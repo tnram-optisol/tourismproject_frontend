@@ -13,7 +13,6 @@ import ReadMoreIcon from "@mui/icons-material/ReadMore";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
@@ -24,26 +23,29 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
 import { signOut } from "../store/reducers/authReducer";
+import { useAppSelector } from "hooks/useAppSelector";
+import { useAppDispatch } from "hooks/useAppDispatch";
 
 const NavBar = () => {
-  const loggedIn = useSelector((state) => state.auth.value.loggedIn);
-  const role = useSelector((state) => state.auth.value.role);
-  const email = useSelector((state) => state.auth.value.email);
-  const dispatch = useDispatch();
+  const loggedIn = useAppSelector((state) => state.auth.value.loggedIn);
+  const role = useAppSelector((state) => state.auth.value.role);
+  const email = useAppSelector((state) => state.auth.value.email);
+  const dispatch = useAppDispatch();
   console.log(role, email);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   let [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const handleClick = (event) => {
+
+  const handleClick = (event:any) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const handleOpenUserMenu = (event) => {
+  const handleOpenUserMenu = (event:any) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -51,9 +53,11 @@ const NavBar = () => {
     setAnchorElUser(null);
   };
 
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState({
+    location: ''
+  });
 
-  const searchTour = (event) => {
+  const searchTour = () => {
     console.log(query);
     setSearchParams(query);
     navigate({
@@ -114,13 +118,7 @@ const NavBar = () => {
               className="header-right"
             >
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-                <Button
-                  id="demo-positioned-button"
-                  aria-controls={open ? "demo-positioned-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                >
+                <Button onClick={handleClick}>
                   More Links
                 </Button>
                 <Menu

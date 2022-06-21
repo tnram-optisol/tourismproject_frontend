@@ -4,7 +4,7 @@ import NavBar from "Layout/Navbar";
 import React from "react";
 import { ToastContainer } from "react-toastify";
 
-function UserLayout(props) {
+function UserLayout(props: { children: any; }) {
   const { children } = props;
   return (
     <>

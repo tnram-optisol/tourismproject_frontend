@@ -9,6 +9,7 @@ export const USER_POST_REVIEW = "/review";
 export const USER_FILTER_TOUR = "/filter/tour";
 export const USER_SEARCH_TOUR = "/search/tour";
 export const MAIL_TO_ADMIN = "/mail/admin";
+export const ALL_CATEGORY = "/all/category"
 
 //Protected Routes
 export const TOUR_ADMIN_GET_TOUR = "/tour/view/all";

@@ -1,7 +1,7 @@
 import { Table, TableContainer} from "@mui/material";
 import React from "react";
 
-function MyTable(props) {
+function MyTable(props: { children: any; }) {
   const { children } = props;
   return (
     <TableContainer>

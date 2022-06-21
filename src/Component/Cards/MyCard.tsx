@@ -1,8 +1,8 @@
 import { Card } from "@mui/material";
 import React from "react";
 
-function MyCard(props) {
-  const { value, children } = props;
+function MyCard(props: { value?: any; children: any; key?: any }) {
+  const { value, children, key } = props;
   return (
     <Card
       sx={{
@@ -11,7 +11,7 @@ function MyCard(props) {
         display: "inline-block",
       }}
       className="card-data"
-      key={value}
+      key={value | key}
     >
       {children}
     </Card>

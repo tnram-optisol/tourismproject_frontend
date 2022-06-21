@@ -12,6 +12,6 @@ function blink() {
 const AnimatedComponent = styled.h6`
   animation: ${blink} 1s infinite ease-in-out;
 `;
-export default function AnimatedText(props) {
+export default function AnimatedText(props: { className: string | any; data: string | number | any; }) {
   return <AnimatedComponent className={props.className}>{props.data}</AnimatedComponent>;
 }

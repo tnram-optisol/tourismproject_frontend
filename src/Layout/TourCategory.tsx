@@ -6,16 +6,23 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import useFetchData from "hooks/useFetchData";
-import React from "react";
+import { useAppDispatch } from "hooks/useAppDispatch";
+import { useAppSelector } from "hooks/useAppSelector";
+import React, { useEffect } from "react";
+import { getUserCategoryData } from "store/reducers/userReducer";
 
-function TourCategory(props) {
-  const categoryResult = useFetchData(`/all/category`);
-  const categoryData = categoryResult.resultData;
+function TourCategory(props: { filterData: (arg0: number) => void; }) {
+  const dispatch = useAppDispatch();
+  const loading = useAppSelector((state) => state.user.value.loading);
+  const categoryData = useAppSelector((state) => state.user.value.category)
+
+  useEffect(() => {
+    dispatch(getUserCategoryData())
+  }, [dispatch])
 
   return (
     <>
-      {!categoryResult.loading ? (
+      {!loading ? (
         <Grid container spacing={1} className="mt-2">
           <Grid container spacing={1} className="mt-2 category  ">
             {categoryData.map((category, index) => (

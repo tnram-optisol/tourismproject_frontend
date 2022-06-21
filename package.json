@@ -79,6 +79,7 @@
   },
   "devDependencies": {
     "@types/react-datepicker": "^4.4.2",
-    "@types/react-lazyload": "^3.2.0"
+    "@types/react-lazyload": "^3.2.0",
+    "@types/styled-components": "^5.1.25"
   }
 }

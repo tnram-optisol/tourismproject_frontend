@@ -8,7 +8,7 @@ import {
   Grid,
   Typography,
   Dialog,
-  DialogTitle
+  DialogTitle,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -32,14 +32,14 @@ import { useAppSelector } from "hooks/useAppSelector";
 
 export default function ViewRooms() {
   const navigate = useNavigate();
-  const query:any = useParams();
+  const query: any = useParams();
   const room_id = +query.id;
   const token = localStorage.getItem("token");
   const user = token ? JSON.parse(atob(token.split(".")[1])) : {};
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [open, setOpen] = useState(false);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const roomData = useAppSelector((state) => state.hotel.value.viewRoom);
   const loading = useAppSelector((state) => state.hotel.value.loading);
   const [initialValues, setInitialValues] = useState({
@@ -59,7 +59,7 @@ export default function ViewRooms() {
         .required("Required"),
     });
   };
-  const handleClickOpen = (id:number) => {
+  const handleClickOpen = (id: number) => {
     setOpen(true);
   };
   const handleClose = () => {
@@ -82,194 +82,205 @@ export default function ViewRooms() {
         <ToastContainer />
         <Box>
           {!loading ? (
-            roomData.map((room, index) => (
-              <Box className="mt-5" key={index}>
-                <Divider />
-                <Grid container spacing={1}>
-                  <Grid item xs={6}>
-                    <Box className="m-2">
-                      <img
-                        src={room.room_image}
-                        alt={room.room_name}
-                        className="d-block w-100"
-                        height="300"
-                      />
-                    </Box>
+            roomData.map(
+              (
+                room: {
+                  room_image: string;
+                  room_name: string;
+                  availability: boolean;
+                  max_person: number;
+                  description: string;
+                  room_id: number;
+                  cost: number;
+                },
+                index: React.Key | null | undefined
+              ) => (
+                <Box className="mt-5" key={index}>
+                  <Divider />
+                  <Grid container spacing={1}>
+                    <Grid item xs={6}>
+                      <Box className="m-2">
+                        <img
+                          src={room.room_image}
+                          alt={room.room_name}
+                          className="d-block w-100"
+                          height="300"
+                        />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Box className="m-2">
+                        <img
+                          src={room.room_image}
+                          alt={room.room_name}
+                          className="d-block w-100"
+                          height="300"
+                        />
+                      </Box>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={6}>
-                    <Box className="m-2">
-                      <img
-                        src={room.room_image}
-                        alt={room.room_name}
-                        className="d-block w-100"
-                        height="300"
-                      />
-                    </Box>
-                  </Grid>
-                </Grid>
-                <Divider />
-                <Box className="m-2">
-                  <Typography
-                    gutterBottom
-                    variant="h5"
-                    component="div"
-                    className="m-2 text-danger"
-                  >
-                    Brand New {room.room_name}
-                  </Typography>
-                  <Typography
-                    gutterBottom
-                    variant="subtitle1"
-                    className="m-2 text-primary"
-                  >
-                    <Typography variant="body1">
-                      Availablity:{" "}
-                      {room.availability ? "Available - 5" : "Not Available"}
+                  <Divider />
+                  <Box className="m-2">
+                    <Typography
+                      gutterBottom
+                      variant="h5"
+                      component="div"
+                      className="m-2 text-danger"
+                    >
+                      Brand New {room.room_name}
                     </Typography>
-                  </Typography>
-                  <Typography variant="h6">
-                    <FontAwesomeIcon icon={faUser} />
-                    <MyCardBody
-                      variant={"body1"}
-                      data={` Max Person: ${room.max_person}`}
-                      color={"green"}
-                    />
-                  </Typography>
-                </Box>
-                <Divider />
-                <Grid container spacing={1}>
-                  <Grid item xs={7}>
-                    <Grid container className="mt-1 tour">
-                      <Grid container spacing={1} className="m-2">
-                        <Grid item xs={6}>
-                          <Grid container spacing={1}>
+                    <Typography
+                      gutterBottom
+                      variant="subtitle1"
+                      className="m-2 text-primary"
+                    >
+                      <Typography variant="body1">
+                        Availablity:{" "}
+                        {room.availability ? "Available - 5" : "Not Available"}
+                      </Typography>
+                    </Typography>
+                    <Typography variant="h6">
+                      <FontAwesomeIcon icon={faUser} />
+                      <MyCardBody
+                        variant={"body1"}
+                        data={` Max Person: ${room.max_person}`}
+                        color={"green"}
+                      />
+                    </Typography>
+                  </Box>
+                  <Divider />
+                  <Grid container spacing={1}>
+                    <Grid item xs={7}>
+                      <Grid container className="mt-1 tour">
+                        <Grid container spacing={1} className="m-2">
+                          <Grid item xs={6}>
                             <Grid container spacing={1}>
-                              <Grid item xs={1}>
-                                <FontAwesomeIcon
-                                  icon={faSignIn}
-                                  className="m-1 text-center"
-                                />
+                              <Grid container spacing={1}>
+                                <Grid item xs={1}>
+                                  <FontAwesomeIcon
+                                    icon={faSignIn}
+                                    className="m-1 text-center"
+                                  />
+                                </Grid>
+                                <Grid item xs={10}>
+                                  <Typography variant="subtitle2">
+                                    Self Check In
+                                    <p>Check yourself in with the lockGrid.</p>
+                                  </Typography>
+                                </Grid>
                               </Grid>
-                              <Grid item xs={10}>
-                                <Typography variant="subtitle2">
-                                  Self Check In
-                                  <p>Check yourself in with the lockGrid.</p>
-                                </Typography>
-                              </Grid>
-                            </Grid>
-                            <Grid container spacing={1}>
-                              <Grid item xs={1}>
-                                <FontAwesomeIcon
-                                  icon={faCancel}
-                                  className="m-1 text-center"
-                                />
-                              </Grid>
-                              <Grid item xs={11}>
-                                <Typography variant="subtitle2">
-                                  Cancellation Policy
-                                  <p>Free Cancellation for 24 Hours</p>
-                                </Typography>
+                              <Grid container spacing={1}>
+                                <Grid item xs={1}>
+                                  <FontAwesomeIcon
+                                    icon={faCancel}
+                                    className="m-1 text-center"
+                                  />
+                                </Grid>
+                                <Grid item xs={11}>
+                                  <Typography variant="subtitle2">
+                                    Cancellation Policy
+                                    <p>Free Cancellation for 24 Hours</p>
+                                  </Typography>
+                                </Grid>
                               </Grid>
                             </Grid>
                           </Grid>
                         </Grid>
                       </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container className="mt-1 tour">
-                      <Grid item xs={12} className="m-2 tour">
-                        <Typography variant="h6" className="d-block">
-                          Booking Dates
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} className="m-2 tour">
-                        <ReactDatePicker
-                          minDate={new Date()}
-                          selected={startDate}
-                          onChange={onChange}
-                          startDate={startDate}
-                          endDate={endDate}
-                          selectsRange
-                          inline
-                          monthsShown={2}
-                        />
-                      </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container className="mt-1 tour">
-                      <Grid item xs={12}>
-                        <Typography variant="h6" className="mt-1 tour">
-                          {" "}
-                          Description About Room{" "}
-                        </Typography>
-                        <Typography variant="body2" className="mt-1 tour">
-                          {room.description}
-                        </Typography>
-                        <Button
-                          variant="outlined"
-                          color="error"
-                          className="m-2 tour"
-                          onClick={() => handleClickOpen(room.room_id)}
-                        >
-                          Read More
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={5} className="m-auto">
-                    <Card
-                      sx={{
-                        maxWidth: 500,
-                        margin: "10px",
-                        border: "2px solid lightblue",
-                        padding: "10px",
-                      }}
-                    >
-                      <Box>
-                        <Container maxWidth="sm" className="m-2">
-                          <Typography
-                            variant="h6"
-                            className="text-center text-danger"
-                          >
-                            ₹​ {room.cost} /person
+                      <Divider />
+                      <Grid container className="mt-1 tour">
+                        <Grid item xs={12} className="m-2 tour">
+                          <Typography variant="h6" className="d-block">
+                            Booking Dates
                           </Typography>
-                          <FormikContainer
-                            className="review-form"
-                            initialValues={initialValues}
-                            formData={BOOKROOM_FORM_DATA}
-                            validationSchema={validationSchema()}
-                            buttonName={"Book Now"}
-                            endPoint={"/book/room"}
-                            apiCall={roomBooking}
-                            redirect={navigate}
-                            location={"/my/bookings"}
+                        </Grid>
+                        <Grid item xs={12} className="m-2 tour">
+                          <ReactDatePicker
+                            minDate={new Date()}
+                            selected={startDate}
+                            onChange={onChange}
+                            startDate={startDate}
+                            endDate={endDate}
+                            selectsRange
+                            inline
+                            monthsShown={2}
+                          />
+                        </Grid>
+                      </Grid>
+                      <Divider />
+                      <Grid container className="mt-1 tour">
+                        <Grid item xs={12}>
+                          <Typography variant="h6" className="mt-1 tour">
+                            {" "}
+                            Description About Room{" "}
+                          </Typography>
+                          <Typography variant="body2" className="mt-1 tour">
+                            {room.description}
+                          </Typography>
+                          <Button
+                            variant="outlined"
+                            color="error"
+                            className="m-2 tour"
+                            onClick={() => handleClickOpen(room.room_id)}
                           >
-                            {BOOKROOM_FORM_DATA.map((el, index) => (
-                              <FormControl
-                                key={index}
-                                control={el.control}
-                                name={el.name}
-                                id={el.name}
-                                label={el.label}
-                                type={el.type}
-                              />
-                            ))}
-                          </FormikContainer>
-                        </Container>
-                      </Box>
-                    </Card>
+                            Read More
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={5} className="m-auto">
+                      <Card
+                        sx={{
+                          maxWidth: 500,
+                          margin: "10px",
+                          border: "2px solid lightblue",
+                          padding: "10px",
+                        }}
+                      >
+                        <Box>
+                          <Container maxWidth="sm" className="m-2">
+                            <Typography
+                              variant="h6"
+                              className="text-center text-danger"
+                            >
+                              ₹​ {room.cost} /person
+                            </Typography>
+                            <FormikContainer
+                              className="review-form"
+                              initialValues={initialValues}
+                              formData={BOOKROOM_FORM_DATA}
+                              validationSchema={validationSchema()}
+                              buttonName={"Book Now"}
+                              endPoint={"/book/room"}
+                              apiCall={roomBooking}
+                              redirect={navigate}
+                              location={"/my/bookings"}
+                            >
+                              {BOOKROOM_FORM_DATA.map((el, index) => (
+                                <FormControl
+                                  key={index}
+                                  control={el.control}
+                                  name={el.name}
+                                  id={el.name}
+                                  label={el.label}
+                                  type={el.type}
+                                />
+                              ))}
+                            </FormikContainer>
+                          </Container>
+                        </Box>
+                      </Card>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </Box>
-            ))
+                </Box>
+              )
+            )
           ) : (
             <Loader />
           )}
         </Box>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle >
-            Description
-          </DialogTitle>
+          <DialogTitle>Description</DialogTitle>
           <Divider />
           <Description />
         </Dialog>

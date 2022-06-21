@@ -1,12 +1,12 @@
+import { useAppSelector } from 'hooks/useAppSelector';
 import React from 'react'
-import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 
 
 
 
 const ProtectedRoute = () =>{
-    const role = useSelector((state)=>state.auth.value.role);
+    const role = useAppSelector((state)=>state.auth.value.role);
     if(role === 2){
         return <Outlet/>
     }

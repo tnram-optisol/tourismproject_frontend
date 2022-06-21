@@ -58,7 +58,6 @@ export default function Home() {
                       alt={
                         data.tour.package_name
                       }
-                      className={"card-img ripple "}
                     />
                     <Grid container spacing={2}>
                       <Grid item xs={9}>

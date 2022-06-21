@@ -42,7 +42,6 @@ export default function ShowRooms(props: any) {
           ) : (
             rooms.map((room, index) => (
               <MyCard
-                sx={{ maxWidth: 500, margin: "10px", display: "inline-block" }}
                 key={room.room_id}
               >
                 <Link to={`/room/${room.room_id}`} className="nav-link">

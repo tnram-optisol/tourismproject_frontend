@@ -9,7 +9,6 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import { useDispatch, useSelector } from "react-redux";
 import { Button, Grid, IconButton, Menu, Tooltip } from "@mui/material";
 import {
   faCodePullRequest,
@@ -24,21 +23,23 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { signOut } from "store/reducers/authReducer";
+import { useAppSelector } from "hooks/useAppSelector";
+import { useAppDispatch } from "hooks/useAppDispatch";
 
 const drawerWidth = 240;
 
-function AdminLayout(props) {
+function AdminLayout(props: { children: any; }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+  const handleClick = (event:any) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const user = useSelector((state) => state.auth.value.email);
-  const role = useSelector((state) => state.auth.value.role);
-  const dispatch = useDispatch();
+  const user = useAppSelector((state) => state.auth.value.email);
+  const role = useAppSelector((state) => state.auth.value.role);
+  const dispatch = useAppDispatch();
   const { children } = props;
   return (
     <Box sx={{ display: "flex" }}>

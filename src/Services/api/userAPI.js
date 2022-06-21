@@ -1,4 +1,5 @@
 import {
+    ALL_CATEGORY,
     MAIL_TO_ADMIN,
     USER_FILTER_TOUR,
     USER_GET_HOTEL,
@@ -17,6 +18,10 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 export function getTour() {
     return axiosIntercept.get(`${SERVER_URL}${USER_GET_TOUR}`);
+}
+
+export function getAllCategory() {
+    return axiosIntercept.get(`${SERVER_URL}${ALL_CATEGORY}`);
 }
 
 export function filterTourData(category) {

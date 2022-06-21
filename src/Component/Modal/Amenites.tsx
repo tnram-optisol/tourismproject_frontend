@@ -1,13 +1,12 @@
 import {
   faBowlFood,
   faCamera,
-  faChild,
   faLock,
   faMobile,
   faWater,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, Divider, Grid, Typography } from "@mui/material";
+import { Box, Divider,Typography } from "@mui/material";
 import React from "react";
 
 function Amenites() {

@@ -84,7 +84,6 @@ export default function ShowTours() {
           {!loading ? (
             tour.map((data) => (
               <MyCard
-                sx={{ maxWidth: 500, margin: "10px", display: "inline-block" }}
                 key={data.tour_id}
               >
                 <MyCardHeader

@@ -1,6 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 
 import Requests from "Pages/Admin/Requests";
@@ -32,11 +31,12 @@ import Dashboard from "Pages/Admin/Dashboard";
 import HotelOrders from "Pages/Hotels/HotelOrders";
 import ProtectedRoute from "./ProtectedRoute";
 import AccessDenied from "Pages/AccessDenied";
+import { useAppSelector } from "hooks/useAppSelector";
 
 
 
 export default function MyRoutes() {
-  const role = useSelector((state)=>state.auth.value.role);
+  const role = useAppSelector((state) => state.auth.value.role);
   return (
     <>
       <Routes>

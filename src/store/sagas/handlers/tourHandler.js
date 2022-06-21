@@ -56,9 +56,9 @@ export function* handleSetAdminOrdersData() {
   }
 }
 
-export function* watchTourSync(){
+export function* watchTourSync() {
   yield takeLatest(getUserTourData.type, handleSetTourData);
-  yield takeLatest(viewSingleTourData.type,handleViewTourData);
+  yield takeLatest(viewSingleTourData.type, handleViewTourData);
   yield takeLatest(getAdminTourData.type, handleSetAdminTourData);
-  yield takeLatest(getAdminTourOrders.type,handleSetAdminOrdersData)
+  yield takeLatest(getAdminTourOrders.type, handleSetAdminOrdersData);
 }
