@@ -31,21 +31,20 @@ const NavBar = () => {
   const role = useAppSelector((state) => state.auth.value.role);
   const email = useAppSelector((state) => state.auth.value.email);
   const dispatch = useAppDispatch();
-  console.log(role, email);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   let [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const handleClick = (event:any) => {
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const handleOpenUserMenu = (event:any) => {
+  const handleOpenUserMenu = (event: any) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -54,7 +53,7 @@ const NavBar = () => {
   };
 
   const [query, setQuery] = useState({
-    location: ''
+    location: "",
   });
 
   const searchTour = () => {
@@ -117,9 +116,7 @@ const NavBar = () => {
               className="header-right"
             >
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-                <Button onClick={handleClick}>
-                  More Links
-                </Button>
+                <Button onClick={handleClick}>More Links</Button>
                 <Menu
                   id="demo-positioned-menu"
                   aria-labelledby="demo-positioned-button"
@@ -233,7 +230,10 @@ const NavBar = () => {
                         component="div"
                         sx={{ margin: 1 }}
                       >
-                        <Link to="/my/bookings" className="nav-link">
+                        <Link
+                          to="/my/bookings/tour/bookings"
+                          className="nav-link"
+                        >
                           My Bookings
                         </Link>
                       </Typography>

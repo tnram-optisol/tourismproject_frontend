@@ -3,6 +3,7 @@ body {
   font-family: 'Oswald', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: linear-gradient(-45deg, #ffffff, #ffffcc);
 }
 
 code {

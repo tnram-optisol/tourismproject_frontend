@@ -22,22 +22,22 @@ import { useAppSelector } from "hooks/useAppSelector";
 function Category() {
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
-  const loading = useAppSelector((state) => state.admin.value.loading)
-  const category = useAppSelector((state)=>state.admin.value.category)
+  const loading = useAppSelector((state) => state.admin.value.loading);
+  const category = useAppSelector((state) => state.admin.value.category);
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
-    dispatch(getAdminCategoryData())
+    dispatch(getAdminCategoryData());
   };
   const getAllCategory = () => {
-    dispatch(getAdminCategoryData())
+    dispatch(getAdminCategoryData());
   };
   useEffect(() => {
     dispatch(getAdminCategoryData());
   }, [dispatch]);
-  const deleteCategory = (id:number) => {
+  const deleteCategory = (id: number) => {
     adminRemoveCategory(id)
       .then((res) => {
         console.log(res);
@@ -57,7 +57,7 @@ function Category() {
                 <TableRow>
                   {CATEGORY_TABLE_FIELDS.map((el) => (
                     <TableCell
-                    key={el}
+                      key={el}
                       sx={
                         el === "Actions"
                           ? { width: "20%", textAlign: "center" }
@@ -71,7 +71,7 @@ function Category() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {category.map((category, index) => (
+                {category.map((category: any, index: number) => (
                   <TableRow
                     key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

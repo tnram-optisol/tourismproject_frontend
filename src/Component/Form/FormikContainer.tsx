@@ -29,7 +29,15 @@ function FormikContainer(props: any) {
       }
       apiCall(formData)
         .then((res: any) => {
-          toast(res.data);
+          if (res.data.errors) {
+            const data = res.data.errors;
+            data.map((e: any) => toast.error(e.msg));
+          } else {
+            toast(res.data);
+          }
+          if (!res.data.errors && location) {
+            redirect(location);
+          }
         })
         .catch((err: any) => {
           console.log(err);
@@ -52,13 +60,11 @@ function FormikContainer(props: any) {
           } else {
             if (res.data.errors) {
               const data = res.data.errors;
-              data.map(
-                (e: any) => toast.error(e.msg)
-              );
+              data.map((e: any) => toast.error(e.msg));
             } else {
               toast(res.data);
             }
-            if (location) {
+            if (!res.data.errors && location) {
               redirect(location);
             }
           }
@@ -66,9 +72,7 @@ function FormikContainer(props: any) {
         .catch((err: any) => {
           if (err.response.data.errors) {
             const data = err.response.data.errors;
-            data.map(
-              (e: any) => toast.error(e.msg)
-            );
+            data.map((e: any) => toast.error(e.msg));
           } else {
             toast(err.response.data);
           }

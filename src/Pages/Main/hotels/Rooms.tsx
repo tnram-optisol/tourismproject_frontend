@@ -59,7 +59,7 @@ export default function Rooms() {
                 <Typography variant="h6">
                   <FontAwesomeIcon icon={faWallet} />
                   <AnimatedText
-                    data={`  Price: ₹​ ${room.cost} /person for 1 Nights`}
+                    data={`  Price: ₹​ ${room.room_price} /person for 1 Nights`}
                   />
                 </Typography>
                 <Typography variant="body1">

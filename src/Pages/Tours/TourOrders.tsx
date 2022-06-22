@@ -1,10 +1,9 @@
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect } from "react";
 
 import MyTable from "Component/Table/MyTable";
 import AdminLayout from "Component/Wrapper/AdminLayout";
-import { getAdminTourOrders} from "store/reducers/tourReducer";
+import { getAdminTourOrders } from "store/reducers/tourReducer";
 import Loader from "Layout/Loader";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
@@ -14,11 +13,10 @@ function TourOrders() {
   const tourOrders = useAppSelector((state) => state.tour.value.tourOrders);
   const loading = useAppSelector((state) => state.tour.value.loading);
 
-
   useEffect(() => {
     dispatch(getAdminTourOrders());
   }, [dispatch]);
-  
+
   return (
     <AdminLayout>
       {!loading ? (

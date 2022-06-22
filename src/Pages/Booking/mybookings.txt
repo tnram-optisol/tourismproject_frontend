@@ -22,13 +22,16 @@ import {
 } from "Services/api/ordersAPI";
 import {
   getActiveBookings,
-  cancelBookings,
   cancelRoomBookings,
+  cancelTourBookings,
 } from "Services/api/bookingAPI";
 import MyTable from "Component/Table/MyTable";
 import UserLayout from "Component/Wrapper/UserLayout";
+import { useAppDispatch } from "hooks/useAppDispatch";
+import { getUserBookingData } from "store/reducers/userReducer";
 
 function MyBookings(props) {
+  const dispatch = useAppDispatch();
   const token = localStorage.getItem("token");
   const user = token !== "" ? JSON.parse(atob(token.split(".")[1])) : {};
   const [tour, setTour] = useState([]);
@@ -59,6 +62,7 @@ function MyBookings(props) {
       .catch((err) => {
         console.log(err);
       });
+    dispatch(getUserBookingData(user.id));
   };
 
   useEffect(() => getBookings, []);
@@ -68,7 +72,21 @@ function MyBookings(props) {
     console.log(data);
     if (userConfirm) {
       if (data.room) {
-        cancelRoomBookings(data.id);
+        cancelRoomBookings(data.id)
+          .then((res) => {
+            toast(res.data);
+          })
+          .catch((err) => {
+            toast(err);
+          });
+      } else {
+        cancelTourBookings(data.id)
+          .then((res) => {
+            toast(res.data);
+          })
+          .catch((err) => {
+            toast(err);
+          });
       }
     }
   };
@@ -201,11 +219,7 @@ function MyBookings(props) {
                       {!row.payment ? (
                         <TableCell>
                           <Tooltip
-                            title={
-                              <>
-                                <h6>Use Promotion code VIPTOUR at checkout</h6>
-                              </>
-                            }
+                            title={<>Use Promotion code VIPTOUR at checkout</>}
                           >
                             <Button
                               variant="outlined"

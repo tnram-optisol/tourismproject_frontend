@@ -1,5 +1,6 @@
 import {
   ACTIVE_BOOKINGS,
+  BOOK_ROOM,
   BOOK_TOUR,
   CANCEL_ROOM_BOOKING,
   CANCEL_TOUR_BOOKING,
@@ -35,7 +36,7 @@ export function tourBooking(values:BookTourModel) {
 
 export function roomBooking(values:BookRoomModel) {
   const bookHotel = values;
-  return axiosIntercept.post(`${SERVER_URL}${BOOK_TOUR}`, {
+  return axiosIntercept.post(`${SERVER_URL}${BOOK_ROOM}`, {
     bookHotel,
   });
 }

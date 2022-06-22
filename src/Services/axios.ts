@@ -1,5 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
-import { Navigate } from "react-router-dom";
+import axios from "axios";
 
 const token = localStorage.getItem("token");
 const user = token !== "" ? JSON.parse(atob(token!.split(".")[1])) : " ";

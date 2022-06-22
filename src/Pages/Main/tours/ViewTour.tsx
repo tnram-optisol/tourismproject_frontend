@@ -42,7 +42,7 @@ import { useAppSelector } from "hooks/useAppSelector";
 
 export default function ViewTour(props: any) {
   const token = localStorage.getItem("token");
-  const user = token ? JSON.parse(atob(token.split(".")[1])) : {};
+  const user = token ? JSON.parse(atob(token!.split(".")[1])) : {};
   const [reviews, setReview] = useState(0);
   const navigate = useNavigate();
   const query: any = useParams();
@@ -268,7 +268,7 @@ export default function ViewTour(props: any) {
                           endPoint={"/book/tour"}
                           apiCall={tourBooking}
                           redirect={navigate}
-                          location={"/my/bookings"}
+                          location={"/my/bookings/tour/bookings"}
                         >
                           {BOOKTOUR_FORM_DATA.map((el, index) => (
                             <FormControl

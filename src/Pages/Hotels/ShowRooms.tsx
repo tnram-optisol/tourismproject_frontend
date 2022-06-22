@@ -40,9 +40,7 @@ export default function ShowRooms(props: any) {
             <Loader />
           ) : (
             rooms.map((room, index) => (
-              <MyCard
-                key={room.room_id}
-              >
+              <MyCard key={room.room_id}>
                 <Link to={`/room/${room.room_id}`} className="nav-link">
                   <MyCardHeader title={room.room_name} />
                 </Link>
@@ -60,7 +58,7 @@ export default function ShowRooms(props: any) {
                     <FontAwesomeIcon icon={faWallet} />
                     <MyCardBody
                       variant={"body1"}
-                      data={`  Price: ₹​ ${room.cost} /person for 1 Nights`}
+                      data={`  Price: ₹​ ${room.room_price} /person for 1 Nights`}
                       color={"green"}
                     />
                   </Typography>

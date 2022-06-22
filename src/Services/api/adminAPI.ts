@@ -49,7 +49,7 @@ export function adminRejectRequest(data: {
 }) {
   return axiosIntercept.patch(`${SERVER_URL}${ADMIN_APPROVAL}`, {
     user: data.user,
-    role: data.user.role.id,
+    role: data.role,
     status: false,
     sequence: data.sequence,
     property: data.property,

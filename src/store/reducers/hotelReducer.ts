@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { HotelModel, HotelOrdersModel, RoomModel } from "store/model/hotelModel";
+import { HotelModel, HotelOrdersModel, RoomModel } from "utils/model/hotelModel";
 
 export interface HotelState {
   value: {

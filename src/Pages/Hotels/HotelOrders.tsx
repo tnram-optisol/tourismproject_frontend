@@ -50,12 +50,12 @@ function HotelOrders() {
                 <TableCell>{room.bookRoom.room.hotel.hotel_name}</TableCell>
                 <TableCell>{room.bookRoom.room.hotel.address}</TableCell>
                 <TableCell className="text-danger">
-                  INR {room.bookRoom.room.cost}
+                  INR {room.bookRoom.room.room_price}
                 </TableCell>
                 <TableCell className="text-danger">{room.discount}%</TableCell>
                 <TableCell className="text-danger">
                   {" "}
-                  INR {room.bookRoom.room.cost - room.orderCost}
+                  INR {room.bookRoom.room.room_price - room.orderCost}
                 </TableCell>
                 <TableCell className="text-danger">
                   {" "}

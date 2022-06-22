@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { MDBBtn } from "mdb-react-ui-kit";
 import axiosIntercept from "Services/axios";
 import UserLayout from "Component/Wrapper/UserLayout";
+import MyCarousel from "Layout/Carousel";
 
 function MyPayment() {
   const location: any = useLocation();
@@ -66,6 +67,7 @@ function MyPayment() {
   }
   return (
     <UserLayout>
+      <MyCarousel/>
       <Box className="m-5">
         {location.state.data.tour ? (
           <Box className="m-auto ">

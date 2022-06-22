@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { BannerModel, CategoryModel, OrdersModel, RequestModel } from "store/model/adminModel";
-import { UserModel } from "store/model/userModel";
+import { BannerModel, CategoryModel, OrdersModel, RequestModel } from "utils/model/adminModel";
+import { UserModel } from "utils/model/userModel";
 
 export interface AdminState{
   value: {

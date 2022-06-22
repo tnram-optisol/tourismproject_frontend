@@ -6,12 +6,9 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import React, { useEffect, } from "react";
+import React, { useEffect } from "react";
 
-import {
-  adminApproveRequest,
-  adminRejectRequest,
-} from "Services/api/adminAPI";
+import { adminApproveRequest, adminRejectRequest } from "Services/api/adminAPI";
 import MyTable from "Component/Table/MyTable";
 import { REQUEST_TABLE_FIELDS } from "utils/Table/tableFields";
 import AdminLayout from "Component/Wrapper/AdminLayout";
@@ -22,7 +19,7 @@ import { useAppSelector } from "hooks/useAppSelector";
 
 function Requests() {
   let sequence = 1;
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.admin.value.loading);
   const requestData = useAppSelector((state) => state.admin.value.requests);
   const getRequest = () => {
@@ -31,7 +28,7 @@ function Requests() {
   useEffect(() => {
     dispatch(getAdminRequestData());
   }, [dispatch]);
-  const approveStatus = (data:any) => {
+  const approveStatus = (data: any) => {
     const role = data.user.role.id;
     if (role === 2) {
       adminApproveRequest({
@@ -64,20 +61,38 @@ function Requests() {
     }
   };
   const rejectStatus = (data: any) => {
-    adminRejectRequest({
-      user: data.user.id,
-      role: data.user.role.id,
-      status: false,
-      sequence: sequence + 1,
-    })
-      .then((res) => {
-        getRequest();
+    const role = data.user.role.id;
+    if (role === 2) {
+      adminRejectRequest({
+        user: data.user.id,
+        role: data.user.role.id,
+        status: true,
+        property: data.hotel_id,
+        sequence: sequence + 1,
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((res) => {
+          getRequest();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      adminRejectRequest({
+        user: data.user.id,
+        role: data.user.role.id,
+        status: true,
+        property: data.tour_id,
+        sequence: sequence + 1,
+      })
+        .then((res) => {
+          getRequest();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
-  
+
   return (
     <AdminLayout>
       {!loading ? (
@@ -112,7 +127,9 @@ function Requests() {
                     {data.hotel_name ? data.hotel_name : data.package_name}
                   </TableCell>
                   <TableCell>
-                    {data.hotel_license ? data.hotel_license : data.provider_license}
+                    {data.hotel_license
+                      ? data.hotel_license
+                      : data.provider_license}
                   </TableCell>
                   <TableCell>
                     <Button

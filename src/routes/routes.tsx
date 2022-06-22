@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-
 import Requests from "Pages/Admin/Requests";
 import MyBookings from "Pages/Booking/MyBookings";
 import LoginForm from "Pages/Forms/LoginForm";
@@ -32,8 +31,9 @@ import HotelOrders from "Pages/Hotels/HotelOrders";
 import ProtectedRoute from "./ProtectedRoute";
 import AccessDenied from "Pages/AccessDenied";
 import { useAppSelector } from "hooks/useAppSelector";
-
-
+import TourBookings from "Pages/Booking/TourBookings";
+import HotelBookings from "Pages/Booking/HotelBookings";
+import CanceledOrders from "Pages/Booking/CanceledOrders";
 
 export default function MyRoutes() {
   const role = useAppSelector((state) => state.auth.value.role);
@@ -82,9 +82,19 @@ export default function MyRoutes() {
           )}
           {role === 4 ? (
             <>
-              <Route path="my/bookings" element={<MyBookings />}></Route>
+              <Route path="my/bookings/" element={<MyBookings />}>
+                <Route path="tour/bookings" element={<TourBookings />}></Route>
+                <Route
+                  path="hotel/bookings"
+                  element={<HotelBookings />}
+                ></Route>
+                <Route
+                  path="cancel/bookings"
+                  element={<CanceledOrders />}
+                ></Route>
+                <Route path="my/orders" element={<MyOrders />}></Route>
+              </Route>
               <Route path="/payment" element={<MyPayment />}></Route>
-              <Route path="/my/orders" element={<MyOrders />}></Route>
               <Route path="/cancel" element={<Cancel />}></Route>
               <Route path="/success" element={<Success />}></Route>
             </>

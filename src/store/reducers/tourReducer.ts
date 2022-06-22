@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TourModel, TourOrdersModel, UserTourModel } from "store/model/tourModel";
+import { TourModel, TourOrdersModel, UserTourModel } from "utils/model/tourModel";
 
 export interface TourState {
   value: {

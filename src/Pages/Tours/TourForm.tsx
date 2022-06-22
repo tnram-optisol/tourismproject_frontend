@@ -10,7 +10,6 @@ import { postTour, updateTour, viewAdminTour } from "Services/api/toursAPI";
 import AdminLayout from "Component/Wrapper/AdminLayout";
 import FormControl from "Component/Form/FormControl";
 
-
 const TourForm = () => {
   const query: any = useParams();
   const tourId = +query.id;
@@ -44,7 +43,7 @@ const TourForm = () => {
           console.log(err);
         });
     }
-  }, [initialValues, tourId]);
+  }, []);
 
   return (
     <AdminLayout>

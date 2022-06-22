@@ -128,7 +128,8 @@ function Dashboard() {
                   <TableCell>User Id</TableCell>
                   <TableCell>User Name</TableCell>
                   <TableCell>User Email</TableCell>
-                  <TableCell>User Role</TableCell>
+                  <TableCell>Contact </TableCell>
+                  <TableCell>Place</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -145,7 +146,10 @@ function Dashboard() {
                           {user.email}
                         </TableCell>
                         <TableCell className="text-primary">
-                          {user.role.role}
+                          {user.contact}
+                        </TableCell>
+                        <TableCell className="text-primary">
+                          {user.place}
                         </TableCell>
                       </TableRow>
                     ))

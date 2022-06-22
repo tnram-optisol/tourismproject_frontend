@@ -4,6 +4,7 @@ export interface UserModel {
   password: string;
   email: string;
   contact: number;
+  place: string;
   role: {
     id: number;
     role: string;

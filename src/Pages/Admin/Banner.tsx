@@ -24,21 +24,21 @@ import { useAppSelector } from "hooks/useAppSelector";
 function Banner() {
   const [open, setOpen] = useState(false);
   const [tourId, setTourId] = useState(0);
-  const dispatch = useAppDispatch()
-  const loading = useAppSelector((state) => state.admin.value.loading)
-  const banner = useAppSelector((state)=>state.admin.value.banner)
-  const handleClickOpen = (id:number) => {
+  const dispatch = useAppDispatch();
+  const loading = useAppSelector((state) => state.admin.value.loading);
+  const banner = useAppSelector((state) => state.admin.value.banner);
+  const handleClickOpen = (id: number) => {
     setTourId(id);
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-   dispatch(getAdminBannerData())
+    dispatch(getAdminBannerData());
   };
   useEffect(() => {
-    dispatch(getAdminBannerData())
-  },[dispatch])
+    dispatch(getAdminBannerData());
+  }, [dispatch]);
   return (
     <AdminLayout>
       <Box>
@@ -65,7 +65,7 @@ function Banner() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {banner.map((row, index) => (
+              {banner.map((row: any, index:number) => (
                 <TableRow
                   className="tab_row"
                   key={index}

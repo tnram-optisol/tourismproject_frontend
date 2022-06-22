@@ -14,7 +14,7 @@ export interface HotelModel {
 
 export interface RoomModel {
   room_id: number;
-  cost: number;
+  room_price: number;
   room_name: string;
   description: string;
   room_image: string;

@@ -9,7 +9,7 @@ export default function MyCardMedia(props: { img: string ; alt: string ; }) {
       image={props.img}
       alt={props.alt}
       width="250"
-      className={"hover-zoom"}
+      className="hover-zoom"
       loading="lazy"
     />
   );

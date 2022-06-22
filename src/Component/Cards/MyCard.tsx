@@ -10,7 +10,7 @@ function MyCard(props: { value?: any; children: any; key?: any }) {
         margin: "5px",
         display: "inline-block",
       }}
-      className="card-data"
+      className="my-card"
       key={value | key}
     >
       {children}

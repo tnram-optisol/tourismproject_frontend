@@ -1,29 +1,23 @@
-import {
-  Button,
-  Grid,
-  LinearProgress,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Button, Grid, LinearProgress, Stack, Typography } from "@mui/material";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
 import React, { useEffect } from "react";
 import { getUserCategoryData } from "store/reducers/userReducer";
 
-function TourCategory(props: { filterData: (arg0: number) => void; }) {
+function TourCategory(props: { filterData: (arg0: number) => void }) {
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.user.value.loading);
-  const categoryData = useAppSelector((state) => state.user.value.category)
+  const categoryData = useAppSelector((state) => state.user.value.category);
 
   useEffect(() => {
-    dispatch(getUserCategoryData())
-  }, [dispatch])
+    dispatch(getUserCategoryData());
+  }, [dispatch]);
 
   return (
     <>
       {!loading ? (
         <Grid container spacing={1} className="mt-2">
-          <Grid container spacing={1} className="mt-2 category  ">
+          <Grid container spacing={1} className="category  ">
             {categoryData.map((category, index) => (
               <Grid item xs={1} className="m-2" key={index}>
                 <Grid
@@ -60,7 +54,11 @@ function TourCategory(props: { filterData: (arg0: number) => void; }) {
       ) : (
         <Grid container spacing={1} className="mt-2">
           <Grid container spacing={1} className="mt-2 category  ">
-            <Stack sx={{ width: "100%", color: "grey.500" }} className="mt-2" spacing={2}>
+            <Stack
+              sx={{ width: "100%", color: "grey.500" }}
+              className="mt-2"
+              spacing={2}
+            >
               <LinearProgress color="secondary" />
             </Stack>
           </Grid>
