@@ -9,7 +9,7 @@ const axiosIntercept = axios.create({
 });
 
 axiosIntercept.interceptors.request.use(
-  (config: AxiosRequestConfig<any>) => {
+  (config) => {
     if (user !== "") {
       if (config.headers !== undefined) {
         config.headers["Authorization"] = `Bearer ${token}`;

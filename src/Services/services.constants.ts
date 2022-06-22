@@ -45,5 +45,6 @@ export const GET_ORDERS = "/view/order";
 export const CANCEL_ORDERS = "/cancel/orders";
 export const REFUND_ORDERS = "/refund";
 export const CANCEL_ROOM_BOOKING = "/cancel/room/bookings";
+export const CANCEL_TOUR_BOOKING = "/cancel/tour/bookings";
 export const BOOK_TOUR = "/book/tour"
 export const BOOK_ROOM = "/book/room"

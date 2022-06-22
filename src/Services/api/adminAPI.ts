@@ -11,6 +11,7 @@ import {
   ALL_ORDERS,
   ALL_USERS,
 } from "Services/services.constants";
+import { UserModel } from "utils/model/userModel";
 import axiosIntercept from "../axios";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
@@ -23,26 +24,39 @@ export function adminApproval() {
   return axiosIntercept.get(`${SERVER_URL}${ADMIN_APPROVAL}`);
 }
 
-export function adminApproveRequest(data) {
-  return axiosIntercept.get(`${SERVER_URL}${ADMIN_APPROVAL}`, {
+export function adminApproveRequest(data: {
+  user: UserModel;
+  role?: any;
+  status?: boolean;
+  property: number;
+  sequence: number;
+}) {
+  return axiosIntercept.patch(`${SERVER_URL}${ADMIN_APPROVAL}`, {
     user: data.user,
     role: data.user.role.id,
     status: true,
     sequence: data.sequence,
-    property:data.property
+    property: data.property,
   });
 }
 
-export function adminRejectRequest(data) {
-  return axiosIntercept.get(`${SERVER_URL}${ADMIN_APPROVAL}`, {
+export function adminRejectRequest(data: {
+  user: any;
+  role?: any;
+  status?: boolean;
+  sequence: any;
+  property: number;
+}) {
+  return axiosIntercept.patch(`${SERVER_URL}${ADMIN_APPROVAL}`, {
     user: data.user,
     role: data.user.role.id,
     status: false,
     sequence: data.sequence,
+    property: data.property,
   });
 }
 
-export function getEmail(endPoint) {
+export function getEmail(endPoint: any) {
   return axiosIntercept.get(`${SERVER_URL}${endPoint}`);
 }
 
@@ -54,24 +68,24 @@ export function getCategory() {
   return axiosIntercept.get(`${SERVER_URL}${ADMIN_GET_CATEGORY}`);
 }
 
-export function adminSequence(values) {
+export function adminSequence(values: any) {
   return axiosIntercept.patch(`${SERVER_URL}${ADMIN_SEQUENCE}`, values);
 }
 
-export function adminPostCategory(values) {
+export function adminPostCategory(values: any) {
   return axiosIntercept.post(`${SERVER_URL}${ADMIN_POST_CATEGORY}`, values);
 }
 
-export function adminPostTourUpdate(values) {
+export function adminPostTourUpdate(values: any) {
   const tour = values;
   return axiosIntercept.post(`${SERVER_URL}${ADMIN_UPDATE_TOUR}`, { tour });
 }
 
-export function adminRemoveCategory(id) {
+export function adminRemoveCategory(id: number) {
   return axiosIntercept.delete(`${SERVER_URL}${ADMIN_DELETE_CATEGORY}/${id}`);
 }
 
-export function adminGetTour(id) {
+export function adminGetTour(id: number) {
   return axiosIntercept.get(`${SERVER_URL}${ADMIN_VIEW_TOUR}/${id}`);
 }
 
