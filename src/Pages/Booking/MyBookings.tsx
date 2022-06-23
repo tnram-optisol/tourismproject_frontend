@@ -13,13 +13,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 function MyBookings() {
-  
   return (
     <>
       <UserLayout>
         <ToastContainer />
         <Box sx={{ display: "flex" }}>
-          <Box className="position-fixed d-lg-block sidebar  bg-white">
+          <Box className="position-fixed d-lg-block sidebar">
             <Box className="position-sticky">
               <Box className="mx-3 mt-4">
                 <List>

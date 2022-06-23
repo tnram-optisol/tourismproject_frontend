@@ -48,6 +48,8 @@ function MyOrders() {
                 <TableCell> {tourOrderExist.user.contact} </TableCell>
               </TableRow>
             </TableBody>
+          </MyTable>
+          <MyTable>
             <TableHead>
               <TableRow>
                 <TableCell>Package Name</TableCell>
@@ -75,7 +77,7 @@ function MyOrders() {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell colSpan={3}>Total Cost</TableCell>
+                <TableCell colSpan={2}>Total Cost</TableCell>
                 <TableCell align="right">
                   {tourOrderExist.bookTour.tour.cost}
                 </TableCell>
@@ -91,6 +93,7 @@ function MyOrders() {
                 <TableCell align="right">{tourOrderExist.orderCost}</TableCell>
               </TableRow>
               <TableRow>
+                <TableCell rowSpan={4} />
                 <TableCell colSpan={2}>Paid On</TableCell>
                 <TableCell align="right">
                   {tourOrderExist.bookTour.book_date}

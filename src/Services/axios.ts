@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const token = localStorage.getItem("token");
-const user = token !== "" ? JSON.parse(atob(token!.split(".")[1])) : " ";
+const user = token !== "" ? JSON.parse(atob(token!.split(".")[1])) : "";
 
 const axiosIntercept = axios.create({
   baseURL: "http://localhost:8080",

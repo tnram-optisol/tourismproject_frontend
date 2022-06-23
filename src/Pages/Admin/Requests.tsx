@@ -66,7 +66,7 @@ function Requests() {
       adminRejectRequest({
         user: data.user.id,
         role: data.user.role.id,
-        status: true,
+        status: false,
         property: data.hotel_id,
         sequence: sequence + 1,
       })
@@ -80,7 +80,7 @@ function Requests() {
       adminRejectRequest({
         user: data.user.id,
         role: data.user.role.id,
-        status: true,
+        status: false,
         property: data.tour_id,
         sequence: sequence + 1,
       })

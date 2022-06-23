@@ -1,6 +1,5 @@
 import * as Yup from "yup";
 
-
 export const LOGIN_VALIDATION_SCHEMA = Yup.object({
   email: Yup.string().email("Must be valid").required("Required"),
   password: Yup.string()
@@ -15,6 +14,7 @@ export const SIGNUP_VALIDATION_SCHEMA = Yup.object({
     .min(8, "Minimum length must be 8")
     .required("Required"),
   contact: Yup.string()
+    .matches(new RegExp(`[6789]{1}[0-9]{9}`))
     .length(10, "Minimum length must be 10")
     .required("Required"),
   place: Yup.string().required("Required"),

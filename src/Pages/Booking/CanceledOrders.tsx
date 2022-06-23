@@ -6,33 +6,27 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { getCanceledOrders } from "Services/api/ordersAPI";
 import MyTable from "Component/Table/MyTable";
 import { useAppDispatch } from "hooks/useAppDispatch";
-import { getUserBookingData } from "store/reducers/userReducer";
+import { getUserCanceledOrders } from "store/reducers/userReducer";
 import { useAppSelector } from "hooks/useAppSelector";
+import Loader from "Layout/Loader";
 
-export default function CanceledOrders(props) {
+export default function CanceledOrders() {
   const dispatch = useAppDispatch();
   const token = localStorage.getItem("token");
-  const user = token !== "" ? JSON.parse(atob(token.split(".")[1])) : {};
-  const [orderCanceled, setOrderCanceled] = useState([]);
+  const user = token !== "" ? JSON.parse(atob(token!.split(".")[1])) : {};
   const loading = useAppSelector((state) => state.user.value.loading);
-  
+  const orderCanceled = useAppSelector(
+    (state) => state.user.value.canceledOrders
+  );
+
   const getBookings = () => {
-    getCanceledOrders()
-      .then((res) => {
-        setOrderCanceled([...res.data]);
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    dispatch(getUserBookingData(user.id));
+    dispatch(getUserCanceledOrders());
   };
 
   useEffect(() => getBookings, []);
@@ -43,7 +37,9 @@ export default function CanceledOrders(props) {
       <Typography variant="h6" color="blueviolet">
         Canceled Orders
       </Typography>
-      {orderCanceled.length > 0 ? (
+      {loading ? (
+        <Loader />
+      ) : orderCanceled.length > 0 ? (
         <MyTable>
           <TableHead>
             <TableRow>
