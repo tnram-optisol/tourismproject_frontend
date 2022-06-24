@@ -34,6 +34,10 @@ import { useAppSelector } from "hooks/useAppSelector";
 import TourBookings from "Pages/Booking/TourBookings";
 import HotelBookings from "Pages/Booking/HotelBookings";
 import CanceledOrders from "Pages/Booking/CanceledOrders";
+import Users from "Pages/Admin/Users";
+import AdminOrders from "Pages/Admin/TourOrders";
+import AdminTourOrders from "Pages/Admin/TourOrders";
+import AdminHotelOrders from "Pages/Admin/HotelOrders";
 
 export default function MyRoutes() {
   const role = useAppSelector((state) => state.auth.value.role);
@@ -75,6 +79,15 @@ export default function MyRoutes() {
               <Route path="/admin/category" element={<Category />}></Route>{" "}
               <Route path="/admin/banner" element={<Banner />}></Route>{" "}
               <Route path="/admin/dashboard" element={<Dashboard />}></Route>{" "}
+              <Route path="/admin/users" element={<Users />}></Route>
+              <Route
+                path="/admin/tour/orders"
+                element={<AdminTourOrders />}
+              ></Route>
+              <Route
+                path="/admin/hotel/orders"
+                element={<AdminHotelOrders />}
+              ></Route>
               <Route path="/admin/update/:id" element={<UpdateForm />}></Route>
             </>
           ) : (
