@@ -1,3 +1,4 @@
+import { createApi } from "Services/createApi";
 import {
   ALL_CATEGORY,
   MAIL_TO_ADMIN,
@@ -17,43 +18,73 @@ import axiosIntercept from "../axios";
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 export function getTour() {
-  return axiosIntercept.get(`${SERVER_URL}${USER_GET_TOUR}`);
+  return createApi({
+    method: "GET",
+    url: `${USER_GET_TOUR}`,
+  });
 }
 
 export function getAllCategory() {
-  return axiosIntercept.get(`${SERVER_URL}${ALL_CATEGORY}`);
+  return createApi({
+    method: "GET",
+    url: `${ALL_CATEGORY}`,
+  });
 }
 
 export function filterTourData(category: number) {
-  return axiosIntercept.get(`${SERVER_URL}${USER_FILTER_TOUR}/${category}`);
+  return createApi({
+    method: "GET",
+    url: `${USER_FILTER_TOUR}/${category}`,
+  });
 }
 
 export function searchTourData(query: string | null) {
-  return axiosIntercept.get(`${SERVER_URL}${USER_SEARCH_TOUR}/${query}`);
+  return createApi({
+    method: "GET",
+    url: `${USER_SEARCH_TOUR}/${query}`,
+  });
 }
 
 export function getHotels() {
-  return axiosIntercept.get(`${SERVER_URL}${USER_GET_HOTEL}`);
+  return createApi({
+    method: "GET",
+    url: `${USER_GET_HOTEL}`,
+  });
 }
 
 export function getRooms(hotel_id: number) {
-  return axiosIntercept.get(`${SERVER_URL}${USER_GET_ROOMS}/${hotel_id}`);
+  return createApi({
+    method: "GET",
+    url: `${USER_GET_ROOMS}/${hotel_id}`,
+  });
 }
 
 export function viewRooms(room_id: number) {
-  return axiosIntercept.get(`${SERVER_URL}${USER_VIEW_ROOMS}/${room_id}`);
+  return createApi({
+    method: "GET",
+    url: `${USER_VIEW_ROOMS}/${room_id}`,
+  });
 }
 
 export function viewTour(tour_id: number) {
-  return axiosIntercept.get(`${SERVER_URL}${USER_VIEW_TOUR}/${tour_id}`);
+  return createApi({
+    method: "GET",
+    url: `${USER_VIEW_TOUR}/${tour_id}`,
+  });
 }
 
 export function getReview(tour_id: number) {
-  return axiosIntercept.get(`${SERVER_URL}${USER_GET_REVIEW}/${tour_id}`);
+  return createApi({
+    method: "GET",
+    url: `${USER_GET_REVIEW}/${tour_id}`,
+  });
 }
 
 export function getRating(tour_id: number) {
-  return axiosIntercept.get(`${SERVER_URL}${USER_GET_RATING}/${tour_id}`);
+  return createApi({
+    method: "GET",
+    url: `${USER_GET_RATING}/${tour_id}`,
+  });
 }
 
 export function postReview(values: {

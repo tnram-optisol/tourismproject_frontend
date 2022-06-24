@@ -1,4 +1,5 @@
 import axiosIntercept from "Services/axios";
+import { createApi } from "Services/createApi";
 import {
     TOUR_ADMIN_ADD_TOUR,
     TOUR_ADMIN_ALL_ORDERS,
@@ -16,15 +17,24 @@ export function postTour(values:TourModel) {
 }
 
 export function adminTour() {
-    return axiosIntercept.get(`${SERVER_URL}${TOUR_ADMIN_GET_TOUR}`);
+  return createApi({
+    method: "GET",
+    url: `${TOUR_ADMIN_GET_TOUR}`,
+  });
 }
 
 export function viewAdminTour(tour_id: number) {
-  return axiosIntercept.get(`${SERVER_URL}${TOUR_ADMIN_VIEW_TOUR}/${tour_id}`);
+  return createApi({
+    method: "GET",
+    url: `${TOUR_ADMIN_VIEW_TOUR}/${tour_id}`,
+  });
 }
 
 export function paginateTour(page: number) {
-  return axiosIntercept.get(`${SERVER_URL}${TOUR_ADMIN_PAGE_TOUR}/${page}`);
+   return createApi({
+     method: "GET",
+     url: `${TOUR_ADMIN_PAGE_TOUR}/${page}`,
+   });
 }
 
 export function updateTour(values: TourModel) {
@@ -32,5 +42,8 @@ export function updateTour(values: TourModel) {
 }
 
 export function getAllTourOrders() {
-    return axiosIntercept.get(`${SERVER_URL}${TOUR_ADMIN_ALL_ORDERS}`);
+  return createApi({
+    method: "GET",
+    url: `${TOUR_ADMIN_ALL_ORDERS}`,
+  });
 }

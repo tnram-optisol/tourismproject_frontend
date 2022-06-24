@@ -1,14 +1,21 @@
+import { createApi } from "Services/createApi";
 import { CANCEL_ORDERS, GET_ORDERS, REFUND_ORDERS } from "Services/services.constants";
 import axiosIntercept from "../axios";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
-export function getOrders(id:number) {
-  return axiosIntercept.get(`${SERVER_URL}${GET_ORDERS}/${id}`);
+export function getOrders(id: number) {
+  return createApi({
+    method: "GET",
+    url: `${GET_ORDERS}/${id}`,
+  });
 }
 
 export function getCanceledOrders() {
-  return axiosIntercept.get(`${SERVER_URL}${CANCEL_ORDERS}`);
+  return createApi({
+    method: "GET",
+    url: `${CANCEL_ORDERS}`,
+  });
 }
 
 export function refundOrders(data: { bookId: any; }) {

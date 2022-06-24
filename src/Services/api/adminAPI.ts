@@ -1,3 +1,4 @@
+import { createApi } from "Services/createApi";
 import {
   ADMIN_APPROVAL,
   ADMIN_DELETE_CATEGORY,
@@ -17,11 +18,17 @@ import axiosIntercept from "../axios";
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 export function getUserRequest() {
-  return axiosIntercept.get(`${SERVER_URL}${ADMIN_REQUEST}`);
+  return createApi({
+    method: "GET",
+    url: `${ADMIN_REQUEST}`,
+  });
 }
 
 export function adminApproval() {
-  return axiosIntercept.get(`${SERVER_URL}${ADMIN_APPROVAL}`);
+  return createApi({
+    method: "GET",
+    url: `${ADMIN_APPROVAL}`,
+  });
 }
 
 export function adminApproveRequest(data: {
@@ -57,15 +64,57 @@ export function adminRejectRequest(data: {
 }
 
 export function getEmail(endPoint: any) {
-  return axiosIntercept.get(`${SERVER_URL}${endPoint}`);
+  return createApi({
+    method: "GET",
+    url: `${endPoint}`,
+  });
 }
 
 export function getBanner() {
-  return axiosIntercept.get(`${SERVER_URL}${ADMIN_GET_BANNER}`);
+  return createApi({
+    method: "GET",
+    url: `${ADMIN_GET_BANNER}`,
+  });
 }
 
 export function getCategory() {
-  return axiosIntercept.get(`${SERVER_URL}${ADMIN_GET_CATEGORY}`);
+  return createApi({
+    method: "GET",
+    url: `${ADMIN_GET_CATEGORY}`,
+  });
+}
+
+export function adminGetTour(id: number) {
+  return createApi({
+    method: "GET",
+    url: `${ADMIN_VIEW_TOUR}/${id}`,
+  });
+}
+
+export function adminGetUsers() {
+  return createApi({
+    method: "GET",
+    url: `${ALL_USERS}`,
+  });
+}
+
+export function adminPaginate(
+  endpoint: string,
+  page: number,
+  limit: number,
+  searchQuery?: string
+) {
+   return createApi({
+     method: "GET",
+     url: `${endpoint}?page=${page}&limit=${limit}&search=${searchQuery}`,
+   });
+}
+
+export function adminGetOrders() {
+  return createApi({
+    method: "GET",
+    url: `${ALL_ORDERS}`,
+  });
 }
 
 export function adminSequence(values: any) {
@@ -83,16 +132,4 @@ export function adminPostTourUpdate(values: any) {
 
 export function adminRemoveCategory(id: number) {
   return axiosIntercept.delete(`${SERVER_URL}${ADMIN_DELETE_CATEGORY}/${id}`);
-}
-
-export function adminGetTour(id: number) {
-  return axiosIntercept.get(`${SERVER_URL}${ADMIN_VIEW_TOUR}/${id}`);
-}
-
-export function adminGetUsers() {
-  return axiosIntercept.get(`${SERVER_URL}${ALL_USERS}`);
-}
-
-export function adminGetOrders() {
-  return axiosIntercept.get(`${SERVER_URL}${ALL_ORDERS}`);
 }

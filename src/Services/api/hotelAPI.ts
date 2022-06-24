@@ -1,4 +1,5 @@
 import axiosIntercept from "Services/axios";
+import { createApi } from "Services/createApi";
 import {
   HOTEL_ADMIN_ADD_HOTEL,
   HOTEL_ADMIN_ADD_ROOM,
@@ -19,13 +20,22 @@ export function addRoom(values: RoomModel) {
 }
 
 export function getAllRooms(hotel_id: number) {
-  return axiosIntercept.get(`${SERVER_URL}${HOTEL_ADMIN_GET_ROOM}/${hotel_id}`);
+  return createApi({
+    method: "GET",
+    url: `${HOTEL_ADMIN_GET_ROOM}/${hotel_id}`,
+  });
 }
 
 export function getAllHotels() {
-  return axiosIntercept.get(`${SERVER_URL}${HOTEL_ADMIN_GET_HOTEL}`);
+  return createApi({
+    method: "GET",
+    url: `${HOTEL_ADMIN_GET_HOTEL}`,
+  });
 }
 
 export function getAllHotelOrders() {
-  return axiosIntercept.get(`${SERVER_URL}${HOTEL_ADMIN_ALL_ORDERS}`);
+  return createApi({
+    method: "GET",
+    url: `${HOTEL_ADMIN_ALL_ORDERS}`,
+  });
 }

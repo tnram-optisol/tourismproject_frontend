@@ -1,3 +1,4 @@
+import { createApi } from "Services/createApi";
 import {
   ACTIVE_BOOKINGS,
   BOOK_ROOM,
@@ -11,8 +12,11 @@ import axiosIntercept from "../axios";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
-export function getActiveBookings(id:number) {
-  return axiosIntercept.get(`${SERVER_URL}${ACTIVE_BOOKINGS}/${id}`);
+export function getActiveBookings(id: number) {
+  return createApi({
+    method: "GET",
+    url: `${ACTIVE_BOOKINGS}/${id}`,
+  });
 }
 
 export function cancelRoomBookings(id:number) {
