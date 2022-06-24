@@ -5,6 +5,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
+  TablePagination,
   TableRow,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -24,19 +25,23 @@ function Category() {
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.admin.value.loading);
   const category = useAppSelector((state) => state.admin.value.category);
+  const totalData = useAppSelector((state) => state.admin.value.categoryCount);
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(5);
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
-    dispatch(getAdminCategoryData());
+    dispatch(getAdminCategoryData({ page, limit }));
   };
   const getAllCategory = () => {
-    dispatch(getAdminCategoryData());
+    dispatch(getAdminCategoryData({ page, limit }));
   };
   useEffect(() => {
-    dispatch(getAdminCategoryData());
-  }, [dispatch]);
+    dispatch(getAdminCategoryData({ page, limit }));
+  }, [dispatch, limit, page]);
+
   const deleteCategory = (id: number) => {
     adminRemoveCategory(id)
       .then((res) => {
@@ -46,6 +51,15 @@ function Category() {
       .catch((err) => {
         console.log(err);
       });
+  };
+  const handleChangePage = (event: any, newPage: number) => {
+    console.log(event, newPage);
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = (event: any) => {
+    console.log(event.target.value, parseInt(event.target.value, 10));
+    setLimit(event.target.value);
+    setPage(0);
   };
   return (
     <AdminLayout>
@@ -101,6 +115,18 @@ function Category() {
                   </TableRow>
                 ))}
               </TableBody>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10]}
+                  rowSpan={2}
+                  colSpan={4}
+                  count={totalData}
+                  rowsPerPage={limit}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </TableRow>
             </MyTable>
           </Box>
           <Button className="button" onClick={() => handleClickOpen()}>
