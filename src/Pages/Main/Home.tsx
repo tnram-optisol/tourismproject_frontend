@@ -20,20 +20,17 @@ import { useAppSelector } from "hooks/useAppSelector";
 import { useAppDispatch } from "hooks/useAppDispatch";
 
 export default function Home() {
-  const tourData = useAppSelector(state => state.tour.value.tour)
-  const dispatch = useAppDispatch()
+  const tourData = useAppSelector((state) => state.tour.value.tour);
+  const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getUserTourData());
-    console.log(tourData)
-  }, []);
+  }, [dispatch]);
   const filterData = (category: number) => {
-    console.log(category);
     window.scrollTo(0, 0);
     if (category !== 0) {
       filterTourData(category)
         .then((res) => {
           dispatch(setUserTourData(res.data));
-          console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -51,59 +48,49 @@ export default function Home() {
           <Grid container spacing={1}>
             {tourData.length > 0
               ? tourData.map((data, index) => (
-                <LazyLoad key={data.sequence} placeholder={<Loader />}>
-                  <MyCard value={index}>
-                    <MyCardMedia
-                      img={data.tour.tour_image}
-                      alt={
-                        data.tour.package_name
-                      }
-                    />
-                    <Grid container spacing={2}>
-                      <Grid item xs={9}>
-                        <Link
-                          to={`/tour/${data.tour.tour_id
-                            }`}
-                          className="nav-link"
+                  <LazyLoad key={data.sequence} placeholder={<Loader />}>
+                    <MyCard value={index}>
+                      <MyCardMedia
+                        img={data.tour.tour_image}
+                        alt={data.tour.package_name}
+                      />
+                      <Grid container spacing={2}>
+                        <Grid item xs={9}>
+                          <Link
+                            to={`/tour/${data.tour.tour_id}`}
+                            className="nav-link"
+                          >
+                            <MyCardHeader title={data.tour.package_name} />
+                          </Link>
+                        </Grid>
+                        <Grid item xs={3} className="mt-4">
+                          {data.rating ? (
+                            <>
+                              {data.rating}
+                              <FontAwesomeIcon icon={faStar} color="yellow" />
+                            </>
+                          ) : (
+                            <>
+                              New
+                              <FontAwesomeIcon icon={faStar} color="yellow" />
+                            </>
+                          )}
+                        </Grid>
+                      </Grid>
+                      <CardContent>
+                        <Typography variant="subtitle1" color="brown">
+                          <LocationOn /> {data.tour.from} --- {data.tour.from}
+                        </Typography>
+                        <Typography
+                          variant="subtitle1"
+                          className={"m-2 text-danger"}
                         >
-                          <MyCardHeader
-                            title={
-                              data.tour.package_name
-                            }
-                          />
-                        </Link>
-                      </Grid>
-                      <Grid item xs={3} className="mt-4">
-                        {data.rating ? (
-                          <>
-                            {data.rating}
-                            <FontAwesomeIcon icon={faStar} color="yellow" />
-                          </>
-                        ) : (
-                          <>
-                            New
-                            <FontAwesomeIcon icon={faStar} color="yellow" />
-                          </>
-                        )}
-                      </Grid>
-                    </Grid>
-                    <CardContent>
-                      <Typography variant="subtitle1" color="brown">
-                        <LocationOn />{" "}
-                        {data.tour.from} ---{" "}
-                        {data.tour.from}
-                      </Typography>
-                      <Typography
-                        variant="subtitle1"
-                        className={"m-2 text-danger"}
-                      >
-                        {`₹​  ${data.tour.cost
-                          } /person`}
-                      </Typography>
-                    </CardContent>
-                  </MyCard>
-                </LazyLoad>
-              ))
+                          {`₹​  ${data.tour.cost} /person`}
+                        </Typography>
+                      </CardContent>
+                    </MyCard>
+                  </LazyLoad>
+                ))
               : ""}
           </Grid>
         </Box>

@@ -1,5 +1,11 @@
-import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import React, { useEffect } from "react";
+import {
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
 
 import MyTable from "Component/Table/MyTable";
 import AdminLayout from "Component/Wrapper/AdminLayout";
@@ -12,11 +18,25 @@ function TourOrders() {
   const dispatch = useAppDispatch();
   const tourOrders = useAppSelector((state) => state.tour.value.tourOrders);
   const loading = useAppSelector((state) => state.tour.value.loading);
+  const totalTourOrders = useAppSelector(
+    (state) => state.tour.value.tourOrdersCount
+  );
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(5);
 
   useEffect(() => {
-    dispatch(getAdminTourOrders());
-  }, [dispatch]);
+    dispatch(getAdminTourOrders({ limit, page }));
+  }, [dispatch, limit, page]);
 
+  const handleChangePage = (event: any, newPage: number) => {
+    console.log(event, newPage);
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = (event: any) => {
+    console.log(event.target.value, parseInt(event.target.value, 10));
+    setLimit(event.target.value);
+    setPage(0);
+  };
   return (
     <AdminLayout>
       {!loading ? (
@@ -40,7 +60,7 @@ function TourOrders() {
           </TableHead>
           <TableBody>
             {tourOrders.map((tour, index) => (
-              <TableRow>
+              <TableRow key={index}>
                 <TableCell>{tour.order_id}</TableCell>
                 <TableCell>
                   {new Date(tour.orderdAt).toLocaleDateString()}
@@ -71,6 +91,18 @@ function TourOrders() {
                 </TableCell>
               </TableRow>
             ))}
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10]}
+                rowSpan={2}
+                colSpan={6}
+                count={totalTourOrders}
+                rowsPerPage={limit}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </TableRow>
           </TableBody>
         </MyTable>
       ) : (

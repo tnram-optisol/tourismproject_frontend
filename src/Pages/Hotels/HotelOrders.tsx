@@ -1,5 +1,11 @@
-import React, { useEffect } from "react";
-import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+} from "@mui/material";
 
 import MyTable from "Component/Table/MyTable";
 import AdminLayout from "Component/Wrapper/AdminLayout";
@@ -12,9 +18,25 @@ function HotelOrders() {
   const dispatch = useAppDispatch();
   const hotelOrders = useAppSelector((state) => state.hotel.value.hotelOrders);
   const loading = useAppSelector((state) => state.hotel.value.loading);
+  const totalHotelOrders = useAppSelector(
+    (state) => state.hotel.value.totalHotelOrders
+  );
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(5);
   useEffect(() => {
-    dispatch(getAdminHotelOrders());
-  }, [dispatch]);
+    dispatch(getAdminHotelOrders({ limit, page }));
+  }, [dispatch, limit, page]);
+
+  const handleChangePage = (event: any, newPage: number) => {
+    console.log(event, newPage);
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = (event: any) => {
+    console.log(event.target.value, parseInt(event.target.value, 10));
+    setLimit(event.target.value);
+    setPage(0);
+  };
+
   return (
     <AdminLayout>
       {!loading ? (
@@ -69,6 +91,18 @@ function HotelOrders() {
                 </TableCell>
               </TableRow>
             ))}
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10]}
+                rowSpan={2}
+                colSpan={8}
+                count={totalHotelOrders}
+                rowsPerPage={limit}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </TableRow>
           </TableBody>
         </MyTable>
       ) : (

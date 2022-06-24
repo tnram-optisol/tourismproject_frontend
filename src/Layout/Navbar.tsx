@@ -25,6 +25,7 @@ import "./Navbar.css";
 import { signOut } from "../store/reducers/authReducer";
 import { useAppSelector } from "hooks/useAppSelector";
 import { useAppDispatch } from "hooks/useAppDispatch";
+import { toast } from "react-toastify";
 
 const NavBar = () => {
   const loggedIn = useAppSelector((state) => state.auth.value.loggedIn);
@@ -278,6 +279,9 @@ const NavBar = () => {
                       className="d-block"
                       onClick={() => {
                         dispatch(signOut());
+                        toast.success("See You Again"!!!, {
+                          theme: "colored",
+                        });
                       }}
                     >
                       <Link to="/signin" className="nav-link">
