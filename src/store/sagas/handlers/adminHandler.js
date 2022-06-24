@@ -1,5 +1,10 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { adminGetOrders, adminGetUsers, getBanner, getCategory, getUserRequest } from "Services/api/adminAPI";
+import {
+  adminGetOrders,
+  adminGetUsers,
+  adminPaginate,
+  getUserRequest,
+} from "Services/api/adminAPI";
 import {
   getAdminAllUserData,
   getAdminBannerData,
@@ -13,9 +18,15 @@ import {
   setAdminRequestData,
 } from "store/reducers/adminReducer";
 
-export function* setAdminBannerHandler() {
+export function* setAdminBannerHandler(payload) {
   try {
-    const response = yield call(getBanner);
+    const response = yield call(
+      adminPaginate,
+      "/admin/banner",
+      payload.payload.page,
+      payload.payload.limit,
+      payload.payload.searchQuery
+    );
     const { data } = response;
     console.log(data);
     yield put(setAdminBannerData(data));
@@ -35,9 +46,15 @@ export function* setAdminRequestHandler() {
   }
 }
 
-export function* setAdminCategoryHandler() {
+export function* setAdminCategoryHandler(payload) {
+  console.log(payload);
   try {
-    const response = yield call(getCategory);
+    const response = yield call(
+      adminPaginate,
+      "/admin/category",
+      payload.payload.page,
+      payload.payload.limit
+    );
     const { data } = response;
     console.log(data);
     yield put(setAdminCategoryData(data));
@@ -46,9 +63,15 @@ export function* setAdminCategoryHandler() {
   }
 }
 
-export function* setAdminAllUsersHandler() {
+export function* setAdminAllUsersHandler(payload) {
   try {
-    const response = yield call(adminGetUsers);
+    const response = yield call(
+      adminPaginate,
+      "/admin/all/users",
+      payload.payload.page,
+      payload.payload.limit,
+      payload.payload.searchQuery
+    );
     const { data } = response;
     console.log(data);
     yield put(setAdminAllUserData(data));
@@ -57,9 +80,15 @@ export function* setAdminAllUsersHandler() {
   }
 }
 
-export function* setAdminAllOrdersHandler() {
+export function* setAdminAllOrdersHandler(payload) {
   try {
-    const response = yield call(adminGetOrders);
+    const response = yield call(
+      adminPaginate,
+      "/admin/all/orders",
+      payload.payload.page,
+      payload.payload.limit,
+      payload.payload.searchQuery
+    );
     const { data } = response;
     console.log(data);
     yield put(setAdminOrdersData(data));

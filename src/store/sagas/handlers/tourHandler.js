@@ -1,5 +1,9 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { adminTour, getAllTourOrders } from "Services/api/toursAPI";
+import {
+  adminTour,
+  getAllTourOrders,
+  paginateOrders,
+} from "Services/api/toursAPI";
 import { getTour, viewTour } from "Services/api/userAPI";
 import {
   setUserTourData,
@@ -34,9 +38,15 @@ export function* handleViewTourData(payload) {
   }
 }
 
-export function* handleSetAdminTourData() {
+export function* handleSetAdminTourData(payload) {
   try {
-    const response = yield call(adminTour);
+    const response = yield call(
+      paginateOrders,
+      "/tour/all/orders",
+      payload.payload.page,
+      payload.payload.limit,
+      payload.payload.searchQuery
+    );
     const { data } = response;
     console.log(data);
     yield put(setAdminTourData(data));

@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TourModel, TourOrdersModel, UserTourModel } from "utils/model/tourModel";
+import {
+  TourModel,
+  TourOrdersModel,
+  UserTourModel,
+} from "utils/model/tourModel";
 
 export interface TourState {
   value: {
@@ -7,6 +11,7 @@ export interface TourState {
     adminTour: TourModel[];
     viewTour: TourModel[];
     tourOrders: TourOrdersModel[];
+    tourOrdersCount: number;
     loading: boolean;
   };
 }
@@ -17,6 +22,7 @@ const initialState: TourState = {
     adminTour: [],
     viewTour: [],
     tourOrders: [],
+    tourOrdersCount: 0,
     loading: true,
   },
 };
@@ -29,7 +35,7 @@ const tourSlicer = createSlice({
     setUserTourData: (state, action) => {
       state.value.tour = [...action.payload];
     },
-    viewSingleTourData: (state,action) => {},
+    viewSingleTourData: (state, action) => {},
     setSingleTourData: (state, action) => {
       state.value.loading = false;
       state.value.viewTour = [action.payload];
@@ -39,10 +45,13 @@ const tourSlicer = createSlice({
       state.value.loading = false;
       state.value.adminTour = [...action.payload];
     },
-    getAdminTourOrders: () => {},
+    getAdminTourOrders: (state, payload) => {
+      state.value.loading = true;
+    },
     setAdminTourOrders: (state, action) => {
       state.value.loading = false;
-      state.value.tourOrders = [...action.payload];
+      state.value.tourOrders = [...action.payload[0]];
+      state.value.tourOrdersCount = action.payload[1];
     },
   },
 });

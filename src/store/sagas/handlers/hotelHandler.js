@@ -4,6 +4,7 @@ import {
   getAllHotels,
   getAllRooms,
 } from "Services/api/hotelAPI";
+import { paginateOrders } from "Services/api/toursAPI";
 import { getHotels, getRooms, viewRooms } from "Services/api/userAPI";
 import {
   getAdminHotelData,
@@ -77,9 +78,15 @@ export function* handleAdminRoomData(payload) {
     console.log(err);
   }
 }
-export function* handleSetAdminHotelOrders() {
+export function* handleSetAdminHotelOrders(payload) {
   try {
-    const response = yield call(getAllHotelOrders);
+    const response = yield call(
+      paginateOrders,
+      "/hotel/all/orders",
+      payload.payload.page,
+      payload.payload.limit,
+      payload.payload.searchQuery
+    );
     const { data } = response;
     console.log(data);
     yield put(setAdminHotelOrders(data));

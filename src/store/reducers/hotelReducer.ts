@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { HotelModel, HotelOrdersModel, RoomModel } from "utils/model/hotelModel";
+import {
+  HotelModel,
+  HotelOrdersModel,
+  RoomModel,
+} from "utils/model/hotelModel";
 
 export interface HotelState {
   value: {
@@ -7,6 +11,7 @@ export interface HotelState {
     room: RoomModel[];
     viewRoom: RoomModel[];
     hotelOrders: HotelOrdersModel[];
+    totalHotelOrders: number;
     loading: boolean;
   };
 }
@@ -16,7 +21,8 @@ const initialState: HotelState = {
     hotel: [],
     room: [],
     viewRoom: [],
-    hotelOrders:[],
+    hotelOrders: [],
+    totalHotelOrders: 0,
     loading: true,
   },
 };
@@ -52,12 +58,13 @@ const hotelSlicer = createSlice({
       state.value.loading = false;
       state.value.room = [...action.payload];
     },
-    getAdminHotelOrders: (state) => {
+    getAdminHotelOrders: (state, action) => {
       state.value.loading = true;
     },
     setAdminHotelOrders: (state, action) => {
       state.value.loading = false;
-      state.value.hotelOrders = [...action.payload];
+      state.value.hotelOrders = [...action.payload[0]];
+      state.value.totalHotelOrders = action.payload[1];
     },
   },
 });
@@ -74,6 +81,6 @@ export const {
   viewSingleRoomData,
   setSingleRoomData,
   getAdminHotelOrders,
-  setAdminHotelOrders
+  setAdminHotelOrders,
 } = hotelSlicer.actions;
 export default hotelSlicer.reducer;
