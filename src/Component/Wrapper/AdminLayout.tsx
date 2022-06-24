@@ -25,13 +25,14 @@ import { Link } from "react-router-dom";
 import { signOut } from "store/reducers/authReducer";
 import { useAppSelector } from "hooks/useAppSelector";
 import { useAppDispatch } from "hooks/useAppDispatch";
+import { toast } from "react-toastify";
 
 const drawerWidth = 240;
 
-function AdminLayout(props: { children: any; }) {
+function AdminLayout(props: { children: any }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event:any) => {
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -97,6 +98,9 @@ function AdminLayout(props: { children: any; }) {
                   variant="text"
                   onClick={() => {
                     dispatch(signOut());
+                    toast("See You Again!!", {
+                      theme: "colored",
+                    });
                   }}
                 >
                   <Link to="/signin" className="nav-link">
@@ -155,6 +159,30 @@ function AdminLayout(props: { children: any; }) {
                 </ListItemIcon>
                 <Link to="/admin/requests" className=" nav-link">
                   Requests
+                </Link>
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <FontAwesomeIcon color="blue" icon={faUserCircle} />
+                </ListItemIcon>
+                <Link to="/admin/users" className=" nav-link">
+                  Users
+                </Link>
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <FontAwesomeIcon color="blue" icon={faMoneyBill} />
+                </ListItemIcon>
+                <Link to="/admin/tour/orders" className=" nav-link">
+                  Tour Orders
+                </Link>
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <FontAwesomeIcon color="blue" icon={faMoneyBill} />
+                </ListItemIcon>
+                <Link to="/admin/hotel/orders" className=" nav-link">
+                  Hotel Orders
                 </Link>
               </ListItem>
             </>
