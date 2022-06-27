@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import Requests from "Pages/Admin/Requests";
 import MyBookings from "Pages/Booking/MyBookings";
 import LoginForm from "Pages/Forms/LoginForm";
 import RegisterForm from "Pages/Forms/RegisterForm";
@@ -35,9 +34,10 @@ import TourBookings from "Pages/Booking/TourBookings";
 import HotelBookings from "Pages/Booking/HotelBookings";
 import CanceledOrders from "Pages/Booking/CanceledOrders";
 import Users from "Pages/Admin/Users";
-import AdminOrders from "Pages/Admin/TourOrders";
 import AdminTourOrders from "Pages/Admin/TourOrders";
 import AdminHotelOrders from "Pages/Admin/HotelOrders";
+import TourRequests from "Pages/Admin/TourRequests";
+import HotelRequests from "Pages/Admin/HotelRequests";
 
 export default function MyRoutes() {
   const role = useAppSelector((state) => state.auth.value.role);
@@ -75,7 +75,14 @@ export default function MyRoutes() {
           {role === 1 ? (
             <>
               {" "}
-              <Route path="/admin/requests" element={<Requests />}></Route>{" "}
+              <Route
+                path="/admin/requests/tour"
+                element={<TourRequests />}
+              ></Route>{" "}
+              <Route
+                path="/admin/requests/hotel"
+                element={<HotelRequests />}
+              ></Route>{" "}
               <Route path="/admin/category" element={<Category />}></Route>{" "}
               <Route path="/admin/banner" element={<Banner />}></Route>{" "}
               <Route path="/admin/dashboard" element={<Dashboard />}></Route>{" "}
