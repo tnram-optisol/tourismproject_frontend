@@ -1,21 +1,20 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import {
-  adminGetOrders,
-  adminGetUsers,
-  adminPaginate,
-  getUserRequest,
-} from "Services/api/adminAPI";
+import { adminPaginate } from "Services/api/adminAPI";
 import {
   getAdminAllUserData,
   getAdminBannerData,
   getAdminCategoryData,
-  getAdminOrdersData,
-  getAdminRequestData,
+  getAdminHotelOrdersData,
+  getAdminHotelRequestData,
+  getAdminTourOrdersData,
+  getAdminTourRequestData,
   setAdminAllUserData,
   setAdminBannerData,
   setAdminCategoryData,
-  setAdminOrdersData,
-  setAdminRequestData,
+  setAdminHotelOrdersData,
+  setAdminHotelRequestData,
+  setAdminTourOrdersData,
+  setAdminTourRequestData,
 } from "store/reducers/adminReducer";
 
 export function* setAdminBannerHandler(payload) {
@@ -35,17 +34,73 @@ export function* setAdminBannerHandler(payload) {
   }
 }
 
-export function* setAdminRequestHandler() {
+export function* setAdminHotelRequestHandler(payload) {
   try {
-    const response = yield call(getUserRequest);
+    const response = yield call(
+      adminPaginate,
+      "/admin/request/hotel",
+      payload.payload.page,
+      payload.payload.limit,
+      payload.payload.searchQuery
+    );
     const { data } = response;
     console.log(data);
-    yield put(setAdminRequestData(data));
+    yield put(setAdminHotelRequestData(data));
   } catch (err) {
     console.log(err);
   }
 }
 
+export function* setAdminTourRequestHandler(payload) {
+  try {
+    const response = yield call(
+      adminPaginate,
+      "/admin/request/tour",
+      payload.payload.page,
+      payload.payload.limit,
+      payload.payload.searchQuery
+    );
+    const { data } = response;
+    console.log(data);
+    yield put(setAdminTourRequestData(data));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* setAdminHotelOrdersHandler(payload) {
+  try {
+    const response = yield call(
+      adminPaginate,
+      "/admin/hotel/orders",
+      payload.payload.page,
+      payload.payload.limit,
+      payload.payload.searchQuery
+    );
+    const { data } = response;
+    console.log(data);
+    yield put(setAdminHotelOrdersData(data));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* setAdminTourOrdersHandler(payload) {
+  try {
+    const response = yield call(
+      adminPaginate,
+      "/admin/tour/orders",
+      payload.payload.page,
+      payload.payload.limit,
+      payload.payload.searchQuery
+    );
+    const { data } = response;
+    console.log(data);
+    yield put(setAdminTourOrdersData(data));
+  } catch (err) {
+    console.log(err);
+  }
+}
 export function* setAdminCategoryHandler(payload) {
   console.log(payload);
   try {
@@ -53,7 +108,8 @@ export function* setAdminCategoryHandler(payload) {
       adminPaginate,
       "/admin/category",
       payload.payload.page,
-      payload.payload.limit
+      payload.payload.limit,
+      payload.payload.searchQuery
     );
     const { data } = response;
     console.log(data);
@@ -80,27 +136,13 @@ export function* setAdminAllUsersHandler(payload) {
   }
 }
 
-export function* setAdminAllOrdersHandler(payload) {
-  try {
-    const response = yield call(
-      adminPaginate,
-      "/admin/all/orders",
-      payload.payload.page,
-      payload.payload.limit,
-      payload.payload.searchQuery
-    );
-    const { data } = response;
-    console.log(data);
-    yield put(setAdminOrdersData(data));
-  } catch (err) {
-    console.log(err);
-  }
-}
 
 export function* watchAdminSync() {
   yield takeLatest(getAdminBannerData.type, setAdminBannerHandler);
   yield takeLatest(getAdminCategoryData.type, setAdminCategoryHandler);
-  yield takeLatest(getAdminRequestData.type, setAdminRequestHandler);
+  yield takeLatest(getAdminTourRequestData.type, setAdminTourRequestHandler);
+  yield takeLatest(getAdminHotelRequestData.type, setAdminHotelRequestHandler);
+  yield takeLatest(getAdminTourOrdersData.type, setAdminTourOrdersHandler);
+  yield takeLatest(getAdminHotelOrdersData.type, setAdminHotelOrdersHandler);
   yield takeLatest(getAdminAllUserData.type, setAdminAllUsersHandler);
-  yield takeLatest(getAdminOrdersData.type, setAdminAllOrdersHandler);
 }

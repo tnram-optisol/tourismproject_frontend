@@ -1,10 +1,5 @@
-import {
-  call,
-  put,
-  takeLatest,
-} from "redux-saga/effects";
-import { getActiveBookings } from "Services/api/bookingAPI";
-import { getCanceledOrders } from "Services/api/ordersAPI";
+import { call, put, takeLatest } from "redux-saga/effects";
+import { ordersPaginate } from "Services/api/ordersAPI";
 import { getAllCategory } from "Services/api/userAPI";
 import {
   getUserBookingData,
@@ -28,7 +23,13 @@ export function* handleSetUserCategory() {
 
 export function* handleSetUserAllOrders(payload) {
   try {
-    const response = yield call(getActiveBookings, payload.payload);
+    const response = yield call(
+      ordersPaginate,
+      `/bookings/${payload.payload.id}`,
+      payload.payload.page,
+      payload.payload.limit,
+      payload.payload.searchQuery
+    );
     const { data } = response;
     console.log(data);
     yield put(setUserBookingData(data));
@@ -37,9 +38,15 @@ export function* handleSetUserAllOrders(payload) {
   }
 }
 
-export function* handleSetUserCanceledOrders() {
+export function* handleSetUserCanceledOrders(payload) {
   try {
-    const response = yield call(getCanceledOrders);
+    const response = yield call(
+      ordersPaginate,
+      "/cancel/orders",
+      payload.payload.page,
+      payload.payload.limit,
+      payload.payload.searchQuery
+    );
     const { data } = response;
     console.log(data);
     yield put(setUserCanceledOrders(data));

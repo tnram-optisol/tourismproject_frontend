@@ -1,17 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  BannerModel,
-  CategoryModel,
-  OrdersModel,
-  RequestModel,
-} from "utils/model/adminModel";
-import { HotelOrdersModel } from "utils/model/hotelModel";
-import { TourOrdersModel } from "utils/model/tourModel";
+import { BannerModel, CategoryModel } from "utils/model/adminModel";
+import { HotelModel, HotelOrdersModel } from "utils/model/hotelModel";
+import { TourModel, TourOrdersModel } from "utils/model/tourModel";
 import { UserModel } from "utils/model/userModel";
 
 export interface AdminState {
   value: {
-    requests: RequestModel[];
+    hotelRequests: HotelModel[];
+    tourRequests: TourModel[];
+    hotelRequestsCount: number;
+    tourRequestsCount: number;
     banner: BannerModel[];
     users: UserModel[];
     category: CategoryModel[];
@@ -28,7 +26,10 @@ export interface AdminState {
 
 const initialState: AdminState = {
   value: {
-    requests: [],
+    hotelRequests: [],
+    tourRequests: [],
+    hotelRequestsCount: 0,
+    tourRequestsCount: 0,
     banner: [],
     category: [],
     users: [],
@@ -47,12 +48,33 @@ const adminSlicer = createSlice({
   name: "hotel",
   initialState: initialState,
   reducers: {
-    getAdminRequestData: (state) => {
+    getAdminHotelRequestData: (state, action) => {
       state.value.loading = true;
     },
-    setAdminRequestData: (state, action) => {
+    setAdminHotelRequestData: (state, action) => {
       console.log(action.payload);
-      state.value.requests = [...action.payload.hotel, ...action.payload.tour];
+      state.value.hotelRequestsCount =
+        action.payload.hotel[1] > 0
+          ? action.payload.hotel[1]
+          : state.value.hotelRequestsCount;
+      state.value.hotelRequests =
+        action.payload.hotel[0].length > 0
+          ? [...action.payload.hotel[0]]
+          : [...action.payload.hotel];
+      state.value.loading = false;
+    },
+    getAdminTourRequestData: (state, action) => {
+      state.value.loading = true;
+    },
+    setAdminTourRequestData: (state, action) => {
+      state.value.tourRequestsCount =
+        action.payload.tour[1] > 0
+          ? action.payload.tour[1]
+          : state.value.tourRequestsCount;
+      state.value.tourRequests =
+        action.payload.tour[0].length > 0
+          ? [...action.payload.tour[0]]
+          : [...action.payload.tour];
       state.value.loading = false;
     },
     getAdminCategoryData: (state, action) => {
@@ -61,10 +83,15 @@ const adminSlicer = createSlice({
     setAdminCategoryData: (state, action) => {
       state.value.categoryCount =
         action.payload[1] > 0 ? action.payload[1] : state.value.categoryCount;
-      state.value.category =
-        action.payload[0].length > 0
-          ? [...action.payload[0]]
-          : [...action.payload];
+      if (action.payload.length > 0) {
+        state.value.category =
+          action.payload[0].length > 0
+            ? [...action.payload[0]]
+            : [...action.payload];
+      } else {
+        state.value.category = [];
+        state.value.categoryCount = 0;
+      }
       state.value.loading = false;
     },
     getAdminBannerData: (state, action) => {
@@ -73,10 +100,15 @@ const adminSlicer = createSlice({
     setAdminBannerData: (state, action) => {
       state.value.bannerCount =
         action.payload[1] > 0 ? action.payload[1] : state.value.bannerCount;
-      state.value.banner =
-        action.payload[0].length > 0
-          ? [...action.payload[0]]
-          : [...action.payload];
+      if (action.payload.length > 0) {
+        state.value.banner =
+          action.payload[0].length > 0
+            ? [...action.payload[0]]
+            : [...action.payload];
+      } else {
+        state.value.banner = [];
+        state.value.bannerCount = 0;
+      }
       state.value.loading = false;
     },
     getAdminAllUserData: (state, action) => {
@@ -85,36 +117,73 @@ const adminSlicer = createSlice({
     setAdminAllUserData: (state, action) => {
       state.value.usersCount =
         action.payload[1] > 0 ? action.payload[1] : state.value.usersCount;
-      state.value.users =
-        action.payload[0].length > 0
-          ? [...action.payload[0]]
-          : [...action.payload];
+      if (action.payload.length > 0) {
+        state.value.users =
+          action.payload[0].length > 0
+            ? [...action.payload[0]]
+            : [...action.payload];
+      } else {
+        state.value.users = [];
+        state.value.usersCount = 0;
+      }
       state.value.loading = false;
     },
-    getAdminOrdersData: (state, action) => {
+    getAdminTourOrdersData: (state, action) => {
       state.value.loading = true;
     },
-    setAdminOrdersData: (state, action) => {
+    setAdminTourOrdersData: (state, action) => {
+      if (action.payload) {
+        state.value.tourOrders =
+          action.payload.tourOrder[0].length > 0
+            ? [...action.payload.tourOrder[0]]
+            : [...action.payload.tourOrder];
+        state.value.totalTourOrders =
+          action.payload.tourOrder[1] > 0
+            ? action.payload.tourOrder[1]
+            : state.value.totalTourOrders;
+      } else {
+        state.value.tourOrders = [];
+        state.value.totalTourOrders = 0;
+      }
       state.value.loading = false;
-      state.value.totalTourOrders = action.payload.tourOrder[1];
-      state.value.tourOrders = [...action.payload.tourOrder[0]];
-      state.value.totalHotelOrders = action.payload.hotelOrder[1];
-      state.value.hotelOrders = [...action.payload.hotelOrder[0]];
+    },
+    getAdminHotelOrdersData: (state, action) => {
+      state.value.loading = true;
+    },
+    setAdminHotelOrdersData: (state, action) => {
+      if (action.payload) {
+        state.value.hotelOrders =
+          action.payload.hotelOrder[0].length > 0
+            ? [...action.payload.hotelOrder[0]]
+            : [...action.payload.hotelOrder];
+        state.value.totalHotelOrders =
+          action.payload.hotelOrder[1] > 0
+            ? action.payload.hotelOrder[1]
+            : state.value.totalHotelOrders;
+      } else {
+        state.value.hotelOrders = [];
+        state.value.totalHotelOrders = 0;
+      }
+      state.value.loading = false;
     },
   },
 });
 
 export const {
   getAdminBannerData,
-  getAdminRequestData,
+  getAdminTourRequestData,
+  getAdminHotelRequestData,
   getAdminCategoryData,
   getAdminAllUserData,
-  getAdminOrdersData,
+  getAdminTourOrdersData,
+  getAdminHotelOrdersData,
   setAdminBannerData,
+  setAdminHotelRequestData,
+  setAdminTourRequestData,
   setAdminCategoryData,
-  setAdminRequestData,
   setAdminAllUserData,
-  setAdminOrdersData,
+  setAdminHotelOrdersData,
+  setAdminTourOrdersData,
 } = adminSlicer.actions;
 
 export default adminSlicer.reducer;

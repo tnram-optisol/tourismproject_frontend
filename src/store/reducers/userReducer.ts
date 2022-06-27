@@ -9,7 +9,10 @@ export interface UserState {
     category: CategoryModel[];
     hotelOrders: BookRoomModel[];
     tourOrders: BookTourModel[];
+    totalTourOrders: number;
     canceledOrders: OrdersModel[];
+    totalCanceledOrders: number;
+    totalHotelOrders: number;
     loading: boolean;
   };
 }
@@ -20,7 +23,10 @@ const initialState: UserState = {
     loading: true,
     hotelOrders: [],
     tourOrders: [],
-    canceledOrders:[]
+    canceledOrders: [],
+    totalCanceledOrders: 0,
+    totalTourOrders: 0,
+    totalHotelOrders: 0,
   },
 };
 
@@ -39,15 +45,44 @@ const userSlicer = createSlice({
       state.value.loading = true;
     },
     setUserBookingData: (state, action) => {
-      state.value.hotelOrders = [...action.payload.roomBooking];
-      state.value.tourOrders = [...action.payload.tourBooking];
+      if (action.payload.roomBooking) {
+        state.value.hotelOrders =
+          action.payload.roomBooking[0].length > 0
+            ? [...action.payload.roomBooking[0]]
+            : [...action.payload.roomBooking];
+        state.value.totalHotelOrders =
+          action.payload.roomBooking[1] > 0
+            ? action.payload.roomBooking[1]
+            : state.value.totalHotelOrders;
+      } else if (action.payload.tourBooking) {
+        state.value.tourOrders =
+          action.payload.tourBooking[0].length > 0
+            ? [...action.payload.tourBooking[0]]
+            : [...action.payload.tourBooking];
+        state.value.totalTourOrders =
+          action.payload.tourBooking[1] > 0
+            ? action.payload.tourBooking[1]
+            : state.value.totalTourOrders;
+      } else {
+        state.value.totalTourOrders = 0;
+        state.value.totalHotelOrders = 0;
+        state.value.tourOrders = [];
+        state.value.hotelOrders = [];
+      }
       state.value.loading = false;
     },
-    getUserCanceledOrders: (state) => {
+    getUserCanceledOrders: (state, payload) => {
       state.value.loading = true;
     },
     setUserCanceledOrders: (state, action) => {
-      state.value.canceledOrders =[...action.payload]
+      state.value.canceledOrders =
+        action.payload[0].length > 0
+          ? [...action.payload[0]]
+          : [...action.payload];
+      state.value.totalCanceledOrders =
+        action.payload[1] > 0
+          ? action.payload[1]
+          : state.value.totalCanceledOrders;
       state.value.loading = false;
     },
   },
@@ -59,7 +94,7 @@ export const {
   getUserBookingData,
   setUserBookingData,
   setUserCanceledOrders,
-  getUserCanceledOrders
+  getUserCanceledOrders,
 } = userSlicer.actions;
 
 export default userSlicer.reducer;

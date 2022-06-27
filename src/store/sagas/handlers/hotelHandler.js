@@ -1,9 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import {
-  getAllHotelOrders,
-  getAllHotels,
-  getAllRooms,
-} from "Services/api/hotelAPI";
+import { getAllHotels, getAllRooms } from "Services/api/hotelAPI";
 import { paginateOrders } from "Services/api/toursAPI";
 import { getHotels, getRooms, viewRooms } from "Services/api/userAPI";
 import {
