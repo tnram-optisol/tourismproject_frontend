@@ -1,4 +1,4 @@
-import { Box, List, ListItem, ListItemIcon, Typography } from "@mui/material";
+import { Box, List, ListItem, ListItemIcon } from "@mui/material";
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";

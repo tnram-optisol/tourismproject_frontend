@@ -4,6 +4,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
+  TablePagination,
   TableRow,
   Typography,
 } from "@mui/material";
@@ -11,10 +12,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
-
 import {
   getOrders,
-  getCanceledOrders,
   refundOrders,
 } from "Services/api/ordersAPI";
 import {
@@ -32,19 +31,29 @@ export default function HotelBookings(props: any) {
   const dispatch = useAppDispatch();
   const token = localStorage.getItem("token");
   const user = token !== "" ? JSON.parse(atob(token!.split(".")[1])) : {};
+  const id = +user.id;
   const navigate = useNavigate();
   const room = useAppSelector((state) => state.user.value.hotelOrders);
   const loading = useAppSelector((state) => state.user.value.loading);
+  const totalData = useAppSelector(
+    (state) => state.user.value.totalHotelOrders
+  );
   let discount = 0;
   let totalCost = 0;
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(5);
 
   const getBookings = () => {
     if (user.id > 0) {
-      dispatch(getUserBookingData(user.id));
+      dispatch(getUserBookingData({ id, limit, page }));
     }
   };
 
-  useEffect(() => getBookings, [dispatch]);
+  useEffect(() => {
+    if (id > 0) {
+      dispatch(getUserBookingData({ id, limit, page }));
+    }
+  }, [dispatch, id, limit, page]);
 
   const handleCancel = (data: BookRoomModel, name: string) => {
     let userConfirm = window.confirm(`Is it ok to cancel booking for ${name}`);
@@ -109,6 +118,15 @@ export default function HotelBookings(props: any) {
         });
     }
   };
+  const handleChangePage = (event: any, newPage: number) => {
+    console.log(event, newPage);
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = (event: any) => {
+    console.log(event.target.value, parseInt(event.target.value, 10));
+    setLimit(event.target.value);
+    setPage(0);
+  };
   return (
     <>
       <Box>
@@ -143,7 +161,7 @@ export default function HotelBookings(props: any) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {room.map((row, index) => (
+                {room.map((row, index: number) => (
                   <TableRow
                     key={index}
                     sx={{
@@ -215,6 +233,18 @@ export default function HotelBookings(props: any) {
                     )}
                   </TableRow>
                 ))}
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10]}
+                    rowSpan={2}
+                    colSpan={6}
+                    count={totalData}
+                    rowsPerPage={limit}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                  />
+                </TableRow>
               </TableBody>
             </MyTable>
           </Box>

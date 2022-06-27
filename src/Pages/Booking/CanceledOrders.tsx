@@ -3,10 +3,11 @@ import {
   TableBody,
   TableCell,
   TableHead,
+  TablePagination,
   TableRow,
   Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -18,19 +19,28 @@ import Loader from "Layout/Loader";
 
 export default function CanceledOrders() {
   const dispatch = useAppDispatch();
-  const token = localStorage.getItem("token");
-  const user = token !== "" ? JSON.parse(atob(token!.split(".")[1])) : {};
   const loading = useAppSelector((state) => state.user.value.loading);
   const orderCanceled = useAppSelector(
     (state) => state.user.value.canceledOrders
   );
+  const totalData = useAppSelector(
+    (state) => state.user.value.totalCanceledOrders
+  );
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(5);
 
-  const getBookings = () => {
-    dispatch(getUserCanceledOrders());
+  useEffect(() => {
+    dispatch(getUserCanceledOrders({ limit, page }));
+  }, [dispatch, limit, page]);
+  const handleChangePage = (event: any, newPage: number) => {
+    console.log(event, newPage);
+    setPage(newPage);
   };
-
-  useEffect(() => getBookings, []);
-
+  const handleChangeRowsPerPage = (event: any) => {
+    console.log(event.target.value, parseInt(event.target.value, 10));
+    setLimit(event.target.value);
+    setPage(0);
+  };
   return (
     <Box>
       <ToastContainer />
@@ -81,6 +91,18 @@ export default function CanceledOrders() {
                 </TableCell>
               </TableRow>
             ))}
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10]}
+                rowSpan={2}
+                colSpan={4}
+                count={totalData}
+                rowsPerPage={limit}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </TableRow>
           </TableBody>
         </MyTable>
       ) : (

@@ -4,6 +4,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
+  TablePagination,
   TableRow,
   Tooltip,
   Typography,
@@ -13,15 +14,8 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-import {
-  getOrders,
-  getCanceledOrders,
-  refundOrders,
-} from "Services/api/ordersAPI";
-import {
-  cancelRoomBookings,
-  cancelTourBookings,
-} from "Services/api/bookingAPI";
+import { getOrders, refundOrders } from "Services/api/ordersAPI";
+import { cancelTourBookings } from "Services/api/bookingAPI";
 import MyTable from "Component/Table/MyTable";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { getUserBookingData } from "store/reducers/userReducer";
@@ -29,40 +23,49 @@ import { useAppSelector } from "hooks/useAppSelector";
 import Loader from "Layout/Loader";
 import { BookTourModel } from "utils/model/tourModel";
 
-
 export default function TourBookings(props: any) {
   const dispatch = useAppDispatch();
   const token = localStorage.getItem("token");
   const user = token !== "" ? JSON.parse(atob(token!.split(".")[1])) : {};
+  const id = +user.id;
   const navigate = useNavigate();
   const tour = useAppSelector((state) => state.user.value.tourOrders);
   const loading = useAppSelector((state) => state.user.value.loading);
+  const totalData = useAppSelector((state) => state.user.value.totalTourOrders);
   let discount = 0;
   let totalCost = 0;
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(5);
 
   const getBookings = () => {
     if (user.id > 0) {
-      dispatch(getUserBookingData(user.id));
+      dispatch(getUserBookingData({ id, limit, page }));
     }
   };
 
-  useEffect(() => getBookings, []);
+  useEffect(() => {
+    dispatch(getUserBookingData({ id, limit, page }));
+  }, [dispatch, id, limit, page]);
 
   const handleCancel = (data: BookTourModel, name: string) => {
     let userConfirm = window.confirm(`Is it ok to cancel booking for ${name}`);
     console.log(data);
     if (userConfirm) {
-       cancelTourBookings(data.book_id)
-         .then((res) => {
-           toast(res.data);
-         })
-         .catch((err) => {
-           toast(err);
-         });
+      cancelTourBookings(data.book_id)
+        .then((res) => {
+          toast(res.data);
+        })
+        .catch((err) => {
+          toast(err);
+        });
     }
   };
 
-  const calculateCost = (totalPerson: number, tourCost: number, totalDays: number) => {
+  const calculateCost = (
+    totalPerson: number,
+    tourCost: number,
+    totalDays: number
+  ) => {
     let discountPrice = 0;
     if (totalPerson > 3) {
       discount = 40;
@@ -115,6 +118,16 @@ export default function TourBookings(props: any) {
           console.log(err);
         });
     }
+  };
+
+  const handleChangePage = (event: any, newPage: number) => {
+    console.log(event, newPage);
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = (event: any) => {
+    console.log(event.target.value, parseInt(event.target.value, 10));
+    setLimit(event.target.value);
+    setPage(0);
   };
   return (
     <>
@@ -236,10 +249,22 @@ export default function TourBookings(props: any) {
                     )}
                   </TableRow>
                 ))}
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10]}
+                    rowSpan={2}
+                    colSpan={6}
+                    count={totalData}
+                    rowsPerPage={limit}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                  />
+                </TableRow>
               </TableBody>
             </MyTable>
           </Box>
-        ) :  (
+        ) : (
           <h6 className="text-danger">Book A Package to View</h6>
         )}
       </Box>
