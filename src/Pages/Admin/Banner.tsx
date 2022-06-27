@@ -135,7 +135,11 @@ function Banner() {
                 ))}
                 <TableRow>
                   <TablePagination
-                    rowsPerPageOptions={[5, 10]}
+                    rowsPerPageOptions={[
+                      5,
+                      10,
+                      { label: "All", value: totalData },
+                    ]}
                     rowSpan={2}
                     colSpan={4}
                     count={totalData}

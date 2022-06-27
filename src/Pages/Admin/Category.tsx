@@ -2,11 +2,14 @@ import {
   Box,
   Button,
   Dialog,
+  FormControl,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TablePagination,
   TableRow,
+  TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
@@ -28,19 +31,20 @@ function Category() {
   const totalData = useAppSelector((state) => state.admin.value.categoryCount);
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
+  const [searchQuery, setSearchQuery] = useState("");
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
-    dispatch(getAdminCategoryData({ page, limit }));
+    dispatch(getAdminCategoryData({ page, limit, searchQuery }));
   };
   const getAllCategory = () => {
-    dispatch(getAdminCategoryData({ page, limit }));
+    dispatch(getAdminCategoryData({ page, limit, searchQuery }));
   };
   useEffect(() => {
-    dispatch(getAdminCategoryData({ page, limit }));
-  }, [dispatch, limit, page]);
+    dispatch(getAdminCategoryData({ page, limit, searchQuery }));
+  }, [dispatch, limit, page, searchQuery]);
 
   const deleteCategory = (id: number) => {
     adminRemoveCategory(id)
@@ -61,11 +65,26 @@ function Category() {
     setLimit(event.target.value);
     setPage(0);
   };
+  const handleOnChange = (event: any) => {
+    setSearchQuery(event.target.value);
+  };
   return (
     <AdminLayout>
       {!loading ? (
         <Box className="m-auto">
           <Box>
+            <FormControl>
+              <TextField
+                className="mr-auto"
+                id="outlined-basic"
+                label="Outlined"
+                variant="outlined"
+                onChange={(event) => handleOnChange(event)}
+                placeholder="Search for Category"
+                value={searchQuery}
+                autoFocus
+              />
+            </FormControl>
             <MyTable>
               <TableHead>
                 <TableRow>
