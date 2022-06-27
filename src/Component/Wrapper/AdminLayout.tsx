@@ -98,7 +98,7 @@ function AdminLayout(props: { children: any }) {
                   variant="text"
                   onClick={() => {
                     dispatch(signOut());
-                    toast("See You Again!!", {
+                    toast.success("See You Again!!", {
                       theme: "colored",
                     });
                   }}
@@ -139,6 +139,14 @@ function AdminLayout(props: { children: any }) {
             <>
               <ListItem>
                 <ListItemIcon>
+                  <FontAwesomeIcon color="blue" icon={faUserCircle} />
+                </ListItemIcon>
+                <Link to="/admin/users" className=" nav-link">
+                  Users
+                </Link>
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
                   <FontAwesomeIcon color="blue" icon={faHome} />
                 </ListItemIcon>
                 <Link to="/admin/banner" className=" nav-link">
@@ -157,16 +165,16 @@ function AdminLayout(props: { children: any }) {
                 <ListItemIcon>
                   <FontAwesomeIcon color="blue" icon={faCodePullRequest} />
                 </ListItemIcon>
-                <Link to="/admin/requests" className=" nav-link">
-                  Requests
+                <Link to="/admin/requests/tour" className=" nav-link">
+                  Tour Requests
                 </Link>
               </ListItem>
               <ListItem>
                 <ListItemIcon>
-                  <FontAwesomeIcon color="blue" icon={faUserCircle} />
+                  <FontAwesomeIcon color="blue" icon={faCodePullRequest} />
                 </ListItemIcon>
-                <Link to="/admin/users" className=" nav-link">
-                  Users
+                <Link to="/admin/requests/hotel" className=" nav-link">
+                  Hotel Requests
                 </Link>
               </ListItem>
               <ListItem>

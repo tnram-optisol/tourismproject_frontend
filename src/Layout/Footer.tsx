@@ -12,10 +12,10 @@ import { MDBFooter } from "mdb-react-ui-kit";
 
 export default function Footer() {
   return (
-    <Box className="my-footer">
+    <footer>
       <MDBFooter
         bgColor="dark"
-        className=" text-center text-lg-start text-muted"
+        className=" text-center text-lg-start text-muted my-footer"
       >
         <Box sx={{ color: "#f5deb3" }}>
           <Grid container spacing={1}>
@@ -96,6 +96,6 @@ export default function Footer() {
           </Grid>
         </Box>
       </MDBFooter>
-    </Box>
+    </footer>
   );
 }

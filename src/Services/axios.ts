@@ -1,4 +1,6 @@
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const token = localStorage.getItem("token");
 const user = token !== "" ? JSON.parse(atob(token!.split(".")[1])) : null;
@@ -30,6 +32,7 @@ axiosIntercept.interceptors.request.use(
 
 axiosIntercept.interceptors.response.use(
   (res) => {
+    console.log(res);
     return res;
   },
   (err) => {
@@ -38,6 +41,10 @@ axiosIntercept.interceptors.response.use(
       err.response.status === 403 ||
       err.response.status === 400
     ) {
+      if (err.response.data.errors) {
+        const data = [...err.response.data.errors];
+        data.map((e) => toast.error(e.msg));
+      }
       return err.response;
     }
   }

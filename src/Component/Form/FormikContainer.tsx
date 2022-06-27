@@ -48,7 +48,6 @@ function FormikContainer(props: any) {
           if (endPoint === "/signIn") {
             localStorage.setItem("token", res.data.token);
             toast("Logged in Successfully");
-            redirect("/");
             let user = await JSON.parse(
               atob(localStorage.getItem("token")!.split(".")[1])
             );
@@ -57,10 +56,10 @@ function FormikContainer(props: any) {
                 payload: user.role,
               })
             );
+            redirect("/");
           } else {
             if (res.data.errors) {
-              const data = res.data.errors;
-              data.map((e: any) => toast.error(e.msg));
+              toast.error(res.data.errors);
             } else {
               toast(res.data);
             }
@@ -70,12 +69,7 @@ function FormikContainer(props: any) {
           }
         })
         .catch((err: any) => {
-          if (err.response.data.errors) {
-            const data = err.response.data.errors;
-            data.map((e: any) => toast.error(e.msg));
-          } else {
-            toast(err.response.data);
-          }
+          console.log(err);
         });
     }
   };

@@ -30,7 +30,6 @@ import { toast } from "react-toastify";
 const NavBar = () => {
   const loggedIn = useAppSelector((state) => state.auth.value.loggedIn);
   const role = useAppSelector((state) => state.auth.value.role);
-  const email = useAppSelector((state) => state.auth.value.email);
   const dispatch = useAppDispatch();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -166,25 +165,7 @@ const NavBar = () => {
                         sx={{ margin: 1 }}
                       >
                         <Link to="/add/hotels" className="nav-link">
-                          Add Hotel
-                        </Link>
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        component="div"
-                        sx={{ margin: 1 }}
-                      >
-                        <Link to="/view/hotels" className="nav-link">
-                          View Hotel
-                        </Link>
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        component="div"
-                        sx={{ margin: 1 }}
-                      >
-                        <Link to="/hotel/orders" className="nav-link">
-                          Orders
+                          Dash Board
                         </Link>
                       </Typography>
                     </Box>
@@ -199,25 +180,7 @@ const NavBar = () => {
                         sx={{ margin: 1 }}
                       >
                         <Link to="/add/tours" className="nav-link">
-                          Add Tours
-                        </Link>
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        component="div"
-                        sx={{ margin: 1 }}
-                      >
-                        <Link to="/view/tours" className="nav-link">
-                          View Tours
-                        </Link>
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        component="div"
-                        sx={{ margin: 1 }}
-                      >
-                        <Link to="/tour/orders" className="nav-link">
-                          Orders
+                          Dash Board
                         </Link>
                       </Typography>
                     </Box>

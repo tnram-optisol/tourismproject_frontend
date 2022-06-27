@@ -75,7 +75,6 @@ export default function ViewTour(props: any) {
   useEffect(() => {
     dispatch(viewSingleTourData(tour_id));
     window.scrollTo(0, 0);
-    console.log(tourData);
     getRating(tour_id)
       .then((res) => {
         setReview(res.data.rating);
@@ -83,7 +82,7 @@ export default function ViewTour(props: any) {
       .catch((err) => {
         console.log(err);
       });
-  }, [dispatch]);
+  }, [dispatch, tour_id]);
   const handleClickOpen = (id: any) => {
     setOpen(true);
   };

@@ -26,7 +26,6 @@ const TourForm = () => {
     if (tourId > 0) {
       viewAdminTour(tourId)
         .then((res) => {
-          console.log(res);
           setInitialValues({
             ...initialValues,
             name: res.data.package_name,

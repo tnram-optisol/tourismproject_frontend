@@ -51,7 +51,7 @@ function HotelOrders() {
               <TableCell sx={{ width: "7%" }}>Room Name</TableCell>
               <TableCell sx={{ width: "7%" }}>Hotel Name</TableCell>
               <TableCell sx={{ width: "7%" }}>Hotel Address</TableCell>
-              <TableCell sx={{ width: "7%" }}>Tour Cost</TableCell>
+              <TableCell sx={{ width: "7%" }}>Total Cost</TableCell>
               <TableCell sx={{ width: "5%" }}>Discount</TableCell>
               <TableCell sx={{ width: "5%" }}>Deductions</TableCell>
               <TableCell align="right">Paid Price</TableCell>
