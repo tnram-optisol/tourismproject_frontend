@@ -34,7 +34,6 @@ function Banner() {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
-  console.log(banner);
   const handleClickOpen = (id: number) => {
     setTourId(id);
     setOpen(true);

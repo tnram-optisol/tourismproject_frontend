@@ -1,22 +1,25 @@
 import {
   Box,
+  FormControl,
   Grid,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
+  TextField,
   Typography,
 } from "@mui/material";
+import React, { useEffect, useState } from "react";
+
+import { getAdminTourOrdersData } from "store/reducers/adminReducer";
 import MyTable from "Component/Table/MyTable";
 import AdminLayout from "Component/Wrapper/AdminLayout";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
 import Loader from "Layout/Loader";
-import React, { useEffect, useState } from "react";
-import { getAdminOrdersData } from "store/reducers/adminReducer";
 
-function AdminTourOrders() {
+const AdminTourOrders = () => {
   const tourOrders = useAppSelector((state) => state.admin.value.tourOrders);
   const totalTourOrders = useAppSelector(
     (state) => state.admin.value.totalTourOrders
@@ -25,9 +28,13 @@ function AdminTourOrders() {
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
+  const [searchQuery, setSearchQuery] = useState("");
+  const handleOnChange = (event: any) => {
+    setSearchQuery(event.target.value);
+  };
   useEffect(() => {
-    dispatch(getAdminOrdersData({ limit, page }));
-  }, [dispatch, limit, page]);
+    dispatch(getAdminTourOrdersData({ limit, page, searchQuery }));
+  }, [dispatch, limit, page, searchQuery]);
 
   const handleChangePage = (event: any, newPage: number) => {
     console.log(event, newPage);
@@ -49,6 +56,18 @@ function AdminTourOrders() {
               </Typography>
             </Grid>
             <Box className="mt-2">
+              <FormControl>
+                <TextField
+                  className="mr-auto"
+                  id="outlined-basic"
+                  label="Outlined"
+                  variant="outlined"
+                  onChange={(event) => handleOnChange(event)}
+                  placeholder="Search for Orders"
+                  value={searchQuery}
+                  autoFocus
+                />
+              </FormControl>
               <MyTable>
                 <TableHead>
                   <TableRow>
@@ -114,6 +133,6 @@ function AdminTourOrders() {
       </Box>
     </AdminLayout>
   );
-}
+};
 
 export default AdminTourOrders;

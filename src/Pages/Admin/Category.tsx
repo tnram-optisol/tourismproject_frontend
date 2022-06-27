@@ -5,7 +5,6 @@ import {
   FormControl,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TablePagination,
   TableRow,

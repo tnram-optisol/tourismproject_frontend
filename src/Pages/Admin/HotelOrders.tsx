@@ -1,22 +1,25 @@
 import {
   Box,
+  FormControl,
   Grid,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
+  TextField,
   Typography,
 } from "@mui/material";
+import React, { useEffect, useState } from "react";
+
+import { getAdminHotelOrdersData } from "store/reducers/adminReducer";
 import MyTable from "Component/Table/MyTable";
 import AdminLayout from "Component/Wrapper/AdminLayout";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
 import Loader from "Layout/Loader";
-import React, { useEffect, useState } from "react";
-import { getAdminOrdersData } from "store/reducers/adminReducer";
 
-function AdminHotelOrders() {
+const AdminHotelOrders = () => {
   const hotelOrders = useAppSelector((state) => state.admin.value.hotelOrders);
   const totalHotelOrders = useAppSelector(
     (state) => state.admin.value.totalHotelOrders
@@ -25,9 +28,10 @@ function AdminHotelOrders() {
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
+  const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
-    dispatch(getAdminOrdersData({ limit, page }));
-  }, [dispatch, limit, page]);
+    dispatch(getAdminHotelOrdersData({ limit, page, searchQuery }));
+  }, [dispatch, limit, page, searchQuery]);
 
   const handleChangePage = (event: any, newPage: number) => {
     console.log(event, newPage);
@@ -37,6 +41,9 @@ function AdminHotelOrders() {
     console.log(event.target.value, parseInt(event.target.value, 10));
     setLimit(event.target.value);
     setPage(0);
+  };
+  const handleOnChange = (event: any) => {
+    setSearchQuery(event.target.value);
   };
   return (
     <AdminLayout>
@@ -49,6 +56,18 @@ function AdminHotelOrders() {
               </Typography>
             </Grid>
             <Box className="mt-2">
+              <FormControl>
+                <TextField
+                  className="mr-auto"
+                  id="outlined-basic"
+                  label="Outlined"
+                  variant="outlined"
+                  onChange={(event) => handleOnChange(event)}
+                  placeholder="Search for Orders"
+                  value={searchQuery}
+                  autoFocus
+                />
+              </FormControl>
               <MyTable>
                 <TableHead>
                   <TableRow>
@@ -114,6 +133,6 @@ function AdminHotelOrders() {
       </Box>
     </AdminLayout>
   );
-}
+};
 
 export default AdminHotelOrders;

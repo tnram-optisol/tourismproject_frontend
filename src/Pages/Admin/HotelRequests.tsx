@@ -16,7 +16,7 @@ import MyTable from "Component/Table/MyTable";
 import { REQUEST_TABLE_FIELDS } from "utils/Table/tableFields";
 import AdminLayout from "Component/Wrapper/AdminLayout";
 import Loader from "Layout/Loader";
-import { getAdminRequestData } from "store/reducers/adminReducer";
+import { getAdminHotelRequestData } from "store/reducers/adminReducer";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
 
@@ -34,10 +34,10 @@ const HotelRequests = () => {
   const [limit, setLimit] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
   const getRequest = () => {
-    dispatch(getAdminRequestData({ page, limit, searchQuery }));
+    dispatch(getAdminHotelRequestData({ page, limit, searchQuery }));
   };
   useEffect(() => {
-    dispatch(getAdminRequestData({ page, limit, searchQuery }));
+    dispatch(getAdminHotelRequestData({ page, limit, searchQuery }));
   }, [dispatch, limit, page, searchQuery]);
 
   const handleOnChange = (event: any) => {
