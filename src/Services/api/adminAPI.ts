@@ -4,6 +4,7 @@ import {
   ADMIN_DELETE_CATEGORY,
   ADMIN_GET_BANNER,
   ADMIN_GET_CATEGORY,
+  ADMIN_NOTIFICATION,
   ADMIN_POST_CATEGORY,
   ADMIN_REQUEST,
   ADMIN_SEQUENCE,
@@ -11,6 +12,7 @@ import {
   ADMIN_VIEW_TOUR,
   ALL_ORDERS,
   ALL_USERS,
+  NOTIFICATION_DELETE,
 } from "Services/services.constants";
 import { UserModel } from "utils/model/userModel";
 import axiosIntercept from "../axios";
@@ -104,16 +106,30 @@ export function adminPaginate(
   limit: number,
   searchQuery?: string
 ) {
-   return createApi({
-     method: "GET",
-     url: `${endpoint}?page=${page}&limit=${limit}&search=${searchQuery}`,
-   });
+  return createApi({
+    method: "GET",
+    url: `${endpoint}?page=${page}&limit=${limit}&search=${searchQuery}`,
+  });
 }
 
 export function adminGetOrders() {
   return createApi({
     method: "GET",
     url: `${ALL_ORDERS}`,
+  });
+}
+
+export function adminNotification() {
+  return createApi({
+    method: "GET",
+    url: `${ADMIN_NOTIFICATION}`,
+  });
+}
+
+export function deleteNotification(id: number) {
+  return createApi({
+    method: "DELETE",
+    url: `${NOTIFICATION_DELETE}/${id}`,
   });
 }
 
