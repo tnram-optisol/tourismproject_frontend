@@ -31,11 +31,16 @@ const tourSlicer = createSlice({
   name: "tour",
   initialState: initialState,
   reducers: {
-    getUserTourData: () => {},
+    getUserTourData: (state) => {
+      state.value.loading = true;
+    },
     setUserTourData: (state, action) => {
+      state.value.loading = false;
       state.value.tour = [...action.payload];
     },
-    viewSingleTourData: (state, action) => {},
+    viewSingleTourData: (state, action) => {
+      state.value.loading = true;
+    },
     setSingleTourData: (state, action) => {
       state.value.loading = false;
       state.value.viewTour = [action.payload];

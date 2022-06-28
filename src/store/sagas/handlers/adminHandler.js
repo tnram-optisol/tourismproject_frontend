@@ -1,11 +1,12 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { adminPaginate } from "Services/api/adminAPI";
+import { adminNotification, adminPaginate } from "Services/api/adminAPI";
 import {
   getAdminAllUserData,
   getAdminBannerData,
   getAdminCategoryData,
   getAdminHotelOrdersData,
   getAdminHotelRequestData,
+  getAdminNotifications,
   getAdminTourOrdersData,
   getAdminTourRequestData,
   setAdminAllUserData,
@@ -13,6 +14,7 @@ import {
   setAdminCategoryData,
   setAdminHotelOrdersData,
   setAdminHotelRequestData,
+  setAdminNotifications,
   setAdminTourOrdersData,
   setAdminTourRequestData,
 } from "store/reducers/adminReducer";
@@ -136,7 +138,16 @@ export function* setAdminAllUsersHandler(payload) {
   }
 }
 
-
+export function* setAdminNotificationsHandler(payload) {
+  try {
+    const response = yield call(adminNotification);
+    const { data } = response;
+    console.log(data);
+    yield put(setAdminNotifications(data));
+  } catch (err) {
+    console.log(err);
+  }
+}
 export function* watchAdminSync() {
   yield takeLatest(getAdminBannerData.type, setAdminBannerHandler);
   yield takeLatest(getAdminCategoryData.type, setAdminCategoryHandler);
@@ -145,4 +156,5 @@ export function* watchAdminSync() {
   yield takeLatest(getAdminTourOrdersData.type, setAdminTourOrdersHandler);
   yield takeLatest(getAdminHotelOrdersData.type, setAdminHotelOrdersHandler);
   yield takeLatest(getAdminAllUserData.type, setAdminAllUsersHandler);
+  yield takeLatest(getAdminNotifications.type, setAdminNotificationsHandler);
 }

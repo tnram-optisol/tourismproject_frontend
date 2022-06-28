@@ -1,9 +1,5 @@
-import { call, put, takeLatest } from "redux-saga/effects";
-import {
-  adminTour,
-  getAllTourOrders,
-  paginateOrders,
-} from "Services/api/toursAPI";
+import { call, put, SagaReturnType, takeLatest } from "redux-saga/effects";
+import { adminTour, paginateOrders } from "Services/api/toursAPI";
 import { getTour, viewTour } from "Services/api/userAPI";
 import {
   setUserTourData,
@@ -12,35 +8,52 @@ import {
   getUserTourData,
   viewSingleTourData,
   getAdminTourData,
-  setAdminTourOrders,
   getAdminTourOrders,
+  setAdminTourOrders,
 } from "store/reducers/tourReducer";
 
 export function* handleSetTourData() {
   try {
-    const response = yield call(getTour);
+    const response: SagaReturnType<typeof getTour> = yield call(getTour);
     const { data } = response;
-    console.log(data);
     yield put(setUserTourData(data));
   } catch (err) {
     console.log(err);
   }
 }
 
-export function* handleViewTourData(payload) {
+export function* handleViewTourData(payload: {
+  payload: number;
+  type: typeof viewSingleTourData;
+}) {
   try {
-    const response = yield call(viewTour, payload.payload);
+    const response: SagaReturnType<typeof viewTour> = yield call(
+      viewTour,
+      payload.payload
+    );
     const { data } = response;
-    console.log(data);
     yield put(setSingleTourData(data));
   } catch (err) {
     console.log(err);
   }
 }
 
-export function* handleSetAdminTourData(payload) {
+export function* handleSetAdminTourData() {
   try {
-    const response = yield call(
+    const response: SagaReturnType<typeof adminTour> = yield call(adminTour);
+    const { data } = response;
+    yield put(setAdminTourData(data));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* handleSetAdminOrdersData(payload: {
+  payload: { page: number; limit: number; searchQuery: string | undefined };
+  type: typeof getAdminTourOrders;
+}) {
+  try {
+    const response: SagaReturnType<typeof paginateOrders> = yield call(
       paginateOrders,
       "/tour/all/orders",
       payload.payload.page,
@@ -48,18 +61,6 @@ export function* handleSetAdminTourData(payload) {
       payload.payload.searchQuery
     );
     const { data } = response;
-    console.log(data);
-    yield put(setAdminTourData(data));
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-export function* handleSetAdminOrdersData() {
-  try {
-    const response = yield call(getAllTourOrders);
-    const { data } = response;
-    console.log(data);
     yield put(setAdminTourOrders(data));
   } catch (err) {
     console.log(err);

@@ -54,7 +54,6 @@ const userSlicer = createSlice({
           action.payload.roomBooking[1] > 0
             ? action.payload.roomBooking[1]
             : state.value.totalHotelOrders;
-      } else if (action.payload.tourBooking) {
         state.value.tourOrders =
           action.payload.tourBooking[0].length > 0
             ? [...action.payload.tourBooking[0]]

@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, SagaReturnType, takeLatest } from "redux-saga/effects";
 import { ordersPaginate } from "Services/api/ordersAPI";
 import { getAllCategory } from "Services/api/userAPI";
 import {
@@ -10,9 +10,12 @@ import {
   setUserCategoryData,
 } from "store/reducers/userReducer";
 
+type Response = SagaReturnType<typeof getAllCategory>;
+type PaginateResponse = SagaReturnType<typeof ordersPaginate>;
+
 export function* handleSetUserCategory() {
   try {
-    const response = yield call(getAllCategory);
+    const response: Response = yield call(getAllCategory);
     const { data } = response;
     console.log(data);
     yield put(setUserCategoryData(data));
@@ -21,9 +24,17 @@ export function* handleSetUserCategory() {
   }
 }
 
-export function* handleSetUserAllOrders(payload) {
+export function* handleSetUserAllOrders(payload: {
+  payload: {
+    id: any;
+    page: number;
+    limit: number;
+    searchQuery: string | undefined;
+  };
+  type: typeof getUserBookingData;
+}) {
   try {
-    const response = yield call(
+    const response: PaginateResponse = yield call(
       ordersPaginate,
       `/bookings/${payload.payload.id}`,
       payload.payload.page,
@@ -38,9 +49,12 @@ export function* handleSetUserAllOrders(payload) {
   }
 }
 
-export function* handleSetUserCanceledOrders(payload) {
+export function* handleSetUserCanceledOrders(payload: {
+  payload: { page: number; limit: number; searchQuery: string | undefined };
+  type: typeof getUserCanceledOrders;
+}) {
   try {
-    const response = yield call(
+    const response: PaginateResponse = yield call(
       ordersPaginate,
       "/cancel/orders",
       payload.payload.page,

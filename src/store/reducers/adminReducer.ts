@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { BannerModel, CategoryModel } from "utils/model/adminModel";
+import {
+  BannerModel,
+  CategoryModel,
+  NotificationModel,
+} from "utils/model/adminModel";
 import { HotelModel, HotelOrdersModel } from "utils/model/hotelModel";
 import { TourModel, TourOrdersModel } from "utils/model/tourModel";
 import { UserModel } from "utils/model/userModel";
@@ -20,6 +24,8 @@ export interface AdminState {
     usersCount: number;
     categoryCount: number;
     bannerCount: number;
+    totalNotifications: number;
+    notifications: NotificationModel[];
     loading: boolean;
   };
 }
@@ -35,6 +41,8 @@ const initialState: AdminState = {
     users: [],
     tourOrders: [],
     hotelOrders: [],
+    notifications: [],
+    totalNotifications: 0,
     totalTourOrders: 0,
     totalHotelOrders: 0,
     usersCount: 0,
@@ -166,6 +174,18 @@ const adminSlicer = createSlice({
       }
       state.value.loading = false;
     },
+    getAdminNotifications: (state) => {
+      state.value.loading = true;
+    },
+    setAdminNotifications: (state, action) => {
+      state.value.notifications = action.payload.notification
+        ? [...action.payload.notification]
+        : [];
+      state.value.totalNotifications = action.payload.notification
+        ? action.payload.notification.length
+        : state.value.totalNotifications;
+      state.value.loading = false;
+    },
   },
 });
 
@@ -177,6 +197,7 @@ export const {
   getAdminAllUserData,
   getAdminTourOrdersData,
   getAdminHotelOrdersData,
+  getAdminNotifications,
   setAdminBannerData,
   setAdminHotelRequestData,
   setAdminTourRequestData,
@@ -184,6 +205,7 @@ export const {
   setAdminAllUserData,
   setAdminHotelOrdersData,
   setAdminTourOrdersData,
+  setAdminNotifications,
 } = adminSlicer.actions;
 
 export default adminSlicer.reducer;
