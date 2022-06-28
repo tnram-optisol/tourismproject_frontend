@@ -18,6 +18,15 @@ import AdminLayout from "Component/Wrapper/AdminLayout";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
 import Loader from "Layout/Loader";
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 const AdminTourOrders = () => {
   const tourOrders = useAppSelector((state) => state.admin.value.tourOrders);
@@ -74,7 +83,7 @@ const AdminTourOrders = () => {
                     <TableCell>Order Id</TableCell>
                     <TableCell>Order By</TableCell>
                     <TableCell>Email</TableCell>
-                    <TableCell>Description</TableCell>
+                    <TableCell>Package </TableCell>
                     <TableCell>OrderCost</TableCell>
                     <TableCell>Order Status</TableCell>
                   </TableRow>
@@ -92,7 +101,7 @@ const AdminTourOrders = () => {
                         {order.email}
                       </TableCell>
                       <TableCell className="text-primary">
-                        {order.description}
+                        {order.bookTour.tour.package_name}
                       </TableCell>
                       <TableCell className="text-danger">
                         ₹ {order.orderCost}
@@ -125,6 +134,25 @@ const AdminTourOrders = () => {
                   </TableRow>
                 </TableBody>
               </MyTable>
+            </Box>
+            <Box className="mt-2">
+              <Typography variant="h6">All Tour Orders</Typography>
+              <LineChart
+                width={400}
+                height={250}
+                data={tourOrders}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="bookTour.tour.package_name"
+                  name="Package Name"
+                />
+                <YAxis name="Order Cost" />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="orderCost" stroke="#8884d8" />
+              </LineChart>
             </Box>
           </Grid>
         ) : (

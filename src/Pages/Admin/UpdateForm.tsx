@@ -64,18 +64,7 @@ const UpdateForm = () => {
           redirect={navigate}
           options={category}
           apiCall={adminPostTourUpdate}
-        >
-          {SETCATEGORY_FORM_DATA.map((el, index) => (
-            <InputControl
-              key={index}
-              control={el.control}
-              name={el.name}
-              id={el.name}
-              label={el.label}
-              type={el.type}
-            />
-          ))}
-        </FormikContainer>
+        />
       </Box>
     </AdminLayout>
   );

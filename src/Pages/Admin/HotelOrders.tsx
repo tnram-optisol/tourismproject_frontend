@@ -18,6 +18,15 @@ import AdminLayout from "Component/Wrapper/AdminLayout";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
 import Loader from "Layout/Loader";
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 const AdminHotelOrders = () => {
   const hotelOrders = useAppSelector((state) => state.admin.value.hotelOrders);
@@ -125,6 +134,22 @@ const AdminHotelOrders = () => {
                   </TableRow>
                 </TableBody>
               </MyTable>
+            </Box>
+            <Box className="mt-2">
+              <Typography variant="h6">All Hotel Orders</Typography>
+              <LineChart
+                width={400}
+                height={250}
+                data={hotelOrders}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="bookRoom.room.room_name" />
+                <YAxis name="Order Cost" />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="orderCost" stroke="#8884d8" />
+              </LineChart>
             </Box>
           </Grid>
         ) : (

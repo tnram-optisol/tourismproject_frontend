@@ -27,18 +27,7 @@ function SequenceForm(props:any) {
         buttonName={"Set Sequence"}
         apiCall={adminSequence}
         endPoint={"/admin/sequence"}
-      >
-        {SEQUENCE_FORM_DATA.map((el, index) => (
-          <InputControl
-            key={index}
-            control={el.control}
-            name={el.name}
-            id={el.name}
-            label={el.label}
-            type={el.type}
-          />
-        ))}
-      </FormikContainer>
+      />
     </Box>
   );
 }

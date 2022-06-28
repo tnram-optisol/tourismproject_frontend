@@ -16,7 +16,7 @@ import { useAppDispatch } from "hooks/useAppDispatch";
 
 function Dashboard() {
   const packages = useAppSelector((state) => state.tour.value.tour);
-  const loading = useAppSelector((state) => state.user.value.loading);
+  const loading = useAppSelector((state) => state.tour.value.loading);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getUserTourData());

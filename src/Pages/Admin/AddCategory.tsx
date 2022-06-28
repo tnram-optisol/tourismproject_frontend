@@ -22,18 +22,7 @@ function AddCategory() {
         apiCall={adminPostCategory}
         endPoint={"/admin/category"}
         redirect={navigate}
-      >
-        {CATEGORY_FORM_DATA.map((el, index) => (
-          <InputControl
-            key={index}
-            control={el.control}
-            name={el.name}
-            id={el.name}
-            label={el.label}
-            type={el.type}
-          />
-        ))}
-      </FormikContainer>
+      />
     </Box>
   );
 }
