@@ -18,6 +18,7 @@ function FormikContainer(props: any) {
     redirect,
     location,
     options,
+    children,
   } = props;
   const dispatch = useDispatch();
   const onSubmit = (values: { [x: string]: string | Blob; file: any }) => {
@@ -99,6 +100,7 @@ function FormikContainer(props: any) {
                 options={el.control === "select" ? options : ""}
               />
             ))}
+            {children}
             <Button
               type="submit"
               className="mt-2"

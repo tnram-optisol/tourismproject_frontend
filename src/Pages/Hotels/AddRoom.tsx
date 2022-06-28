@@ -11,7 +11,7 @@ import AdminLayout from "Component/Wrapper/AdminLayout";
 import FormControl from "Component/Form/FormControl";
 
 function AddRoom() {
-  let hotel:any = useParams();
+  let hotel: any = useParams();
   let hotelId = parseInt(hotel.id);
   const navigate = useNavigate();
   const initialValues = {
@@ -33,18 +33,7 @@ function AddRoom() {
           redirect={navigate}
           apiCall={addRoom}
           endPoint={`/hotel/add/room`}
-        >
-          {ADDROOM_FORM_DATA.map((el, index) => (
-            <FormControl
-              key={index}
-              control={el.control}
-              name={el.name}
-              id={el.name}
-              label={el.label}
-              type={el.type}
-            />
-          ))}
-        </FormikContainer>
+        />
       </Box>
     </AdminLayout>
   );

@@ -58,18 +58,7 @@ const TourForm = () => {
         endPoint={tourId > 0 ? `/tour/update` : `/tour/add`}
         location={"/view/tours"}
         redirect={navigate}
-      >
-        {ADDTOUR_FORM_DATA.map((el, index) => (
-          <FormControl
-            key={index}
-            control={el.control}
-            name={el.name}
-            id={el.name}
-            label={el.label}
-            type={el.type}
-          />
-        ))}
-      </FormikContainer>
+      />
     </AdminLayout>
   );
 };

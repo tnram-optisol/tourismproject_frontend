@@ -244,18 +244,7 @@ export default function ViewRooms() {
                             apiCall={roomBooking}
                             redirect={navigate}
                             location={"/my/bookings/hotel/bookings"}
-                          >
-                            {BOOKROOM_FORM_DATA.map((el, index) => (
-                              <FormControl
-                                key={index}
-                                control={el.control}
-                                name={el.name}
-                                id={el.name}
-                                label={el.label}
-                                type={el.type}
-                              />
-                            ))}
-                          </FormikContainer>
+                          />
                         </Container>
                       </Box>
                     </Card>

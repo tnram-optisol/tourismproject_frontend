@@ -89,3 +89,7 @@ thead:hover {
 .main {
   min-height: 100vh;
 }
+
+.active {
+  font-weight: bolder;
+}

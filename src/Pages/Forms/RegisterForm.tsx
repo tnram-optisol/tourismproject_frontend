@@ -11,9 +11,8 @@ import { SIGNUP_VALIDATION_SCHEMA } from "utils/Form/ValidationSchema/formValida
 import { signUp } from "Services/authService";
 import UserLayout from "Component/Wrapper/UserLayout";
 
-
 export default function RegisterForm(props: any) {
-  let role:any = useParams();
+  let role: any = useParams();
   let userRole = parseInt(role.id);
   const initialValues = {
     ...SIGNUP_INITIAL_VALUES,
@@ -33,18 +32,7 @@ export default function RegisterForm(props: any) {
           apiCall={signUp}
           redirect={navigate}
           location={"/login"}
-        >
-          {SIGNUP_FORM_DATA.map((el, index) => (
-            <FormControl
-              key={index}
-              control={el.control}
-              name={el.name}
-              id={el.name}
-              label={el.label}
-              type={el.type}
-            />
-          ))}
-        </FormikContainer>
+        />
       </Box>
     </UserLayout>
   );

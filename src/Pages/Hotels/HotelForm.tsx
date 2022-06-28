@@ -34,18 +34,7 @@ const HotelForm = (props: any) => {
           redirect={navigate}
           apiCall={addHotel}
           endPoint={`/hotel/add/hotel`}
-        >
-          {ADDHOTEL_FORM_DATA.map((el, index) => (
-            <FormControl
-              key={index}
-              control={el.control}
-              name={el.name}
-              id={el.name}
-              label={el.label}
-              type={el.type}
-            />
-          ))}
-        </FormikContainer>
+        />
       </Box>
     </AdminLayout>
   );

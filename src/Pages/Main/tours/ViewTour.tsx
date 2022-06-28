@@ -268,18 +268,7 @@ export default function ViewTour(props: any) {
                           apiCall={tourBooking}
                           redirect={navigate}
                           location={"/my/bookings/tour/bookings"}
-                        >
-                          {BOOKTOUR_FORM_DATA.map((el, index) => (
-                            <FormControl
-                              key={index}
-                              control={el.control}
-                              name={el.name}
-                              id={el.name}
-                              label={el.label}
-                              type={el.type}
-                            />
-                          ))}
-                        </FormikContainer>
+                        />
                       </Box>
                     </Card>
                   </Grid>

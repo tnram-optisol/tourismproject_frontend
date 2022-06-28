@@ -1,9 +1,11 @@
 import {
+  Box,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
@@ -13,6 +15,15 @@ import { getAdminTourOrders } from "store/reducers/tourReducer";
 import Loader from "Layout/Loader";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 function TourOrders() {
   const dispatch = useAppDispatch();
@@ -40,71 +51,94 @@ function TourOrders() {
   return (
     <AdminLayout>
       {!loading ? (
-        <MyTable>
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ width: "10%" }}> Order Id </TableCell>
-              <TableCell sx={{ width: "10%" }}> Booked On </TableCell>
-              <TableCell sx={{ width: "10%" }}> Recipient </TableCell>
-              <TableCell sx={{ width: "10%" }}> Recipient Email </TableCell>
-              <TableCell sx={{ width: "10%" }}> Recipient Contact </TableCell>
-              <TableCell sx={{ width: "7%" }}>Package Name</TableCell>
-              <TableCell sx={{ width: "7%" }}>From Location</TableCell>
-              <TableCell sx={{ width: "7%" }}>To Location</TableCell>
-              <TableCell sx={{ width: "7%" }}>Tour Cost</TableCell>
-              <TableCell sx={{ width: "5%" }}>Discount</TableCell>
-              <TableCell sx={{ width: "5%" }}>Deductions</TableCell>
-              <TableCell align="right">Paid Price</TableCell>
-              <TableCell sx={{ width: "7%" }}>Order Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {tourOrders.map((tour, index) => (
-              <TableRow key={index}>
-                <TableCell>{tour.order_id}</TableCell>
-                <TableCell>
-                  {new Date(tour.orderdAt).toLocaleDateString()}
-                </TableCell>
-                <TableCell>{tour.purchased_by}</TableCell>
-                <TableCell>{tour.email}</TableCell>
-                <TableCell>{tour.user.contact}</TableCell>
-                <TableCell>{tour.bookTour.tour.package_name}</TableCell>
-                <TableCell>{tour.bookTour.tour.from}</TableCell>
-                <TableCell>{tour.bookTour.tour.to}</TableCell>
-                <TableCell className="text-danger">
-                  INR {tour.bookTour.tour.cost}
-                </TableCell>
-                <TableCell className="text-danger">{tour.discount}%</TableCell>
-                <TableCell className="text-danger">
-                  {" "}
-                  INR {tour.bookTour.tour.cost - tour.orderCost}
-                </TableCell>
-                <TableCell className="text-danger">
-                  {" "}
-                  INR {tour.orderCost}
-                </TableCell>
-                <TableCell
-                  className={tour.orderStatus ? "text-success" : "text-danger"}
-                >
-                  {" "}
-                  {tour.orderStatus ? "Booked" : "Canceled"}
-                </TableCell>
+        <Box className="mt-2">
+          <Typography variant="h6">All Tour Orders</Typography>
+          <MyTable>
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ width: "10%" }}> Order Id </TableCell>
+                <TableCell sx={{ width: "10%" }}> Booked On </TableCell>
+                <TableCell sx={{ width: "10%" }}> Recipient </TableCell>
+                <TableCell sx={{ width: "10%" }}> Recipient Email </TableCell>
+                <TableCell sx={{ width: "10%" }}> Recipient Contact </TableCell>
+                <TableCell sx={{ width: "7%" }}>Package Name</TableCell>
+                <TableCell sx={{ width: "7%" }}>From Location</TableCell>
+                <TableCell sx={{ width: "7%" }}>To Location</TableCell>
+                <TableCell sx={{ width: "7%" }}>Tour Cost</TableCell>
+                <TableCell sx={{ width: "5%" }}>Discount</TableCell>
+                <TableCell sx={{ width: "5%" }}>Deductions</TableCell>
+                <TableCell align="right">Paid Price</TableCell>
+                <TableCell sx={{ width: "7%" }}>Order Status</TableCell>
               </TableRow>
-            ))}
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 10]}
-                rowSpan={2}
-                colSpan={6}
-                count={totalTourOrders}
-                rowsPerPage={limit}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </TableRow>
-          </TableBody>
-        </MyTable>
+            </TableHead>
+            <TableBody>
+              {tourOrders.map((tour, index) => (
+                <TableRow key={index}>
+                  <TableCell>{tour.order_id}</TableCell>
+                  <TableCell>
+                    {new Date(tour.orderdAt).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell>{tour.purchased_by}</TableCell>
+                  <TableCell>{tour.email}</TableCell>
+                  <TableCell>{tour.user.contact}</TableCell>
+                  <TableCell>{tour.bookTour.tour.package_name}</TableCell>
+                  <TableCell>{tour.bookTour.tour.from}</TableCell>
+                  <TableCell>{tour.bookTour.tour.to}</TableCell>
+                  <TableCell className="text-danger">
+                    INR {tour.bookTour.tour.cost}
+                  </TableCell>
+                  <TableCell className="text-danger">
+                    {tour.discount}%
+                  </TableCell>
+                  <TableCell className="text-danger">
+                    {" "}
+                    INR {tour.bookTour.tour.cost - tour.orderCost}
+                  </TableCell>
+                  <TableCell className="text-danger">
+                    {" "}
+                    INR {tour.orderCost}
+                  </TableCell>
+                  <TableCell
+                    className={
+                      tour.orderStatus ? "text-success" : "text-danger"
+                    }
+                  >
+                    {" "}
+                    {tour.orderStatus ? "Booked" : "Canceled"}
+                  </TableCell>
+                </TableRow>
+              ))}
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10]}
+                  rowSpan={2}
+                  colSpan={6}
+                  count={totalTourOrders}
+                  rowsPerPage={limit}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </TableRow>
+            </TableBody>
+          </MyTable>
+          <Box className="mt-2">
+            <Typography variant="h6">All Tour Orders</Typography>
+            <LineChart
+              width={400}
+              height={250}
+              data={tourOrders}
+              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="bookTour.tour.package_name" name="Package Name" />
+              <YAxis name="Order Cost" />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="orderCost" stroke="#8884d8" />
+            </LineChart>
+          </Box>
+        </Box>
       ) : (
         <Loader />
       )}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import FormikContainer from "Component/Form/FormikContainer";
@@ -9,7 +9,6 @@ import { LOGIN_VALIDATION_SCHEMA } from "utils/Form/ValidationSchema/formValidat
 import { signIn } from "Services/authService";
 import UserLayout from "Component/Wrapper/UserLayout";
 import "./Forms.css";
-import FormControl from "Component/Form/FormControl";
 
 export default function LoginForm(props: any) {
   const navigate = useNavigate();
@@ -26,16 +25,21 @@ export default function LoginForm(props: any) {
           endPoint={"/signIn"}
           redirect={navigate}
         >
-          {LOGIN_FORM_DATA.map((el, index) => (
-            <FormControl
-              key={index}
-              control={el.control}
-              name={el.name}
-              id={el.name}
-              label={el.label}
-              type={el.type}
-            />
-          ))}
+          <Box className="mt-2">
+            <Typography variant="body1" color="red">
+              Forgot Password
+              <Button
+                variant="text"
+                color="error"
+                className="m-2 d-inline"
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Reset Password
+              </Button>
+            </Typography>
+          </Box>
         </FormikContainer>
       </Box>
     </UserLayout>

@@ -36,3 +36,9 @@ export interface OrdersModel {
   orderdAt: Date;
   user: UserModel;
 }
+
+export interface NotificationModel {
+  id: number;
+  notification: string;
+  type: string;
+}
