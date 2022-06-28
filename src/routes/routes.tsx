@@ -38,6 +38,7 @@ import AdminTourOrders from "Pages/Admin/TourOrders";
 import AdminHotelOrders from "Pages/Admin/HotelOrders";
 import TourRequests from "Pages/Admin/TourRequests";
 import HotelRequests from "Pages/Admin/HotelRequests";
+import Notification from "Pages/Admin/Notification";
 
 export default function MyRoutes() {
   const role = useAppSelector((state) => state.auth.value.role);
@@ -86,6 +87,10 @@ export default function MyRoutes() {
               <Route path="/admin/category" element={<Category />}></Route>{" "}
               <Route path="/admin/banner" element={<Banner />}></Route>{" "}
               <Route path="/admin/dashboard" element={<Dashboard />}></Route>{" "}
+              <Route
+                path="/admin/notification"
+                element={<Notification />}
+              ></Route>{" "}
               <Route path="/admin/users" element={<Users />}></Route>
               <Route
                 path="/admin/tour/orders"
