@@ -3,7 +3,6 @@ import React from "react";
 import { ToastContainer } from "react-toastify";
 
 import FormikContainer from "Component/Form/FormikContainer";
-import InputControl from "Component/Form/InputControl";
 import { adminSequence } from "Services/api/adminAPI";
 import { SEQUENCE_FORM_DATA } from "utils/Form/formFields/formFields";
 import { SEQUENCE_INITIAL_VALUES } from "utils/Form/InitialValues/formInitial";

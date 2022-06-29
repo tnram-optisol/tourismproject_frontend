@@ -44,9 +44,9 @@ function FormikContainer(props: any) {
           console.log(err);
         });
     } else {
-      apiCall(values)
-        .then(async (res: any) => {
-          if (endPoint === "/signIn") {
+      if (endPoint === "/signIn") {
+        apiCall(values)
+          .then(async (res: { data: { token: string } }) => {
             localStorage.setItem("token", res.data.token);
             toast("Logged in Successfully");
             let user = await JSON.parse(
@@ -58,7 +58,15 @@ function FormikContainer(props: any) {
               })
             );
             redirect("/");
-          } else {
+          })
+          .catch((err: any) => {
+            if (err.response.data) {
+              toast.error(err.response.data);
+            }
+          });
+      } else {
+        apiCall(values)
+          .then((res: any) => {
             if (res.data.errors) {
               toast.error(res.data.errors);
             } else {
@@ -67,11 +75,16 @@ function FormikContainer(props: any) {
             if (!res.data.errors && location) {
               redirect(location);
             }
-          }
-        })
-        .catch((err: any) => {
-          console.log(err);
-        });
+          })
+          .catch((err: any) => {
+            if (err.response.data.errors) {
+              const data = [...err.response.data.errors];
+              data.map((e) => toast.error(e.msg));
+            } else {
+              toast(err.response.data);
+            }
+          });
+      }
     }
   };
   const handleOnChange = (event: any) => {

@@ -12,10 +12,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
-import {
-  getOrders,
-  refundOrders,
-} from "Services/api/ordersAPI";
+import { getOrders, refundHotelOrders } from "Services/api/ordersAPI";
 import {
   cancelRoomBookings,
   cancelTourBookings,
@@ -106,7 +103,7 @@ export default function HotelBookings(props: any) {
     );
     console.log(row);
     if (userConfirm) {
-      refundOrders({
+      refundHotelOrders({
         bookId: row.id,
       })
         .then((res) => {

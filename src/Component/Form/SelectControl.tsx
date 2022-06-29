@@ -10,10 +10,11 @@ interface Options {
 
 function SelectControl(props: any) {
   const { label, name, options } = props;
+  const optionsObj = options[0];
   const [field, meta, helpers] = useField(props);
   const optionsData: Options[] = [];
-  if (options) {
-    for (let option of options) {
+  if (optionsObj) {
+    for (let option of optionsObj) {
       optionsData.push({ label: option.category, value: option.id });
     }
   }

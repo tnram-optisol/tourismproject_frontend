@@ -68,7 +68,7 @@ export default function CanceledOrders() {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.order_id}
+                  {row.order_id.split("-")[0]}
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {row.bookTour.tour.package_name}

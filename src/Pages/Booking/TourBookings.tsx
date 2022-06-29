@@ -6,7 +6,6 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -14,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-import { getOrders, refundOrders } from "Services/api/ordersAPI";
+import { getOrders, refundTourOrders } from "Services/api/ordersAPI";
 import { cancelTourBookings } from "Services/api/bookingAPI";
 import MyTable from "Component/Table/MyTable";
 import { useAppDispatch } from "hooks/useAppDispatch";
@@ -107,7 +106,7 @@ export default function TourBookings(props: any) {
     );
     console.log(row);
     if (userConfirm) {
-      refundOrders({
+      refundTourOrders({
         bookId: row.book_id,
       })
         .then((res) => {
@@ -200,19 +199,15 @@ export default function TourBookings(props: any) {
                     </TableCell>
                     {!row.payment ? (
                       <TableCell>
-                        <Tooltip
-                          title={<>Use Promotion code VIPTOUR at checkout</>}
+                        <Button
+                          variant="outlined"
+                          color="success"
+                          className="btn m-2"
+                          onClick={() => handlePayNow(row)}
                         >
-                          <Button
-                            variant="outlined"
-                            color="success"
-                            className="btn m-2"
-                            onClick={() => handlePayNow(row)}
-                          >
-                            {" "}
-                            Pay Now{" "}
-                          </Button>
-                        </Tooltip>
+                          {" "}
+                          Pay Now{" "}
+                        </Button>
                         <Button
                           variant="outlined"
                           color="error"

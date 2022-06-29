@@ -45,7 +45,7 @@ const userSlicer = createSlice({
       state.value.loading = true;
     },
     setUserBookingData: (state, action) => {
-      if (action.payload.roomBooking) {
+      if (action.payload.roomBooking[1] > 0) {
         state.value.hotelOrders =
           action.payload.roomBooking[0].length > 0
             ? [...action.payload.roomBooking[0]]
@@ -54,6 +54,7 @@ const userSlicer = createSlice({
           action.payload.roomBooking[1] > 0
             ? action.payload.roomBooking[1]
             : state.value.totalHotelOrders;
+      } else if (action.payload.tourBooking[1] > 0) {
         state.value.tourOrders =
           action.payload.tourBooking[0].length > 0
             ? [...action.payload.tourBooking[0]]
@@ -74,15 +75,21 @@ const userSlicer = createSlice({
       state.value.loading = true;
     },
     setUserCanceledOrders: (state, action) => {
-      state.value.canceledOrders =
-        action.payload[0].length > 0
-          ? [...action.payload[0]]
-          : [...action.payload];
-      state.value.totalCanceledOrders =
-        action.payload[1] > 0
-          ? action.payload[1]
-          : state.value.totalCanceledOrders;
-      state.value.loading = false;
+      if (action.payload[1] > 0 || action.payload[0].length > 0) {
+        state.value.canceledOrders =
+          action.payload[0].length > 0
+            ? [...action.payload[0]]
+            : [...action.payload];
+        state.value.totalCanceledOrders =
+          action.payload[1] > 0
+            ? action.payload[1]
+            : state.value.totalCanceledOrders;
+        state.value.loading = false;
+      } else {
+        state.value.canceledOrders = [];
+        state.value.totalCanceledOrders = 0;
+        state.value.loading = false;
+      }
     },
   },
 });

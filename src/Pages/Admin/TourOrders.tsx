@@ -59,15 +59,13 @@ const AdminTourOrders = () => {
       <Box className="mt-2">
         {!loading ? (
           <Grid container spacing={2}>
-            <Grid item>
+            <Box className="mt-2">
               <Typography variant="h6" color="blue">
                 All Tour Orders
               </Typography>
-            </Grid>
-            <Box className="mt-2">
               <FormControl>
                 <TextField
-                  className="mr-auto"
+                  className="m-2"
                   id="outlined-basic"
                   label="Outlined"
                   variant="outlined"
@@ -92,7 +90,7 @@ const AdminTourOrders = () => {
                   {tourOrders.map((order, index) => (
                     <TableRow key={index}>
                       <TableCell className="text-primary">
-                        {order.order_id}
+                        {order.order_id.split("-")[0]}
                       </TableCell>
                       <TableCell className="text-primary">
                         {order.purchased_by}

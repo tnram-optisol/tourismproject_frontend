@@ -36,7 +36,6 @@ import { BOOKTOUR_INITIAL_VALUES } from "utils/Form/InitialValues/formInitial";
 import FormikContainer from "Component/Form/FormikContainer";
 import { BOOKTOUR_FORM_DATA } from "utils/Form/formFields/formFields";
 import { tourBooking } from "Services/api/bookingAPI";
-import FormControl from "Component/Form/FormControl";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
 

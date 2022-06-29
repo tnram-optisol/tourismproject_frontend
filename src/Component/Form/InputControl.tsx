@@ -10,7 +10,7 @@ function InputControl(props: any) {
     <div>
       <label htmlFor={label}>{label}</label>
       <Field name={name}>
-        {({ form, field }:any) => {
+        {({ form, field }: any) => {
           const { setFieldValue } = form;
           const { value } = field;
           return name !== "rating" ? (
@@ -19,6 +19,7 @@ function InputControl(props: any) {
               type={type}
               {...field}
               {...rest}
+              placeholder={`Please enter ${name}`}
               onChange={(event) => setFieldValue(name, event.target.value)}
             />
           ) : (

@@ -8,6 +8,7 @@ import { MDBBtn } from "mdb-react-ui-kit";
 import axiosIntercept from "Services/axios";
 import UserLayout from "Component/Wrapper/UserLayout";
 import MyCarousel from "Layout/Carousel";
+import AnimatedText from "Component/styled/AnimatedText";
 
 function MyPayment() {
   const location: any = useLocation();
@@ -67,8 +68,12 @@ function MyPayment() {
   }
   return (
     <UserLayout>
-      <MyCarousel/>
+      <MyCarousel />
       <Box className="m-5">
+        <AnimatedText
+          data={"USE CODE TOUR20 For Discount"}
+          className="text-center"
+        />
         {location.state.data.tour ? (
           <Box className="m-auto ">
             <Typography variant="h6" className="text-center text-success">
