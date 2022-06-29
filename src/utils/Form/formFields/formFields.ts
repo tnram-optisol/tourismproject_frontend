@@ -1,4 +1,3 @@
-
 export const LOGIN_FORM_DATA = [
   {
     control: "input",
@@ -338,5 +337,41 @@ export const BOOKROOM_FORM_DATA = [
     label: "Total Guests",
     name: "maxPerson",
     type: "select",
+  },
+];
+
+export const GETOTP_FORM_DATA = [
+  {
+    control: "input",
+    label: "Email",
+    name: "email",
+    type: "email",
+  },
+];
+
+export const RESETPASS_FORM_DATA = [
+  {
+    control: "input",
+    label: "Email",
+    name: "email",
+    type: "email",
+  },
+  {
+    control: "input",
+    label: "OTP",
+    name: "otp",
+    type: "number",
+  },
+  {
+    control: "input",
+    label: "New Password",
+    name: "password",
+    type: "password",
+  },
+  {
+    control: "input",
+    label: "Confirm  Password",
+    name: "cnf_password",
+    type: "password",
   },
 ];

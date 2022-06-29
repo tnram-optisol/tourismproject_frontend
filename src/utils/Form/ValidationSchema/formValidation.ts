@@ -93,3 +93,13 @@ export const POSTREVIEW_VALIDATION_SCHEMA = Yup.object({
   comment: Yup.string().required("Required"),
   rating: Yup.number().min(1).required("Required"),
 });
+export const GETOTP_VALIDATION_SCHEMA = Yup.object({
+  email: Yup.string().email("Must be valid").required("Required"),
+});
+
+export const RESETPASS_VALIDATION_SCHEMA = Yup.object({
+  email: Yup.string().email("Must be valid").required("Required"),
+  otp: Yup.number().min(100000).max(999999).required("Required"),
+  password: Yup.string().length(6).required("Required"),
+  cnf_password: Yup.string().length(6).required("Required"),
+});
