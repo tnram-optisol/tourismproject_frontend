@@ -1,7 +1,6 @@
-.login
-{
-width: 70%;
-margin: 10% auto;
+.login {
+    width: 70%;
+    margin: 5% auto;
 }
 
 .login input {
@@ -23,6 +22,7 @@ margin: 10% auto;
     display: block;
     margin: 10px auto;
 }
+
 .login.form-control,
 .register .form-control {
     margin: 10px;

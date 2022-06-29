@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import FormikContainer from "Component/Form/FormikContainer";
@@ -26,19 +26,16 @@ export default function LoginForm(props: any) {
           redirect={navigate}
         >
           <Box className="mt-2">
-            <Typography variant="body1" color="red">
-              Forgot Password
-              <Button
-                variant="text"
-                color="error"
-                className="m-2 d-inline"
-                onClick={() => {
-                  navigate("/login");
-                }}
-              >
-                Reset Password
-              </Button>
-            </Typography>
+            <Button
+              variant="text"
+              color="error"
+              className="m-2 d-inline"
+              onClick={() => {
+                navigate("/get-otp");
+              }}
+            >
+              Reset Password
+            </Button>
           </Box>
         </FormikContainer>
       </Box>
