@@ -20,3 +20,23 @@ export function signUp(values: {
   console.log(values);
   return axios.post(`${process.env.REACT_APP_SERVER_URL}/signup`, { user });
 }
+
+export function sendOtp(values: { email: string }) {
+  return axios.post(`${process.env.REACT_APP_SERVER_URL}/get-otp`, {
+    email: values.email,
+  });
+}
+
+export function resetPass(values: {
+  email: string;
+  otp: number;
+  password: string;
+  cnf_password: string;
+}) {
+  return axios.post(`${process.env.REACT_APP_SERVER_URL}/reset-pass`, {
+    email: values.email,
+    otp: values.otp,
+    password: values.password,
+    cnf_password: values.cnf_password,
+  });
+}

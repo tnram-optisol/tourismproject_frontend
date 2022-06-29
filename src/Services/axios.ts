@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const token = localStorage.getItem("token");
@@ -32,7 +31,6 @@ axiosIntercept.interceptors.request.use(
 
 axiosIntercept.interceptors.response.use(
   (res) => {
-    console.log(res);
     return res;
   },
   (err) => {

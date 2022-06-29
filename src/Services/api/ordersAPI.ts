@@ -2,7 +2,8 @@ import { createApi } from "Services/createApi";
 import {
   CANCEL_ORDERS,
   GET_ORDERS,
-  REFUND_ORDERS,
+  REFUND_HOTEL_ORDERS,
+  REFUND_TOUR_ORDERS,
 } from "Services/services.constants";
 import axiosIntercept from "../axios";
 
@@ -22,8 +23,16 @@ export function getCanceledOrders() {
   });
 }
 
-export function refundOrders(data: { bookId: any }) {
-  return axiosIntercept.post(`${SERVER_URL}${REFUND_ORDERS}`, data);
+export function refundTourOrders(data: { bookId: any }) {
+  return axiosIntercept.post(`${SERVER_URL}${REFUND_TOUR_ORDERS}`, {
+    bookId: data.bookId,
+  });
+}
+
+export function refundHotelOrders(data: { bookId: any }) {
+  return axiosIntercept.post(`${SERVER_URL}${REFUND_HOTEL_ORDERS}`, {
+    bookId: data.bookId,
+  });
 }
 
 export function ordersPaginate(
