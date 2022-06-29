@@ -39,6 +39,8 @@ import AdminHotelOrders from "Pages/Admin/HotelOrders";
 import TourRequests from "Pages/Admin/TourRequests";
 import HotelRequests from "Pages/Admin/HotelRequests";
 import Notification from "Pages/Admin/Notification";
+import SendOTP from "Pages/Forms/SendOTP";
+import ResetPass from "Pages/Forms/ResetPass";
 
 export default function MyRoutes() {
   const role = useAppSelector((state) => state.auth.value.role);
@@ -128,6 +130,8 @@ export default function MyRoutes() {
           )}
         </Route>
         <Route path="/signin" element={<LoginForm />} />
+        <Route path="/get-otp" element={<SendOTP />} />
+        <Route path="/reset-password" element={<ResetPass />} />
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/signup/:id" element={<RegisterForm />} />
         <Route path="*" element={<AccessDenied />} />
