@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, SagaReturnType, takeLatest } from "redux-saga/effects";
 import { adminNotification, adminPaginate } from "Services/api/adminAPI";
 import {
   getAdminAllUserData,
@@ -19,9 +19,12 @@ import {
   setAdminTourRequestData,
 } from "store/reducers/adminReducer";
 
-export function* setAdminBannerHandler(payload) {
+export function* setAdminBannerHandler(payload: {
+  payload: { page: number; limit: number; searchQuery: string | undefined };
+  type: typeof adminPaginate;
+}) {
   try {
-    const response = yield call(
+    const response: SagaReturnType<typeof adminPaginate> = yield call(
       adminPaginate,
       "/admin/banner",
       payload.payload.page,
@@ -36,9 +39,12 @@ export function* setAdminBannerHandler(payload) {
   }
 }
 
-export function* setAdminHotelRequestHandler(payload) {
+export function* setAdminHotelRequestHandler(payload: {
+  payload: { page: number; limit: number; searchQuery: string | undefined };
+  type: typeof adminPaginate;
+}) {
   try {
-    const response = yield call(
+    const response: SagaReturnType<typeof adminPaginate> = yield call(
       adminPaginate,
       "/admin/request/hotel",
       payload.payload.page,
@@ -53,9 +59,12 @@ export function* setAdminHotelRequestHandler(payload) {
   }
 }
 
-export function* setAdminTourRequestHandler(payload) {
+export function* setAdminTourRequestHandler(payload: {
+  payload: { page: number; limit: number; searchQuery: string | undefined };
+  type: typeof adminPaginate;
+}) {
   try {
-    const response = yield call(
+    const response: SagaReturnType<typeof adminPaginate> = yield call(
       adminPaginate,
       "/admin/request/tour",
       payload.payload.page,
@@ -70,9 +79,12 @@ export function* setAdminTourRequestHandler(payload) {
   }
 }
 
-export function* setAdminHotelOrdersHandler(payload) {
+export function* setAdminHotelOrdersHandler(payload: {
+  payload: { page: number; limit: number; searchQuery: string | undefined };
+  type: typeof adminPaginate;
+}) {
   try {
-    const response = yield call(
+    const response: SagaReturnType<typeof adminPaginate> = yield call(
       adminPaginate,
       "/admin/hotel/orders",
       payload.payload.page,
@@ -87,9 +99,12 @@ export function* setAdminHotelOrdersHandler(payload) {
   }
 }
 
-export function* setAdminTourOrdersHandler(payload) {
+export function* setAdminTourOrdersHandler(payload: {
+  payload: { page: number; limit: number; searchQuery: string | undefined };
+  type: typeof adminPaginate;
+}) {
   try {
-    const response = yield call(
+    const response: SagaReturnType<typeof adminPaginate> = yield call(
       adminPaginate,
       "/admin/tour/orders",
       payload.payload.page,
@@ -103,10 +118,13 @@ export function* setAdminTourOrdersHandler(payload) {
     console.log(err);
   }
 }
-export function* setAdminCategoryHandler(payload) {
+export function* setAdminCategoryHandler(payload: {
+  payload: { page: number; limit: number; searchQuery: string | undefined };
+  type: typeof adminPaginate;
+}) {
   console.log(payload);
   try {
-    const response = yield call(
+    const response: SagaReturnType<typeof adminPaginate> = yield call(
       adminPaginate,
       "/admin/category",
       payload.payload.page,
@@ -121,9 +139,12 @@ export function* setAdminCategoryHandler(payload) {
   }
 }
 
-export function* setAdminAllUsersHandler(payload) {
+export function* setAdminAllUsersHandler(payload: {
+  payload: { page: number; limit: number; searchQuery: string | undefined };
+  type: typeof adminPaginate;
+}) {
   try {
-    const response = yield call(
+    const response: SagaReturnType<typeof adminPaginate> = yield call(
       adminPaginate,
       "/admin/all/users",
       payload.payload.page,
@@ -138,9 +159,11 @@ export function* setAdminAllUsersHandler(payload) {
   }
 }
 
-export function* setAdminNotificationsHandler(payload) {
+export function* setAdminNotificationsHandler(payload: any) {
   try {
-    const response = yield call(adminNotification);
+    const response: SagaReturnType<typeof adminNotification> = yield call(
+      adminNotification
+    );
     const { data } = response;
     console.log(data);
     yield put(setAdminNotifications(data));

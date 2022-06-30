@@ -53,7 +53,7 @@ const initialState: AdminState = {
 };
 
 const adminSlicer = createSlice({
-  name: "hotel",
+  name: "admin",
   initialState: initialState,
   reducers: {
     getAdminHotelRequestData: (state, action) => {

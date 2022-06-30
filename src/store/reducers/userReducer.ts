@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CategoryModel } from "utils/model/adminModel";
-import { BookRoomModel } from "utils/model/hotelModel";
-import { BookTourModel } from "utils/model/tourModel";
-import { OrdersModel } from "utils/model/userModel";
+import { BookRoomModel, HotelOrdersModel } from "utils/model/hotelModel";
+import { BookTourModel, TourOrdersModel } from "utils/model/tourModel";
 
 export interface UserState {
   value: {
@@ -10,8 +9,10 @@ export interface UserState {
     hotelOrders: BookRoomModel[];
     tourOrders: BookTourModel[];
     totalTourOrders: number;
-    canceledOrders: OrdersModel[];
-    totalCanceledOrders: number;
+    canceledTourOrders: TourOrdersModel[];
+    canceledHotelOrders: HotelOrdersModel[];
+    totalTourCanceledOrders: number;
+    totalHotelCanceledOrders: number;
     totalHotelOrders: number;
     loading: boolean;
   };
@@ -23,8 +24,10 @@ const initialState: UserState = {
     loading: true,
     hotelOrders: [],
     tourOrders: [],
-    canceledOrders: [],
-    totalCanceledOrders: 0,
+    canceledTourOrders: [],
+    canceledHotelOrders: [],
+    totalTourCanceledOrders: 0,
+    totalHotelCanceledOrders: 0,
     totalTourOrders: 0,
     totalHotelOrders: 0,
   },
@@ -75,19 +78,34 @@ const userSlicer = createSlice({
       state.value.loading = true;
     },
     setUserCanceledOrders: (state, action) => {
-      if (action.payload[1] > 0 || action.payload[0].length > 0) {
-        state.value.canceledOrders =
-          action.payload[0].length > 0
-            ? [...action.payload[0]]
-            : [...action.payload];
-        state.value.totalCanceledOrders =
-          action.payload[1] > 0
-            ? action.payload[1]
-            : state.value.totalCanceledOrders;
+      if (action.payload.tourOrder[1] > 0) {
+        state.value.canceledTourOrders =
+          action.payload.tourOrder[0].length > 0
+            ? [...action.payload.tourOrder[0]]
+            : [...action.payload.tourOrder];
+        state.value.totalTourCanceledOrders =
+          action.payload.tourOrder[1] > 0
+            ? action.payload.tourOrder[1]
+            : state.value.totalTourCanceledOrders;
         state.value.loading = false;
       } else {
-        state.value.canceledOrders = [];
-        state.value.totalCanceledOrders = 0;
+        state.value.totalTourCanceledOrders = 0;
+        state.value.canceledTourOrders = [];
+        state.value.loading = false;
+      }
+      if (action.payload.hotelOrder[1] > 0) {
+        state.value.canceledHotelOrders =
+          action.payload.hotelOrder[0].length > 0
+            ? [...action.payload.hotelOrder[0]]
+            : [...action.payload.hotelOrder];
+        state.value.totalHotelCanceledOrders =
+          action.payload.hotelOrder[1] > 0
+            ? action.payload.hotelOrder[1]
+            : state.value.totalHotelCanceledOrders;
+        state.value.loading = false;
+      } else {
+        state.value.totalHotelCanceledOrders = 0;
+        state.value.canceledHotelOrders = [];
         state.value.loading = false;
       }
     },
