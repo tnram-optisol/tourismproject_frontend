@@ -42,8 +42,16 @@ function MyBookings() {
                     <ListItemIcon>
                       <FontAwesomeIcon color="blue" icon={faCodePullRequest} />
                     </ListItemIcon>
-                    <Link to="cancel/bookings" className=" nav-link">
-                      Canceled Bookings
+                    <Link to="cancel/tour" className=" nav-link">
+                      Canceled Tour
+                    </Link>
+                  </ListItem>
+                  <ListItem>
+                    <ListItemIcon>
+                      <FontAwesomeIcon color="blue" icon={faCodePullRequest} />
+                    </ListItemIcon>
+                    <Link to="cancel/hotel" className=" nav-link">
+                      Canceled Hotel
                     </Link>
                   </ListItem>
                 </List>

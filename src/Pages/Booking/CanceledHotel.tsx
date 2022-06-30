@@ -21,10 +21,10 @@ export default function CanceledOrders() {
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.user.value.loading);
   const orderCanceled = useAppSelector(
-    (state) => state.user.value.canceledOrders
+    (state) => state.user.value.canceledHotelOrders
   );
   const totalData = useAppSelector(
-    (state) => state.user.value.totalCanceledOrders
+    (state) => state.user.value.totalHotelCanceledOrders
   );
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -71,13 +71,13 @@ export default function CanceledOrders() {
                   {row.order_id.split("-")[0]}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  {row.bookTour.tour.package_name}
+                  {row.bookRoom.room.room_name}
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {new Date(row.orderdAt).toLocaleDateString()}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  {row.bookTour.max_person}
+                  {row.bookRoom.total_person}
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {row.orderCost}
