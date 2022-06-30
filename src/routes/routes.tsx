@@ -32,7 +32,6 @@ import AccessDenied from "Pages/AccessDenied";
 import { useAppSelector } from "hooks/useAppSelector";
 import TourBookings from "Pages/Booking/TourBookings";
 import HotelBookings from "Pages/Booking/HotelBookings";
-import CanceledOrders from "Pages/Booking/CanceledOrders";
 import Users from "Pages/Admin/Users";
 import AdminTourOrders from "Pages/Admin/TourOrders";
 import AdminHotelOrders from "Pages/Admin/HotelOrders";
@@ -41,6 +40,8 @@ import HotelRequests from "Pages/Admin/HotelRequests";
 import Notification from "Pages/Admin/Notification";
 import SendOTP from "Pages/Forms/SendOTP";
 import ResetPass from "Pages/Forms/ResetPass";
+import CanceledTour from "Pages/Booking/CanceledTour";
+import CanceledHotel from "Pages/Booking/CanceledHotel";
 
 export default function MyRoutes() {
   const role = useAppSelector((state) => state.auth.value.role);
@@ -115,10 +116,8 @@ export default function MyRoutes() {
                   path="hotel/bookings"
                   element={<HotelBookings />}
                 ></Route>
-                <Route
-                  path="cancel/bookings"
-                  element={<CanceledOrders />}
-                ></Route>
+                <Route path="cancel/hotel" element={<CanceledHotel />}></Route>
+                <Route path="cancel/tour" element={<CanceledTour />}></Route>
                 <Route path="my/orders" element={<MyOrders />}></Route>
               </Route>
               <Route path="/payment" element={<MyPayment />}></Route>

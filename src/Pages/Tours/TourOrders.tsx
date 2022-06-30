@@ -48,6 +48,23 @@ function TourOrders() {
     setLimit(event.target.value);
     setPage(0);
   };
+  const chartData: {
+    order_id: string;
+    name: string;
+    cost: number;
+    status: string;
+  }[] = [];
+  const showChart = () => {
+    tourOrders.map((e) =>
+      chartData.push({
+        order_id: e.order_id.split("-")[0],
+        name: e.bookTour.tour.package_name,
+        cost: e.orderCost,
+        status: e.orderStatus ? "booked" : "canceled",
+      })
+    );
+    return chartData;
+  };
   return (
     <AdminLayout>
       {!loading ? (
@@ -74,7 +91,7 @@ function TourOrders() {
             <TableBody>
               {tourOrders.map((tour, index) => (
                 <TableRow key={index}>
-                  <TableCell>{tour.order_id}</TableCell>
+                  <TableCell>{tour.order_id.split("-")[0]}</TableCell>
                   <TableCell>
                     {new Date(tour.orderdAt).toLocaleDateString()}
                   </TableCell>
@@ -125,17 +142,18 @@ function TourOrders() {
           <Box className="mt-2">
             <Typography variant="h6">All Tour Orders</Typography>
             <LineChart
-              width={400}
+              width={500}
               height={250}
-              data={tourOrders}
+              data={showChart()}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="bookTour.tour.package_name" name="Package Name" />
+              <XAxis dataKey="order_id" name="Package Name" />
               <YAxis name="Order Cost" />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="orderCost" stroke="#8884d8" />
+              <Line type="monotone" dataKey="cost" stroke="#8884d8" />
+              <Line type="monotone" dataKey="status" stroke="#ff0000" />
             </LineChart>
           </Box>
         </Box>

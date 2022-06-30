@@ -147,5 +147,8 @@ export function adminPostTourUpdate(values: any) {
 }
 
 export function adminRemoveCategory(id: number) {
-  return axiosIntercept.delete(`${SERVER_URL}${ADMIN_DELETE_CATEGORY}/${id}`);
+  return createApi({
+    method: "DELETE",
+    url: `${ADMIN_DELETE_CATEGORY}/${id}`,
+  });
 }

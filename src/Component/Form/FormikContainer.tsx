@@ -48,7 +48,9 @@ function FormikContainer(props: any) {
         apiCall(values)
           .then(async (res: { data: { token: string } }) => {
             localStorage.setItem("token", res.data.token);
-            toast("Logged in Successfully");
+            toast.success("Logged in Successfully", {
+              theme: "colored",
+            });
             let user = await JSON.parse(
               atob(localStorage.getItem("token")!.split(".")[1])
             );

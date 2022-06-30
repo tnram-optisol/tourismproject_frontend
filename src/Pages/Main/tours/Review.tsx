@@ -70,9 +70,7 @@ function Review(props: any) {
           Post Review
         </Button>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>
-            Review Form
-          </DialogTitle>
+          <DialogTitle>Review Form</DialogTitle>
           <Divider />
           <Grid container spacing={1}>
             <Grid item xs={12}>
@@ -84,18 +82,7 @@ function Review(props: any) {
                 buttonName={"Post Review"}
                 endPoint={"/review"}
                 apiCall={postReview}
-              >
-                {REVIEW_FORM_DATA.map((el, index) => (
-                  <InputControl
-                    key={index}
-                    control={el.control}
-                    name={el.name}
-                    id={el.name}
-                    label={el.label}
-                    type={el.type}
-                  />
-                ))}
-              </FormikContainer>
+              />
             </Grid>
           </Grid>
         </Dialog>

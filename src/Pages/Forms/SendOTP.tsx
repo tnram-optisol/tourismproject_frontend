@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Container } from "@mui/material";
 import FormikContainer from "Component/Form/FormikContainer";
 import UserLayout from "Component/Wrapper/UserLayout";
 import React from "react";
@@ -12,21 +12,23 @@ function SendOTP() {
   const navigate = useNavigate();
   return (
     <UserLayout>
-      <Box className="login">
-        <Typography variant="h6" color="blue" className="text-center">
-          Reset Password !!
-        </Typography>
-        <FormikContainer
-          className={"login"}
-          initialValues={GETOTP_INITIAL_VALUES}
-          formData={GETOTP_FORM_DATA}
-          validationSchema={GETOTP_VALIDATION_SCHEMA}
-          buttonName={"Submit"}
-          redirect={navigate}
-          apiCall={sendOtp}
-          location={"/reset-password"}
-        />
-      </Box>
+      <Container maxWidth="lg">
+        <Box className="login">
+          <Typography variant="h6" color="blue" className="text-center">
+            Generate - OTP
+          </Typography>
+          <FormikContainer
+            className={"login"}
+            initialValues={GETOTP_INITIAL_VALUES}
+            formData={GETOTP_FORM_DATA}
+            validationSchema={GETOTP_VALIDATION_SCHEMA}
+            buttonName={"Submit"}
+            redirect={navigate}
+            apiCall={sendOtp}
+            location={"/reset-password"}
+          />
+        </Box>
+      </Container>
     </UserLayout>
   );
 }

@@ -17,7 +17,7 @@ function TourCategory(props: { filterData: (arg0: number) => void }) {
     <>
       {!loading ? (
         <Grid container spacing={1} className="mt-2">
-          <Grid container spacing={1} className="category  ">
+          <Grid container spacing={1} className="category mt-2 ">
             {categoryData.map((category, index) => (
               <Grid item xs={1} className="m-2" key={index}>
                 <Grid
