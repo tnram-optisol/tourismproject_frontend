@@ -10,6 +10,7 @@ export const USER_FILTER_TOUR = "/filter/tour";
 export const USER_SEARCH_TOUR = "/search/tour";
 export const MAIL_TO_ADMIN = "/mail/admin";
 export const ALL_CATEGORY = "/all/category";
+export const VIEW_PROFILE = "/user/profile";
 
 //Protected Routes
 export const TOUR_ADMIN_GET_TOUR = "/tour/view/all";
@@ -18,6 +19,7 @@ export const TOUR_ADMIN_VIEW_TOUR = "/view/tour";
 export const TOUR_ADMIN_ADD_TOUR = "/tour/add";
 export const TOUR_ADMIN_UPDATE_TOUR = "/tour/update";
 export const TOUR_ADMIN_ALL_ORDERS = `/tour/all/orders`;
+export const TOUR_ADMIN_CANCEL_PACKAGE = `/tour/package`;
 
 //Protected Routes
 export const HOTEL_ADMIN_GET_ROOM = "/hotel/view/rooms";

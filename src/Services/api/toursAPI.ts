@@ -3,6 +3,7 @@ import { createApi } from "Services/createApi";
 import {
   TOUR_ADMIN_ADD_TOUR,
   TOUR_ADMIN_ALL_ORDERS,
+  TOUR_ADMIN_CANCEL_PACKAGE,
   TOUR_ADMIN_GET_TOUR,
   TOUR_ADMIN_PAGE_TOUR,
   TOUR_ADMIN_UPDATE_TOUR,
@@ -57,5 +58,12 @@ export function paginateOrders(
   return createApi({
     method: "GET",
     url: `${endpoint}?page=${page}&limit=${limit}&search=${searchQuery}`,
+  });
+}
+
+export function deleteTourPackage(id: number) {
+  return createApi({
+    method: "DELETE",
+    url: `${TOUR_ADMIN_CANCEL_PACKAGE}/${id}`,
   });
 }

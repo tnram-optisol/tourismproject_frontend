@@ -12,6 +12,7 @@ import {
   USER_SEARCH_TOUR,
   USER_VIEW_ROOMS,
   USER_VIEW_TOUR,
+  VIEW_PROFILE,
 } from "Services/services.constants";
 import axiosIntercept from "../axios";
 
@@ -106,4 +107,11 @@ export function contactAdmin(values: {
   const user = values;
   console.log(values);
   return axiosIntercept.post(`${SERVER_URL}${MAIL_TO_ADMIN}`, user);
+}
+
+export function viewProfile() {
+  return createApi({
+    method: "GET",
+    url: `${VIEW_PROFILE}`,
+  });
 }
