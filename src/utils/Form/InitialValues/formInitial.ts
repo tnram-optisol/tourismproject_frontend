@@ -30,7 +30,7 @@ export const ADDTOUR_INITIAL_VALUES = {
   from: "",
   to: "",
   description: "",
-  cost: "",
+  cost: 0,
   startDate: null,
   endDate: null,
   license: "",

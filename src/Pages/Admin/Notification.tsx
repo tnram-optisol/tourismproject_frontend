@@ -25,6 +25,9 @@ function Notification() {
   const notifications = useAppSelector(
     (state) => state.admin.value.notifications
   );
+  const totalNotifications = useAppSelector(
+    (state) => state.admin.value.totalNotifications
+  );
   const loading = useAppSelector((state) => state.admin.value.loading);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -185,7 +188,7 @@ function Notification() {
   };
 
   return (
-    <AdminLayout>
+    <AdminLayout messages={totalNotifications}>
       <Box className="mt-2">
         {!loading ? (
           notifications.length > 0 ? (

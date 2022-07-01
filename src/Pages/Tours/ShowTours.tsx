@@ -10,12 +10,18 @@ import MyCardMedia from "Component/Cards/MyCardMedia";
 import AnimatedText from "Component/styled/AnimatedText";
 import MyCard from "Component/Cards/MyCard";
 import ToursList from "Component/Tours/ToursList";
-import { adminTour, paginateTour } from "Services/api/toursAPI";
-import {setAdminTourData } from "store/reducers/tourReducer";
+import {
+  adminTour,
+  deleteTourPackage,
+  paginateTour,
+} from "Services/api/toursAPI";
+import { setAdminTourData } from "store/reducers/tourReducer";
 import AdminLayout from "Component/Wrapper/AdminLayout";
 import Loader from "Layout/Loader";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
+import { TourModel } from "utils/model/tourModel";
+import { toast } from "react-toastify";
 
 export default function ShowTours() {
   const [page, setPage] = useState(1);
@@ -39,7 +45,7 @@ export default function ShowTours() {
         console.log(err);
       });
   }, [dispatch, page]);
-  const tourPagination = (current:number) => {
+  const tourPagination = (current: number) => {
     setPage(current);
     if (current < maxPage) {
       paginateTour(current)
@@ -77,85 +83,86 @@ export default function ShowTours() {
     }
     return items;
   };
+
+  const removePackage = (data: TourModel) => {
+    const confirmation = window.confirm(
+      `Is it ok to remove Package ${data.package_name}`
+    );
+    if (confirmation) {
+      deleteTourPackage(data.tour_id)
+        .then((res) => {
+          toast(res.data);
+          tourPagination(page);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   return (
     <>
       <AdminLayout>
         <ToursList>
           {!loading ? (
             tour.map((data) => (
-              <MyCard
-                key={data.tour_id}
-              >
-                <MyCardHeader
-                  title={data.package_name}
-                />
-                <MyCardMedia
-                  img={data.tour_image}
-                  alt={data.package_name}
-                />
+              <MyCard key={data.tour_id}>
+                <MyCardHeader title={data.package_name} />
+                <MyCardMedia img={data.tour_image} alt={data.package_name} />
                 <CardContent>
                   <Typography variant="subtitle1" color="brown">
-                    <LocationOn /> {data.from} ---{" "}
-                    {data.to}
+                    <LocationOn /> {data.from} --- {data.to}
                   </Typography>
                   <MyCardBody
                     variant={"body1"}
-                    data={` Max Person: ${
-                      data.max_person
-                    }`}
+                    data={` Max Person: ${data.max_person}`}
                     color={"green"}
                   />
                   <MyCardBody
                     variant={"body1"}
-                    data={` Total Days : ${
-                      data.total_days
-                    }`}
+                    data={` Total Days : ${data.total_days}`}
                     color={"green"}
                   />
                   <MyCardBody
                     variant={"body1"}
-                    data={`  Booking Start Date : ${
-                        new Date(data.startDate).toLocaleDateString()
-                    }`}
+                    data={`  Booking Start Date : ${new Date(
+                      data.startDate
+                    ).toLocaleDateString()}`}
                     color={"blue"}
                   />
                   <MyCardBody
                     variant={"body1"}
-                    data={`  Booking End Date: ${
-                      new Date(data.endDate).toLocaleDateString()
-                    }`}
+                    data={`  Booking End Date: ${new Date(
+                      data.endDate
+                    ).toLocaleDateString()}`}
                     color={"success"}
                   />
                   <AnimatedText
                     className={"m-2 text-danger"}
-                    data={`₹​  ${
-                       data.cost
-                    } /person`}
+                    data={`₹​  ${data.cost} /person`}
                   />
                   <MyCardBody
                     variant={"body1"}
                     data={`  Status: ​ ${
-                        data.status
-                        ? "Approved"
-                        : "Not Approved"
+                      data.status ? "Approved" : "Not Approved"
                     } `}
-                    color={
-                        data.status
-                        ? "green"
-                        : "red"
-                    }
+                    color={data.status ? "green" : "red"}
                   />
                 </CardContent>
                 <CardActions>
                   <Button className="button">
                     <Link
-                      to={`/add/tours/${
-                         data.tour_id
-                      }`}
+                      to={`/add/tours/${data.tour_id}`}
                       className="nav-link"
                     >
                       Update
                     </Link>
+                  </Button>
+                  <Button
+                    className="button"
+                    onClick={() => removePackage(data)}
+                  >
+                    Delete
                   </Button>
                 </CardActions>
               </MyCard>
@@ -164,9 +171,11 @@ export default function ShowTours() {
             <Loader />
           )}
         </ToursList>
-        {
-          !loading ? <Pagination className="paginate">{pages()}</Pagination> :""
-        }
+        {!loading ? (
+          <Pagination className="paginate">{pages()}</Pagination>
+        ) : (
+          ""
+        )}
       </AdminLayout>
     </>
   );

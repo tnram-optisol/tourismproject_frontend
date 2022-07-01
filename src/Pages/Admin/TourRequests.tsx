@@ -8,6 +8,7 @@ import {
   TablePagination,
   TableRow,
   TextField,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
@@ -85,88 +86,94 @@ const TourRequests = () => {
   return (
     <AdminLayout>
       {!loading ? (
-        <Box className="mt-3">
-          <FormControl>
-            <TextField
-              className="mr-auto"
-              id="outlined-basic"
-              label="Outlined"
-              variant="outlined"
-              onChange={(event) => handleOnChange(event)}
-              placeholder="Search for Packages"
-              value={searchQuery}
-              autoFocus
-            />
-          </FormControl>
-          <MyTable>
-            <TableHead>
-              <TableRow>
-                {REQUEST_TABLE_FIELDS.map((el) => (
-                  <TableCell
-                    key={el}
-                    sx={
-                      el === "Actions"
-                        ? { width: "20%", textAlign: "center" }
-                        : { width: "20%" }
-                    }
-                    colSpan={el === "Actions" ? 2 : 0}
-                  >
-                    {el}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {requestData.map((data: any, index) => (
-                <TableRow key={index}>
-                  <TableCell>{data.user.role.role}</TableCell>
-                  <TableCell>{data.user.name}</TableCell>
-                  <TableCell
-                    className={data.status ? "text-success" : "text-danger"}
-                  >
-                    {data.status ? "Approved" : "Not Approved"}
-                  </TableCell>
-                  <TableCell>{data.package_name}</TableCell>
-                  <TableCell>{data.provider_license}</TableCell>
-                  <TableCell>
-                    <Button
-                      variant="outlined"
-                      color="success"
-                      onClick={() => {
-                        approveStatus(data);
-                      }}
+        requestData.length > 0 ? (
+          <Box className="mt-3">
+            <FormControl>
+              <TextField
+                className="mr-auto"
+                id="outlined-basic"
+                label="Outlined"
+                variant="outlined"
+                onChange={(event) => handleOnChange(event)}
+                placeholder="Search for Packages"
+                value={searchQuery}
+                autoFocus
+              />
+            </FormControl>
+            <MyTable>
+              <TableHead>
+                <TableRow>
+                  {REQUEST_TABLE_FIELDS.map((el) => (
+                    <TableCell
+                      key={el}
+                      sx={
+                        el === "Actions"
+                          ? { width: "20%", textAlign: "center" }
+                          : { width: "20%" }
+                      }
+                      colSpan={el === "Actions" ? 2 : 0}
                     >
-                      Approval
-                    </Button>
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      onClick={() => {
-                        rejectStatus(data);
-                      }}
-                    >
-                      Reject
-                    </Button>
-                  </TableCell>
+                      {el}
+                    </TableCell>
+                  ))}
                 </TableRow>
-              ))}
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10]}
-                  rowSpan={2}
-                  colSpan={4}
-                  count={totalData}
-                  rowsPerPage={limit}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-              </TableRow>
-            </TableBody>
-          </MyTable>
-        </Box>
+              </TableHead>
+              <TableBody>
+                {requestData.map((data: any, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{data.user.role.role}</TableCell>
+                    <TableCell>{data.user.name}</TableCell>
+                    <TableCell
+                      className={data.status ? "text-success" : "text-danger"}
+                    >
+                      {data.status ? "Approved" : "Not Approved"}
+                    </TableCell>
+                    <TableCell>{data.package_name}</TableCell>
+                    <TableCell>{data.provider_license}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="outlined"
+                        color="success"
+                        onClick={() => {
+                          approveStatus(data);
+                        }}
+                      >
+                        Approval
+                      </Button>
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        onClick={() => {
+                          rejectStatus(data);
+                        }}
+                      >
+                        Reject
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10]}
+                    rowSpan={2}
+                    colSpan={4}
+                    count={totalData}
+                    rowsPerPage={limit}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                  />
+                </TableRow>
+              </TableBody>
+            </MyTable>
+          </Box>
+        ) : (
+          <Typography variant="h6" color="red" className="m-3">
+            No New Requests
+          </Typography>
+        )
       ) : (
         <Loader />
       )}

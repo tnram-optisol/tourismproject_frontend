@@ -13,16 +13,21 @@ import { getUserTourData } from "store/reducers/tourReducer";
 import Loader from "Layout/Loader";
 import { useAppSelector } from "hooks/useAppSelector";
 import { useAppDispatch } from "hooks/useAppDispatch";
+import { getAdminNotifications } from "store/reducers/adminReducer";
 
 function Dashboard() {
   const packages = useAppSelector((state) => state.tour.value.tour);
   const loading = useAppSelector((state) => state.tour.value.loading);
+  const totalNotifications = useAppSelector(
+    (state) => state.admin.value.totalNotifications
+  );
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getUserTourData());
+    dispatch(getAdminNotifications());
   }, [dispatch]);
   return (
-    <AdminLayout>
+    <AdminLayout messages={totalNotifications}>
       {loading ? (
         <Loader />
       ) : (

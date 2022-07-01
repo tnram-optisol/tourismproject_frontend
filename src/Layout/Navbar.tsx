@@ -18,6 +18,7 @@ import {
   faSearch,
   faSignIn,
   faSignOut,
+  faUser,
   faUserCircle,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
@@ -238,19 +239,24 @@ const NavBar = () => {
                   onClose={handleCloseUserMenu}
                 >
                   {loggedIn ? (
-                    <Button
-                      className="d-block"
-                      onClick={() => {
-                        dispatch(signOut());
-                        toast.success("See You Again"!!!, {
-                          theme: "colored",
-                        });
-                      }}
-                    >
-                      <Link to="/signin" className="nav-link">
-                        <FontAwesomeIcon icon={faSignOut} /> Sign Out
+                    <Box>
+                      <Link to="/my/profile" className="nav-link button">
+                        <FontAwesomeIcon icon={faUser} /> Profile
                       </Link>
-                    </Button>
+                      <Button
+                        className="d-block"
+                        onClick={() => {
+                          dispatch(signOut());
+                          toast.success("See You Again"!!!, {
+                            theme: "colored",
+                          });
+                        }}
+                      >
+                        <Link to="/signin" className="nav-link">
+                          <FontAwesomeIcon icon={faSignOut} /> Sign Out
+                        </Link>
+                      </Button>
+                    </Box>
                   ) : (
                     <Box>
                       <Button className="d-block">

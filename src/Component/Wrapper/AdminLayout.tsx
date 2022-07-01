@@ -31,7 +31,7 @@ import { useAppDispatch } from "hooks/useAppDispatch";
 
 const drawerWidth = 240;
 
-function AdminLayout(props: { children: any }) {
+function AdminLayout(props: { children: any; messages?: number }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: any) => {
@@ -42,9 +42,6 @@ function AdminLayout(props: { children: any }) {
   };
   const user = useAppSelector((state) => state.auth.value.email);
   const role = useAppSelector((state) => state.auth.value.role);
-  const totalNotifications = useAppSelector(
-    (state) => state.admin.value.totalNotifications
-  );
   const dispatch = useAppDispatch();
   const { children } = props;
   return (
@@ -74,7 +71,7 @@ function AdminLayout(props: { children: any }) {
               {role === 1 ? (
                 <Link to="/admin/notification">
                   <Badge
-                    badgeContent={totalNotifications}
+                    badgeContent={props.messages}
                     color="secondary"
                     className="d-iniline mr-2"
                   >

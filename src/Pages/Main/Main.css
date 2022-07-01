@@ -103,3 +103,14 @@ button:hover {
     margin-top: 2%;
     margin-left: 25%;
 }
+
+.profile {
+    margin: 10% auto;
+    text-align: center;
+    border: 2px solid #808080;
+}
+
+.data {
+    text-align: center;
+    padding: 5px auto;
+}

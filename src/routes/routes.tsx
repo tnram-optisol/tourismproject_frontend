@@ -42,6 +42,7 @@ import SendOTP from "Pages/Forms/SendOTP";
 import ResetPass from "Pages/Forms/ResetPass";
 import CanceledTour from "Pages/Booking/CanceledTour";
 import CanceledHotel from "Pages/Booking/CanceledHotel";
+import Profile from "Pages/Main/Profile";
 
 export default function MyRoutes() {
   const role = useAppSelector((state) => state.auth.value.role);
@@ -133,6 +134,7 @@ export default function MyRoutes() {
         <Route path="/reset-password" element={<ResetPass />} />
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/signup/:id" element={<RegisterForm />} />
+        <Route path="/my/profile" element={<Profile />} />
         <Route path="*" element={<AccessDenied />} />
       </Routes>
     </>

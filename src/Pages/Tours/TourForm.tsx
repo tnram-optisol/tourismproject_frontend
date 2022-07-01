@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
 import { ToastContainer } from "react-toastify";
+
 import FormikContainer from "Component/Form/FormikContainer";
 import { ADDTOUR_INITIAL_VALUES } from "utils/Form/InitialValues/formInitial";
 import { ADDTOUR_FORM_DATA } from "utils/Form/formFields/formFields";
 import { ADDTOUR_VALIDATION_SCHEMA } from "utils/Form/ValidationSchema/formValidation";
 import { postTour, updateTour, viewAdminTour } from "Services/api/toursAPI";
 import AdminLayout from "Component/Wrapper/AdminLayout";
-import FormControl from "Component/Form/FormControl";
 
 const TourForm = () => {
   const query: any = useParams();

@@ -14,12 +14,12 @@ function DateControl(props: any) {
   const [dates, setDate] = useState<DateState>({
     startDate: new Date(),
     endDate: null,
-    closedOn:null
+    closedOn: null,
   });
   const handleDateChange = (name: string | any, dates: Date | any) => {
     setDate({
       ...dates,
-      [name]: dates
+      [name]: dates,
     });
     return dates;
   };
@@ -37,7 +37,7 @@ function DateControl(props: any) {
               id={name}
               name={name}
               selected={value}
-              value={name === 'startDate' ? dates.startDate : dates.endDate}
+              value={name === "startDate" ? dates.startDate : dates.endDate}
               {...field}
               {...rest}
               onChange={(val) =>
@@ -48,6 +48,7 @@ function DateControl(props: any) {
             <ReactDatePicker
               className="form-control"
               minDate={new Date()}
+              maxDate={dates.endDate}
               id={name}
               name={name}
               selected={value}
