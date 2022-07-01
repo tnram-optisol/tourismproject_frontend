@@ -2,9 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { CategoryModel } from "utils/model/adminModel";
 import { BookRoomModel, HotelOrdersModel } from "utils/model/hotelModel";
 import { BookTourModel, TourOrdersModel } from "utils/model/tourModel";
+import { UserModel } from "utils/model/userModel";
 
 export interface UserState {
   value: {
+    userData: UserModel[];
     category: CategoryModel[];
     hotelOrders: BookRoomModel[];
     tourOrders: BookTourModel[];
@@ -20,6 +22,7 @@ export interface UserState {
 
 const initialState: UserState = {
   value: {
+    userData: [],
     category: [],
     loading: true,
     hotelOrders: [],
@@ -37,6 +40,13 @@ const userSlicer = createSlice({
   name: "user",
   initialState: initialState,
   reducers: {
+    getUserProfileData: (state) => {
+      state.value.loading = true;
+    },
+    setUserProfileData: (state, action) => {
+      state.value.userData = [action.payload];
+      state.value.loading = false;
+    },
     getUserCategoryData: (state) => {
       state.value.loading = true;
     },
@@ -113,6 +123,8 @@ const userSlicer = createSlice({
 });
 
 export const {
+  getUserProfileData,
+  setUserProfileData,
   getUserCategoryData,
   setUserCategoryData,
   getUserBookingData,

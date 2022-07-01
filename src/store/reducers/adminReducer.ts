@@ -60,29 +60,38 @@ const adminSlicer = createSlice({
       state.value.loading = true;
     },
     setAdminHotelRequestData: (state, action) => {
-      console.log(action.payload);
-      state.value.hotelRequestsCount =
-        action.payload.hotel[1] > 0
-          ? action.payload.hotel[1]
-          : state.value.hotelRequestsCount;
-      state.value.hotelRequests =
-        action.payload.hotel[0].length > 0
-          ? [...action.payload.hotel[0]]
-          : [...action.payload.hotel];
+      if (action.payload.hotel) {
+        state.value.hotelRequestsCount =
+          action.payload.hotel[1] > 0
+            ? action.payload.hotel[1]
+            : state.value.hotelRequestsCount;
+        state.value.hotelRequests =
+          action.payload.hotel[0].length > 0
+            ? [...action.payload.hotel[0]]
+            : [...action.payload.hotel];
+      } else {
+        state.value.hotelRequestsCount = 0;
+        state.value.hotelRequests = [];
+      }
       state.value.loading = false;
     },
     getAdminTourRequestData: (state, action) => {
       state.value.loading = true;
     },
     setAdminTourRequestData: (state, action) => {
-      state.value.tourRequestsCount =
-        action.payload.tour[1] > 0
-          ? action.payload.tour[1]
-          : state.value.tourRequestsCount;
-      state.value.tourRequests =
-        action.payload.tour[0].length > 0
-          ? [...action.payload.tour[0]]
-          : [...action.payload.tour];
+      if (action.payload.tour) {
+        state.value.tourRequestsCount =
+          action.payload.tour[1] > 0
+            ? action.payload.tour[1]
+            : state.value.tourRequestsCount;
+        state.value.tourRequests =
+          action.payload.tour[0].length > 0
+            ? [...action.payload.tour[0]]
+            : [...action.payload.tour];
+      } else {
+        state.value.tourRequests = [];
+        state.value.tourRequestsCount = 0;
+      }
       state.value.loading = false;
     },
     getAdminCategoryData: (state, action) => {
