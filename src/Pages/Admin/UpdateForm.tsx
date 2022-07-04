@@ -17,7 +17,7 @@ import InputControl from "Component/Form/InputControl";
 import "../Forms/Forms.css";
 
 const UpdateForm = () => {
-  const query:any = useParams();
+  const query: any = useParams();
   const tourId = +query.id;
   const navigate = useNavigate();
   const [category, setCategory] = useState([]);
@@ -34,7 +34,7 @@ const UpdateForm = () => {
             name: res.data.package_name,
             from: res.data.from,
             to: res.data.to,
-            tour:res.data.tour_id
+            tour: res.data.tour_id,
           });
         })
         .catch((err) => {
@@ -51,22 +51,20 @@ const UpdateForm = () => {
   }, []);
 
   return (
-    <AdminLayout>
-      <Box>
-        <ToastContainer />
-        <FormikContainer
-          className={"login"}
-          initialValues={initialValues}
-          formData={SETCATEGORY_FORM_DATA}
-          validationSchema={SETCATEGORY_VALIDATION_SCHEMA}
-          buttonName={"Set Category"}
-          endPoint={"/admin/category"}
-          redirect={navigate}
-          options={category}
-          apiCall={adminPostTourUpdate}
-        />
-      </Box>
-    </AdminLayout>
+    <Box>
+      <ToastContainer />
+      <FormikContainer
+        className={"login"}
+        initialValues={initialValues}
+        formData={SETCATEGORY_FORM_DATA}
+        validationSchema={SETCATEGORY_VALIDATION_SCHEMA}
+        buttonName={"Set Category"}
+        endPoint={"/admin/category"}
+        redirect={navigate}
+        options={category}
+        apiCall={adminPostTourUpdate}
+      />
+    </Box>
   );
 };
 

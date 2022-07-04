@@ -188,27 +188,25 @@ function Notification() {
   };
 
   return (
-    <AdminLayout messages={totalNotifications}>
-      <Box className="mt-2">
-        {!loading ? (
-          notifications.length > 0 ? (
-            notifications.map((e, index) => (
-              <List key={index}>
-                <ListItem>
-                  <ListItemText>{displayData(e)}</ListItemText>
-                </ListItem>
-              </List>
-            ))
-          ) : (
-            <Typography variant="h6" color="red">
-              No new Notifications
-            </Typography>
-          )
+    <Box className="mt-2">
+      {!loading ? (
+        notifications.length > 0 ? (
+          notifications.map((e, index) => (
+            <List key={index}>
+              <ListItem>
+                <ListItemText>{displayData(e)}</ListItemText>
+              </ListItem>
+            </List>
+          ))
         ) : (
-          <Loader />
-        )}
-      </Box>
-    </AdminLayout>
+          <Typography variant="h6" color="red">
+            No new Notifications
+          </Typography>
+        )
+      ) : (
+        <Loader />
+      )}
+    </Box>
   );
 }
 

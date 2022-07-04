@@ -68,8 +68,7 @@ function Category() {
     setSearchQuery(event.target.value);
   };
   return (
-    <AdminLayout>
-      {!loading ? (
+    !loading ? (
         <Box className="m-auto">
           <Box>
             <FormControl>
@@ -156,8 +155,7 @@ function Category() {
         </Box>
       ) : (
         <Loader />
-      )}
-    </AdminLayout>
+      )
   );
 }
 

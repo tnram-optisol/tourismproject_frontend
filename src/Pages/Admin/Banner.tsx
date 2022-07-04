@@ -61,103 +61,101 @@ function Banner() {
     setPage(0);
   };
   return (
-    <AdminLayout>
-      <Box>
-        <ToastContainer />
-        {loading ? (
-          <Loader />
-        ) : (
-          <Box className="mt-3">
-            <FormControl>
-              <TextField
-                className="mr-auto"
-                id="outlined-basic"
-                label="Outlined"
-                variant="outlined"
-                onChange={(event) => handleOnChange(event)}
-                placeholder="Search for Packages"
-                value={searchQuery}
-                autoFocus
-              />
-            </FormControl>
-            <MyTable>
-              <TableHead>
-                <TableRow>
-                  {BANNER_TABLE_FIELDS.map((el) => (
-                    <TableCell
-                      key={el}
-                      sx={
-                        el === "Actions"
-                          ? { width: "20%", textAlign: "center" }
-                          : { width: "20%" }
-                      }
-                      colSpan={el === "Actions" ? 2 : 0}
-                    >
-                      {el}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {banner.map((row: any, index: number) => (
-                  <TableRow
-                    className="tab_row"
-                    key={index}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+    <Box>
+      <ToastContainer />
+      {loading ? (
+        <Loader />
+      ) : (
+        <Box className="mt-3">
+          <FormControl>
+            <TextField
+              className="mr-auto"
+              id="outlined-basic"
+              label="Outlined"
+              variant="outlined"
+              onChange={(event) => handleOnChange(event)}
+              placeholder="Search for Packages"
+              value={searchQuery}
+              autoFocus
+            />
+          </FormControl>
+          <MyTable>
+            <TableHead>
+              <TableRow>
+                {BANNER_TABLE_FIELDS.map((el) => (
+                  <TableCell
+                    key={el}
+                    sx={
+                      el === "Actions"
+                        ? { width: "20%", textAlign: "center" }
+                        : { width: "20%" }
+                    }
+                    colSpan={el === "Actions" ? 2 : 0}
                   >
-                    <TableCell component="th" scope="row">
-                      {row.tour.package_name}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {row.sequence}
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        className="button"
-                        color="success"
-                        onClick={() => handleClickOpen(row.tour.tour_id)}
-                      >
-                        Change Sequence
-                      </Button>
-                    </TableCell>
-                    <TableCell>
-                      <Button className="button">
-                        <Link
-                          to={`/admin/update/${row.tour.tour_id}`}
-                          className="nav-link"
-                        >
-                          Update Category
-                        </Link>
-                      </Button>
-                    </TableCell>
-                  </TableRow>
+                    {el}
+                  </TableCell>
                 ))}
-                <TableRow>
-                  <TablePagination
-                    rowsPerPageOptions={[
-                      5,
-                      10,
-                      { label: "All", value: totalData },
-                    ]}
-                    rowSpan={2}
-                    colSpan={4}
-                    count={totalData}
-                    rowsPerPage={limit}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {banner.map((row: any, index: number) => (
+                <TableRow
+                  className="tab_row"
+                  key={index}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {row.tour.package_name}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {row.sequence}
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      className="button"
+                      color="success"
+                      onClick={() => handleClickOpen(row.tour.tour_id)}
+                    >
+                      Change Sequence
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <Button className="button">
+                      <Link
+                        to={`/admin/update/${row.tour.tour_id}`}
+                        className="nav-link"
+                      >
+                        Update Category
+                      </Link>
+                    </Button>
+                  </TableCell>
                 </TableRow>
-              </TableBody>
-            </MyTable>
-          </Box>
-        )}
+              ))}
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[
+                    5,
+                    10,
+                    { label: "All", value: totalData },
+                  ]}
+                  rowSpan={2}
+                  colSpan={4}
+                  count={totalData}
+                  rowsPerPage={limit}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </TableRow>
+            </TableBody>
+          </MyTable>
+        </Box>
+      )}
 
-        <Dialog open={open} onClose={handleClose}>
-          <SequenceForm tourId={tourId} />
-        </Dialog>
-      </Box>
-    </AdminLayout>
+      <Dialog open={open} onClose={handleClose}>
+        <SequenceForm tourId={tourId} />
+      </Dialog>
+    </Box>
   );
 }
 

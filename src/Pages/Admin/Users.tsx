@@ -8,7 +8,7 @@ import {
   TableRow,
   TextField,
   Typography,
-  Box
+  Box,
 } from "@mui/material";
 
 import { useAppDispatch } from "hooks/useAppDispatch";
@@ -44,67 +44,63 @@ function Users() {
     setSearchQuery(event.target.value);
   };
   return (
-    <AdminLayout>
-      <Box className="mt-2">
-        {loading ? (
-          <Loader />
-        ) : (
-          <Box className="mt-2">
-            <Typography variant="h6" color="blue">
-              All Users
-            </Typography>
-            <FormControl>
-              <TextField
-                className="mr-auto"
-                id="outlined-basic"
-                label="Outlined"
-                variant="outlined"
-                onChange={(event) => handleOnChange(event)}
-                placeholder="Search for User"
-                value={searchQuery}
-                autoFocus
-              />
-            </FormControl>
-            <MyTable>
-              <TableHead>
-                <TableRow>
-                  <TableCell>User Id</TableCell>
-                  <TableCell>User Name</TableCell>
-                  <TableCell>User Email</TableCell>
-                  <TableCell>Contact </TableCell>
-                  <TableCell>Place</TableCell>
+    <Box className="mt-2">
+      {loading ? (
+        <Loader />
+      ) : (
+        <Box className="mt-2">
+          <Typography variant="h6" color="blue">
+            All Users
+          </Typography>
+          <FormControl>
+            <TextField
+              className="mr-auto"
+              id="outlined-basic"
+              label="Outlined"
+              variant="outlined"
+              onChange={(event) => handleOnChange(event)}
+              placeholder="Search for User"
+              value={searchQuery}
+              autoFocus
+            />
+          </FormControl>
+          <MyTable>
+            <TableHead>
+              <TableRow>
+                <TableCell>User Id</TableCell>
+                <TableCell>User Name</TableCell>
+                <TableCell>User Email</TableCell>
+                <TableCell>Contact </TableCell>
+                <TableCell>Place</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {users.map((user, index) => (
+                <TableRow key={index}>
+                  <TableCell className="text-primary">{user.id}</TableCell>
+                  <TableCell className="text-primary">{user.name}</TableCell>
+                  <TableCell className="text-primary">{user.email}</TableCell>
+                  <TableCell className="text-primary">{user.contact}</TableCell>
+                  <TableCell className="text-primary">{user.place}</TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {users.map((user, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="text-primary">{user.id}</TableCell>
-                    <TableCell className="text-primary">{user.name}</TableCell>
-                    <TableCell className="text-primary">{user.email}</TableCell>
-                    <TableCell className="text-primary">
-                      {user.contact}
-                    </TableCell>
-                    <TableCell className="text-primary">{user.place}</TableCell>
-                  </TableRow>
-                ))}
-                <TableRow>
-                  <TablePagination
-                    rowsPerPageOptions={[5, 10]}
-                    rowSpan={2}
-                    colSpan={4}
-                    count={totalData}
-                    rowsPerPage={limit}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </TableRow>
-              </TableBody>
-            </MyTable>
-          </Box>
-        )}
-      </Box>
-    </AdminLayout>
+              ))}
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10]}
+                  rowSpan={2}
+                  colSpan={4}
+                  count={totalData}
+                  rowsPerPage={limit}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </TableRow>
+            </TableBody>
+          </MyTable>
+        </Box>
+      )}
+    </Box>
   );
 }
 
