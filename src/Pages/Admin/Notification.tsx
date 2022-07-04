@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import AdminLayout from "Component/Wrapper/AdminLayout";
 import Loader from "Layout/Loader";
 import { useAppSelector } from "hooks/useAppSelector";
 import { useAppDispatch } from "hooks/useAppDispatch";
@@ -24,9 +23,6 @@ import { deleteNotification } from "Services/api/adminAPI";
 function Notification() {
   const notifications = useAppSelector(
     (state) => state.admin.value.notifications
-  );
-  const totalNotifications = useAppSelector(
-    (state) => state.admin.value.totalNotifications
   );
   const loading = useAppSelector((state) => state.admin.value.loading);
   const dispatch = useAppDispatch();

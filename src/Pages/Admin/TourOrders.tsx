@@ -14,7 +14,6 @@ import React, { useEffect, useState } from "react";
 
 import { getAdminTourOrdersData } from "store/reducers/adminReducer";
 import MyTable from "Component/Table/MyTable";
-import AdminLayout from "Component/Wrapper/AdminLayout";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
 import Loader from "Layout/Loader";

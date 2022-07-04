@@ -14,7 +14,6 @@ import React, { useEffect, useState } from "react";
 import { adminApproveRequest, adminRejectRequest } from "Services/api/adminAPI";
 import MyTable from "Component/Table/MyTable";
 import { REQUEST_TABLE_FIELDS } from "utils/Table/tableFields";
-import AdminLayout from "Component/Wrapper/AdminLayout";
 import Loader from "Layout/Loader";
 import { getAdminHotelRequestData } from "store/reducers/adminReducer";
 import { useAppDispatch } from "hooks/useAppDispatch";

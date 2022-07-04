@@ -13,7 +13,6 @@ import {
 import React, { useEffect, useState } from "react";
 
 import MyTable from "Component/Table/MyTable";
-import AdminLayout from "Component/Wrapper/AdminLayout";
 import Loader from "Layout/Loader";
 import { adminRemoveCategory } from "Services/api/adminAPI";
 import { CATEGORY_TABLE_FIELDS } from "utils/Table/tableFields";

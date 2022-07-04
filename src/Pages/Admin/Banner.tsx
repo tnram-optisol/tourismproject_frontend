@@ -16,7 +16,6 @@ import { ToastContainer } from "react-toastify";
 import { useEffect } from "react";
 
 import MyTable from "Component/Table/MyTable";
-import AdminLayout from "Component/Wrapper/AdminLayout";
 import Loader from "Layout/Loader";
 import { BANNER_TABLE_FIELDS } from "utils/Table/tableFields";
 import SequenceForm from "./SequenceForm";

@@ -8,12 +8,10 @@ import {
   adminPostTourUpdate,
   getCategory,
 } from "Services/api/adminAPI";
-import AdminLayout from "Component/Wrapper/AdminLayout";
 import FormikContainer from "Component/Form/FormikContainer";
 import { SETCATEGORY_INITIAL_VALUES } from "utils/Form/InitialValues/formInitial";
 import { SETCATEGORY_FORM_DATA } from "utils/Form/formFields/formFields";
 import { SETCATEGORY_VALIDATION_SCHEMA } from "utils/Form/ValidationSchema/formValidation";
-import InputControl from "Component/Form/InputControl";
 import "../Forms/Forms.css";
 
 const UpdateForm = () => {
@@ -48,7 +46,7 @@ const UpdateForm = () => {
           console.log(err);
         });
     }
-  }, []);
+  }, [tourId]);
 
   return (
     <Box>

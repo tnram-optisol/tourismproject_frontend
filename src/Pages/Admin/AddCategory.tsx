@@ -3,7 +3,6 @@ import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 
 import FormikContainer from "Component/Form/FormikContainer";
-import InputControl from "Component/Form/InputControl";
 import { adminPostCategory } from "Services/api/adminAPI";
 import { CATEGORY_FORM_DATA } from "utils/Form/formFields/formFields";
 import { ADDCATEGORY_INITIAL_VALUES } from "utils/Form/InitialValues/formInitial";

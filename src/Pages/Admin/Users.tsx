@@ -14,7 +14,6 @@ import {
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
 import MyTable from "Component/Table/MyTable";
-import AdminLayout from "Component/Wrapper/AdminLayout";
 import { getAdminAllUserData } from "store/reducers/adminReducer";
 import Loader from "Layout/Loader";
 
