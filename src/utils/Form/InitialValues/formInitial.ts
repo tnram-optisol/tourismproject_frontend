@@ -93,7 +93,6 @@ export const GETOTP_INITIAL_VALUES = {
 };
 
 export const RESETPASS_INITIAL_VALUES = {
-  email: "",
   otp: 0,
   password: "",
   cnf_password: "",

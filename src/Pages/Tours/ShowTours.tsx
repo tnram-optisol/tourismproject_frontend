@@ -16,12 +16,12 @@ import {
   paginateTour,
 } from "Services/api/toursAPI";
 import { setAdminTourData } from "store/reducers/tourReducer";
-import AdminLayout from "Component/Wrapper/AdminLayout";
 import Loader from "Layout/Loader";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
 import { TourModel } from "utils/model/tourModel";
 import { toast } from "react-toastify";
+import PanelLayout from "Component/Wrapper/PanelLayout";
 
 export default function ShowTours() {
   const [page, setPage] = useState(1);
@@ -102,7 +102,7 @@ export default function ShowTours() {
 
   return (
     <>
-      <AdminLayout>
+      <PanelLayout>
         <ToursList>
           {!loading ? (
             tour.map((data) => (
@@ -176,7 +176,7 @@ export default function ShowTours() {
         ) : (
           ""
         )}
-      </AdminLayout>
+      </PanelLayout>
     </>
   );
 }

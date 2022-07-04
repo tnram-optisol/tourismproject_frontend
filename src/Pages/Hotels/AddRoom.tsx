@@ -7,8 +7,8 @@ import { ADDROOM_FORM_DATA } from "utils/Form/formFields/formFields";
 import { ADDROOM_INITIAL_VALUES } from "utils/Form/InitialValues/formInitial";
 import { ADDROOM_VALIDATION_SCHEMA } from "utils/Form/ValidationSchema/formValidation";
 import FormikContainer from "Component/Form/FormikContainer";
-import AdminLayout from "Component/Wrapper/AdminLayout";
-import FormControl from "Component/Form/FormControl";
+import PanelLayout from "Component/Wrapper/PanelLayout";
+
 
 function AddRoom() {
   let hotel: any = useParams();
@@ -20,7 +20,7 @@ function AddRoom() {
   };
 
   return (
-    <AdminLayout>
+    <PanelLayout>
       <Box>
         <FormikContainer
           className={"login"}
@@ -35,7 +35,7 @@ function AddRoom() {
           endPoint={`/hotel/add/room`}
         />
       </Box>
-    </AdminLayout>
+    </PanelLayout>
   );
 }
 

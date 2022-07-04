@@ -15,20 +15,17 @@ import {
   Divider,
   ListItem,
   ListItemIcon,
-  Badge,
 } from "@mui/material";
 import {
-  faCodePullRequest,
-  faFilter,
-  faHome,
+  faDatabase,
   faMoneyBill,
+  faPlus,
   faSignOut,
   faUser,
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { NavLink, Link, Outlet } from "react-router-dom";
-import MailIcon from "@mui/icons-material/Mail";
+import { NavLink, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { signOut } from "store/reducers/authReducer";
@@ -37,7 +34,7 @@ import { useAppDispatch } from "hooks/useAppDispatch";
 
 const drawerWidth = 240;
 
-function AdminLayout(props: { children?: any; messages?: number }) {
+function PanelLayout(props: { children: any }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: any) => {
@@ -49,6 +46,7 @@ function AdminLayout(props: { children?: any; messages?: number }) {
   const user = useAppSelector((state) => state.auth.value.email);
   const role = useAppSelector((state) => state.auth.value.role);
   const dispatch = useAppDispatch();
+  const { children } = props;
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -73,17 +71,6 @@ function AdminLayout(props: { children?: any; messages?: number }) {
             </Grid>
             <Grid item xs={6}></Grid>
             <Grid item xs={4}>
-              {role === 1 ? (
-                <Link to="/admin/notification">
-                  <Badge
-                    badgeContent={props.messages}
-                    color="secondary"
-                    className="d-iniline mr-2"
-                  >
-                    <MailIcon color="action" />
-                  </Badge>
-                </Link>
-              ) : null}
               <Tooltip title="User Actions">
                 <IconButton
                   className="header-icon m-2"
@@ -157,71 +144,32 @@ function AdminLayout(props: { children?: any; messages?: number }) {
         </Link>
         <Divider />
         <List>
-          {role === 1 ? (
+          {role === 3 ? (
             <>
               <ListItem>
                 <ListItemIcon>
-                  <FontAwesomeIcon color="blue" icon={faUserCircle} />
+                  <FontAwesomeIcon color="blue" icon={faPlus} />
                 </ListItemIcon>
                 <NavLink
-                  to="users"
+                  to="/add/tours"
                   className={({ isActive }) =>
                     isActive ? "active" : "nav-link"
                   }
                 >
-                  Users
+                  Add Tour Package
                 </NavLink>
               </ListItem>
               <ListItem>
                 <ListItemIcon>
-                  <FontAwesomeIcon color="blue" icon={faHome} />
+                  <FontAwesomeIcon color="blue" icon={faDatabase} />
                 </ListItemIcon>
                 <NavLink
-                  to="/admin/banner"
+                  to="/view/tours"
                   className={({ isActive }) =>
                     isActive ? "active" : "nav-link"
                   }
                 >
-                  Banner
-                </NavLink>
-              </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <FontAwesomeIcon color="blue" icon={faFilter} />
-                </ListItemIcon>
-                <NavLink
-                  to="/admin/category"
-                  className={({ isActive }) =>
-                    isActive ? "active" : "nav-link"
-                  }
-                >
-                  Category
-                </NavLink>
-              </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <FontAwesomeIcon color="blue" icon={faCodePullRequest} />
-                </ListItemIcon>
-                <NavLink
-                  to="/admin/requests/tour"
-                  className={({ isActive }) =>
-                    isActive ? "active" : "nav-link"
-                  }
-                >
-                  Tour Requests
-                </NavLink>
-              </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <FontAwesomeIcon color="blue" icon={faCodePullRequest} />
-                </ListItemIcon>
-                <NavLink
-                  to="/admin/requests/hotel"
-                  className={({ isActive }) =>
-                    isActive ? "active" : "nav-link"
-                  }
-                >
-                  Hotel Requests
+                  View Tours
                 </NavLink>
               </ListItem>
               <ListItem>
@@ -229,12 +177,44 @@ function AdminLayout(props: { children?: any; messages?: number }) {
                   <FontAwesomeIcon color="blue" icon={faMoneyBill} />
                 </ListItemIcon>
                 <NavLink
-                  to="/admin/tour/orders"
+                  to="/tour/orders"
                   className={({ isActive }) =>
                     isActive ? "active" : "nav-link"
                   }
                 >
-                  Tour Orders
+                  Orders
+                </NavLink>
+              </ListItem>
+            </>
+          ) : (
+            ""
+          )}
+          {role === 2 ? (
+            <>
+              <ListItem>
+                <ListItemIcon>
+                  <FontAwesomeIcon color="blue" icon={faPlus} />
+                </ListItemIcon>
+                <NavLink
+                  to="/add/hotels"
+                  className={({ isActive }) =>
+                    isActive ? "active" : "nav-link"
+                  }
+                >
+                  Add Hotel
+                </NavLink>
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <FontAwesomeIcon color="blue" icon={faDatabase} />
+                </ListItemIcon>
+                <NavLink
+                  to="/view/hotels"
+                  className={({ isActive }) =>
+                    isActive ? "active" : "nav-link"
+                  }
+                >
+                  View Hotel
                 </NavLink>
               </ListItem>
               <ListItem>
@@ -242,12 +222,12 @@ function AdminLayout(props: { children?: any; messages?: number }) {
                   <FontAwesomeIcon color="blue" icon={faMoneyBill} />
                 </ListItemIcon>
                 <NavLink
-                  to="/admin/hotel/orders"
+                  to="/hotel/orders"
                   className={({ isActive }) =>
                     isActive ? "active" : "nav-link"
                   }
                 >
-                  Hotel Orders
+                  Orders
                 </NavLink>
               </ListItem>
             </>
@@ -261,10 +241,10 @@ function AdminLayout(props: { children?: any; messages?: number }) {
         sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
       >
         <Toolbar />
-        <Outlet />
+        {children}
       </Box>
     </Box>
   );
 }
 
-export default AdminLayout;
+export default PanelLayout;

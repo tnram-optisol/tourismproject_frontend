@@ -7,7 +7,7 @@ import MyCardHeader from "Component/Cards/MyCardHeader";
 import MyCard from "Component/Cards/MyCard";
 import MyCardMedia from "Component/Cards/MyCardMedia";
 import { getAdminHotelData } from "store/reducers/hotelReducer";
-import AdminLayout from "Component/Wrapper/AdminLayout";
+import PanelLayout from "Component/Wrapper/PanelLayout";
 import Loader from "Layout/Loader";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
@@ -21,16 +21,16 @@ function ViewHotel() {
     dispatch(getAdminHotelData());
   }, [dispatch]);
 
-  const addRoom = (id:number) => {
+  const addRoom = (id: number) => {
     navigate(`/add/room/${id}`);
   };
 
-  const viewRooms = (id:number) => {
+  const viewRooms = (id: number) => {
     navigate(`/view/room/${id}`);
   };
 
   return (
-    <AdminLayout>
+    <PanelLayout>
       <Box className="tour">
         {loading ? (
           <Loader />
@@ -75,7 +75,7 @@ function ViewHotel() {
           ))
         )}
       </Box>
-    </AdminLayout>
+    </PanelLayout>
   );
 }
 

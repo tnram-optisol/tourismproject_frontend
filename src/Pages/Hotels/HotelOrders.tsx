@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 
 import MyTable from "Component/Table/MyTable";
-import AdminLayout from "Component/Wrapper/AdminLayout";
+import PanelLayout from "Component/Wrapper/PanelLayout";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
 import { getAdminHotelOrders } from "store/reducers/hotelReducer";
@@ -38,7 +38,7 @@ function HotelOrders() {
   };
 
   return (
-    <AdminLayout>
+    <PanelLayout>
       {!loading ? (
         <MyTable>
           <TableHead>
@@ -108,7 +108,7 @@ function HotelOrders() {
       ) : (
         <Loader />
       )}
-    </AdminLayout>
+    </PanelLayout>
   );
 }
 

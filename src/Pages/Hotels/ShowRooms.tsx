@@ -17,7 +17,7 @@ import MyCardMedia from "Component/Cards/MyCardMedia";
 import MyCardBody from "Component/Cards/MyCardBody";
 import MyCard from "Component/Cards/MyCard";
 import { getAdminRoomData } from "store/reducers/hotelReducer";
-import AdminLayout from "Component/Wrapper/AdminLayout";
+import PanelLayout from "Component/Wrapper/PanelLayout";
 import Loader from "Layout/Loader";
 import { useAppDispatch } from "hooks/useAppDispatch";
 import { useAppSelector } from "hooks/useAppSelector";
@@ -33,7 +33,7 @@ export default function ShowRooms(props: any) {
     dispatch(getAdminRoomData(hotel_id));
   }, [dispatch, hotel_id]);
   return (
-    <AdminLayout>
+    <PanelLayout>
       <Box className="tour_body">
         <Box>
           {loading ? (
@@ -116,6 +116,6 @@ export default function ShowRooms(props: any) {
           )}
         </Box>
       </Box>
-    </AdminLayout>
+    </PanelLayout>
   );
 }

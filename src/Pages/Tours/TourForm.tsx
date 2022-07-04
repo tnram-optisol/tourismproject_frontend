@@ -7,7 +7,7 @@ import { ADDTOUR_INITIAL_VALUES } from "utils/Form/InitialValues/formInitial";
 import { ADDTOUR_FORM_DATA } from "utils/Form/formFields/formFields";
 import { ADDTOUR_VALIDATION_SCHEMA } from "utils/Form/ValidationSchema/formValidation";
 import { postTour, updateTour, viewAdminTour } from "Services/api/toursAPI";
-import AdminLayout from "Component/Wrapper/AdminLayout";
+import PanelLayout from "Component/Wrapper/PanelLayout";
 
 const TourForm = () => {
   const query: any = useParams();
@@ -44,7 +44,7 @@ const TourForm = () => {
   }, []);
 
   return (
-    <AdminLayout>
+    <PanelLayout>
       <ToastContainer />
       <FormikContainer
         className={"login"}
@@ -58,7 +58,7 @@ const TourForm = () => {
         location={"/view/tours"}
         redirect={navigate}
       />
-    </AdminLayout>
+    </PanelLayout>
   );
 };
 

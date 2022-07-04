@@ -68,7 +68,7 @@ export default function ViewTour(props: any) {
           `Must be equal to ${tourData[0].total_days} days`
         )
         .required("Required"),
-      date: Yup.date().max(tourData[0].endDate).required("Required"),
+      date: Yup.date().required("Required"),
     });
   };
   useEffect(() => {

@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 
 import MyTable from "Component/Table/MyTable";
-import AdminLayout from "Component/Wrapper/AdminLayout";
+import PanelLayout from "Component/Wrapper/PanelLayout";
 import { getAdminTourOrders } from "store/reducers/tourReducer";
 import Loader from "Layout/Loader";
 import { useAppDispatch } from "hooks/useAppDispatch";
@@ -66,7 +66,7 @@ function TourOrders() {
     return chartData;
   };
   return (
-    <AdminLayout>
+    <PanelLayout>
       {!loading ? (
         <Box className="mt-2">
           <Typography variant="h6">All Tour Orders</Typography>
@@ -160,7 +160,7 @@ function TourOrders() {
       ) : (
         <Loader />
       )}
-    </AdminLayout>
+    </PanelLayout>
   );
 }
 

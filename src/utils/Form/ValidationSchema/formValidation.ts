@@ -98,8 +98,7 @@ export const GETOTP_VALIDATION_SCHEMA = Yup.object({
 });
 
 export const RESETPASS_VALIDATION_SCHEMA = Yup.object({
-  email: Yup.string().email("Must be valid").required("Required"),
   otp: Yup.number().min(100000).max(999999).required("Required"),
-  password: Yup.string().length(6).required("Required"),
-  cnf_password: Yup.string().length(6).required("Required"),
+  password: Yup.string().length(8).required("Required"),
+  cnf_password: Yup.string().length(8).required("Required"),
 });

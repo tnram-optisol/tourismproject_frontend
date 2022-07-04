@@ -352,12 +352,6 @@ export const GETOTP_FORM_DATA = [
 export const RESETPASS_FORM_DATA = [
   {
     control: "input",
-    label: "Email",
-    name: "email",
-    type: "email",
-  },
-  {
-    control: "input",
     label: "OTP",
     name: "otp",
     type: "number",

@@ -9,7 +9,7 @@ import { ADDHOTEL_FORM_DATA } from "utils/Form/formFields/formFields";
 import { ADDHOTEL_VALIDATION_SCHEMA } from "utils/Form/ValidationSchema/formValidation";
 import FormControl from "Component/Form/FormControl";
 import { addHotel } from "Services/api/hotelAPI";
-import AdminLayout from "Component/Wrapper/AdminLayout";
+import PanelLayout from "Component/Wrapper/PanelLayout";
 
 
 const HotelForm = (props: any) => {
@@ -21,7 +21,7 @@ const HotelForm = (props: any) => {
   };
   const navigate = useNavigate();
   return (
-    <AdminLayout>
+    <PanelLayout>
       <Box>
         <FormikContainer
           className={"login"}
@@ -36,7 +36,7 @@ const HotelForm = (props: any) => {
           endPoint={`/hotel/add/hotel`}
         />
       </Box>
-    </AdminLayout>
+    </PanelLayout>
   );
 };
 
