@@ -43,6 +43,7 @@ import ResetPass from "Pages/Forms/ResetPass";
 import CanceledTour from "Pages/Booking/CanceledTour";
 import CanceledHotel from "Pages/Booking/CanceledHotel";
 import Profile from "Pages/Main/Profile";
+import AdminPanel from "Pages/Admin/AdminPanel";
 
 export default function MyRoutes() {
   const role = useAppSelector((state) => state.auth.value.role);
@@ -80,31 +81,27 @@ export default function MyRoutes() {
           {role === 1 ? (
             <>
               {" "}
-              <Route
-                path="/admin/requests/tour"
-                element={<TourRequests />}
-              ></Route>{" "}
-              <Route
-                path="/admin/requests/hotel"
-                element={<HotelRequests />}
-              ></Route>{" "}
-              <Route path="/admin/category" element={<Category />}></Route>{" "}
-              <Route path="/admin/banner" element={<Banner />}></Route>{" "}
-              <Route path="/admin/dashboard" element={<Dashboard />}></Route>{" "}
-              <Route
-                path="/admin/notification"
-                element={<Notification />}
-              ></Route>{" "}
-              <Route path="/admin/users" element={<Users />}></Route>
-              <Route
-                path="/admin/tour/orders"
-                element={<AdminTourOrders />}
-              ></Route>
-              <Route
-                path="/admin/hotel/orders"
-                element={<AdminHotelOrders />}
-              ></Route>
-              <Route path="/admin/update/:id" element={<UpdateForm />}></Route>
+              <Route path="admin/" element={<AdminPanel />}>
+                <Route path="dashboard" element={<Dashboard />}></Route>
+                <Route
+                  path="requests/tour"
+                  element={<TourRequests />}
+                ></Route>{" "}
+                <Route
+                  path="requests/hotel"
+                  element={<HotelRequests />}
+                ></Route>{" "}
+                <Route path="category" element={<Category />}></Route>{" "}
+                <Route path="banner" element={<Banner />}></Route>{" "}
+                <Route path="notification" element={<Notification />}></Route>{" "}
+                <Route path="users" element={<Users />}></Route>
+                <Route path="tour/orders" element={<AdminTourOrders />}></Route>
+                <Route
+                  path="hotel/orders"
+                  element={<AdminHotelOrders />}
+                ></Route>
+                <Route path="update/:id" element={<UpdateForm />}></Route>
+              </Route>
             </>
           ) : (
             <Route path="*" element={<AccessDenied />} />
