@@ -142,7 +142,7 @@ function Notification() {
             </Alert>
           </>
         );
-      case "tour_request":
+      case "request_tour":
         return (
           <>
             <Alert severity="success">
@@ -160,7 +160,7 @@ function Notification() {
             </Alert>
           </>
         );
-      case "hotel_request":
+      case "request_hotel":
         return (
           <>
             <Alert severity="success">
