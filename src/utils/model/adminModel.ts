@@ -42,3 +42,10 @@ export interface NotificationModel {
   notification: string;
   type: string;
 }
+
+export interface CouponModel {
+  coupon_id: number;
+  coupon_name: string;
+  percent_off: number;
+  addedOn: Date;
+}

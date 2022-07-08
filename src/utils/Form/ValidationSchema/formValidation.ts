@@ -102,3 +102,8 @@ export const RESETPASS_VALIDATION_SCHEMA = Yup.object({
   password: Yup.string().length(8).required("Required"),
   cnf_password: Yup.string().length(8).required("Required"),
 });
+
+export const COUPON_VALIDATION_SCHEMA = Yup.object({
+  coupon: Yup.string().required("Required"),
+  percent: Yup.number().min(1).max(100).required("Required"),
+});

@@ -369,3 +369,18 @@ export const RESETPASS_FORM_DATA = [
     type: "password",
   },
 ];
+
+export const COUPON_FORM_DATA = [
+  {
+    control: "input",
+    label: "coupon",
+    name: "coupon",
+    type: "text",
+  },
+  {
+    control: "input",
+    label: "percent",
+    name: "percent",
+    type: "number",
+  },
+];

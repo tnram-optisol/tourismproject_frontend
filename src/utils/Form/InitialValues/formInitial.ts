@@ -97,3 +97,8 @@ export const RESETPASS_INITIAL_VALUES = {
   password: "",
   cnf_password: "",
 };
+
+export const COUPON_INITIAL_VALUES = {
+  coupon: "",
+  percent: 0,
+};
