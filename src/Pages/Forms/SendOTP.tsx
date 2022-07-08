@@ -1,7 +1,8 @@
 import { Box, Typography, Container } from "@mui/material";
+import React from "react";
+
 import FormikContainer from "Component/Form/FormikContainer";
 import UserLayout from "Component/Wrapper/UserLayout";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { sendOtp } from "Services/authService";
 import { GETOTP_FORM_DATA } from "utils/Form/formFields/formFields";

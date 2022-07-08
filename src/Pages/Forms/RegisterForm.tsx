@@ -4,7 +4,6 @@ import { Box } from "@mui/material";
 import "./Forms.css";
 
 import FormikContainer from "Component/Form/FormikContainer";
-import FormControl from "Component/Form/FormControl";
 import { SIGNUP_FORM_DATA } from "utils/Form/formFields/formFields";
 import { SIGNUP_INITIAL_VALUES } from "utils/Form/InitialValues/formInitial";
 import { SIGNUP_VALIDATION_SCHEMA } from "utils/Form/ValidationSchema/formValidation";

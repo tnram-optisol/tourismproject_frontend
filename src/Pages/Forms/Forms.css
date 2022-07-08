@@ -31,3 +31,10 @@
 .contact .form-control {
     margin: 10px auto;
 }
+
+.social-login {
+    margin: 15% auto;
+    justify-content: center;
+    background-color: #0000ff;
+    border: 1px solid #0000ff;
+}
