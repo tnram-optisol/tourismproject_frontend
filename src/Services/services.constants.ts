@@ -11,6 +11,7 @@ export const USER_SEARCH_TOUR = "/search/tour";
 export const MAIL_TO_ADMIN = "/mail/admin";
 export const ALL_CATEGORY = "/all/category";
 export const VIEW_PROFILE = "/user/profile";
+export const VIEW_COUPON = "/user/coupon";
 
 //Protected Routes
 export const TOUR_ADMIN_GET_TOUR = "/tour/view/all";
@@ -42,6 +43,8 @@ export const ALL_ORDERS = "/admin/all/orders";
 export const ADMIN_SEQUENCE = "/admin/sequence";
 export const ADMIN_NOTIFICATION = "/admin/notification";
 export const NOTIFICATION_DELETE = "/admin/notification";
+export const ADMIN_ADD_COUPON = "/admin/add/coupon";
+export const ADMIN_GET_COUPON = "/admin/get/coupon";
 
 //Protected Routes
 export const ACTIVE_BOOKINGS = "/bookings";

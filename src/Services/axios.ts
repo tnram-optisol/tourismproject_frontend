@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const token = localStorage.getItem("token");
-const user = token !== "" ? JSON.parse(atob(token!.split(".")[1])) : null;
+const user = token ? JSON.parse(atob(token.split(".")[1])) : null;
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 

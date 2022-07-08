@@ -12,6 +12,7 @@ import {
   USER_SEARCH_TOUR,
   USER_VIEW_ROOMS,
   USER_VIEW_TOUR,
+  VIEW_COUPON,
   VIEW_PROFILE,
 } from "Services/services.constants";
 import axiosIntercept from "../axios";
@@ -113,5 +114,12 @@ export function viewProfile() {
   return createApi({
     method: "GET",
     url: `${VIEW_PROFILE}`,
+  });
+}
+
+export function getUserCoupon() {
+  return createApi({
+    method: "GET",
+    url: `${VIEW_COUPON}`,
   });
 }

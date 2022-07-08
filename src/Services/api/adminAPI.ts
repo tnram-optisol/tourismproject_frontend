@@ -1,9 +1,11 @@
 import { createApi } from "Services/createApi";
 import {
+  ADMIN_ADD_COUPON,
   ADMIN_APPROVAL,
   ADMIN_DELETE_CATEGORY,
   ADMIN_GET_BANNER,
   ADMIN_GET_CATEGORY,
+  ADMIN_GET_COUPON,
   ADMIN_NOTIFICATION,
   ADMIN_POST_CATEGORY,
   ADMIN_REQUEST,
@@ -150,5 +152,16 @@ export function adminRemoveCategory(id: number) {
   return createApi({
     method: "DELETE",
     url: `${ADMIN_DELETE_CATEGORY}/${id}`,
+  });
+}
+
+export function adminAddCoupon(values: any) {
+  return axiosIntercept.post(`${SERVER_URL}${ADMIN_ADD_COUPON}`, values);
+}
+
+export function getAllCoupons() {
+  return createApi({
+    method: "GET",
+    url: `${ADMIN_GET_COUPON}`,
   });
 }

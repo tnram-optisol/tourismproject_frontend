@@ -15,6 +15,7 @@ export function signUp(values: {
   contact: number;
   role: number;
   place: string;
+  external?: boolean;
 }) {
   const user = values;
   console.log(values);
