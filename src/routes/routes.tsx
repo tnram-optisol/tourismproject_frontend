@@ -44,6 +44,7 @@ import CanceledTour from "Pages/Booking/CanceledTour";
 import CanceledHotel from "Pages/Booking/CanceledHotel";
 import Profile from "Pages/Main/Profile";
 import AdminPanel from "Pages/Admin/AdminPanel";
+import Coupons from "Pages/Admin/Coupons";
 
 export default function MyRoutes() {
   const role = useAppSelector((state) => state.auth.value.role);
@@ -101,6 +102,7 @@ export default function MyRoutes() {
                   element={<AdminHotelOrders />}
                 ></Route>
                 <Route path="update/:id" element={<UpdateForm />}></Route>
+                <Route path="coupon" element={<Coupons />}></Route>
               </Route>
             </>
           ) : (

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   BannerModel,
   CategoryModel,
+  CouponModel,
   NotificationModel,
 } from "utils/model/adminModel";
 import { HotelModel, HotelOrdersModel } from "utils/model/hotelModel";
@@ -26,6 +27,8 @@ export interface AdminState {
     bannerCount: number;
     totalNotifications: number;
     notifications: NotificationModel[];
+    coupons: CouponModel[];
+    totalCoupon: number;
     loading: boolean;
   };
 }
@@ -42,6 +45,8 @@ const initialState: AdminState = {
     tourOrders: [],
     hotelOrders: [],
     notifications: [],
+    coupons: [],
+    totalCoupon: 0,
     totalNotifications: 0,
     totalTourOrders: 0,
     totalHotelOrders: 0,
@@ -195,6 +200,24 @@ const adminSlicer = createSlice({
         : state.value.totalNotifications;
       state.value.loading = false;
     },
+    getAdminCoupon: (state, action) => {
+      state.value.loading = true;
+    },
+    setAdminCoupon: (state, action) => {
+      if (action.payload.coupons) {
+        state.value.coupons = action.payload.coupons
+          ? [...action.payload.coupons[0]]
+          : [...action.payload.coupons];
+        state.value.totalCoupon =
+          action.payload.coupons[1] > 0
+            ? action.payload.coupons[1]
+            : state.value.totalCoupon;
+      } else {
+        state.value.coupons = [];
+        state.value.totalCoupon = 0;
+      }
+      state.value.loading = false;
+    },
   },
 });
 
@@ -207,6 +230,7 @@ export const {
   getAdminTourOrdersData,
   getAdminHotelOrdersData,
   getAdminNotifications,
+  getAdminCoupon,
   setAdminBannerData,
   setAdminHotelRequestData,
   setAdminTourRequestData,
@@ -215,6 +239,7 @@ export const {
   setAdminHotelOrdersData,
   setAdminTourOrdersData,
   setAdminNotifications,
+  setAdminCoupon,
 } = adminSlicer.actions;
 
 export default adminSlicer.reducer;

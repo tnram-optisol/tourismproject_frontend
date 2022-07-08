@@ -187,6 +187,19 @@ function AdminLayout(props: { children?: any; messages?: number }) {
               </ListItem>
               <ListItem>
                 <ListItemIcon>
+                  <FontAwesomeIcon color="blue" icon={faHome} />
+                </ListItemIcon>
+                <NavLink
+                  to="/admin/coupon"
+                  className={({ isActive }) =>
+                    isActive ? "active" : "nav-link"
+                  }
+                >
+                  Coupon
+                </NavLink>
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
                   <FontAwesomeIcon color="blue" icon={faFilter} />
                 </ListItemIcon>
                 <NavLink

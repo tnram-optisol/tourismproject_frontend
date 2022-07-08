@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Container from "@mui/material/Container";
-import { Box, Divider, Grid, List, ListItem, Typography } from "@mui/material";
+import { Box, Grid, List, ListItem, Typography } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLocation,

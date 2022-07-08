@@ -6,7 +6,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 
 const ProtectedRoute = () =>{
-    const role = useAppSelector((state)=>state.auth.value.role);
+    const role = useAppSelector((state) => state.auth.value.role);
     if(role === 2){
         return <Outlet/>
     }

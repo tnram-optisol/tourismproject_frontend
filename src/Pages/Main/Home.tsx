@@ -79,7 +79,7 @@ export default function Home() {
                       </Grid>
                       <CardContent>
                         <Typography variant="subtitle1" color="brown">
-                          <LocationOn /> {data.tour.from} --- {data.tour.from}
+                          <LocationOn /> {data.tour.from} --- {data.tour.to}
                         </Typography>
                         <Typography
                           variant="subtitle1"

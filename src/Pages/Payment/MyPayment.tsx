@@ -1,20 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
-import "./Payment.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MDBBtn } from "mdb-react-ui-kit";
+
+import "./Payment.css";
 import axiosIntercept from "Services/axios";
 import UserLayout from "Component/Wrapper/UserLayout";
 import MyCarousel from "Layout/Carousel";
 import AnimatedText from "Component/styled/AnimatedText";
+import { getUserCoupon } from "Services/api/userAPI";
+import { CouponModel } from "utils/model/adminModel";
 
 function MyPayment() {
+  const [coupon, setCoupon] = useState<CouponModel>({
+    coupon_id: 0,
+    coupon_name: "",
+    percent_off: 0,
+    addedOn: new Date(),
+  });
   const location: any = useLocation();
   const token = localStorage.getItem("token");
   const user = JSON.parse(atob(token!.split(".")[1]));
   console.log(location.state);
+
+  useEffect(() => {
+    getUserCoupon()
+      .then((res) => {
+        setCoupon({
+          ...res.data.coupons[0],
+        });
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   async function handleToken(
     token?: undefined | any,
     address?: undefined | any
@@ -28,7 +51,8 @@ function MyPayment() {
             totalPerson: location.state.data.max_person,
             cost: location.state.data.tour.cost,
             description: location.state.data.tour.description,
-            discount: location.state.discount,
+            discount: coupon.percent_off,
+            coupon: coupon.coupon_name,
             user: user.id,
           },
         })
@@ -71,7 +95,7 @@ function MyPayment() {
       <MyCarousel />
       <Box className="m-5">
         <AnimatedText
-          data={"USE CODE TOUR20 For Discount"}
+          data={`USE CODE ${coupon.coupon_name} For Discount`}
           className="text-center"
         />
         {location.state.data.tour ? (

@@ -4,6 +4,7 @@ import {
   getAdminAllUserData,
   getAdminBannerData,
   getAdminCategoryData,
+  getAdminCoupon,
   getAdminHotelOrdersData,
   getAdminHotelRequestData,
   getAdminNotifications,
@@ -12,6 +13,7 @@ import {
   setAdminAllUserData,
   setAdminBannerData,
   setAdminCategoryData,
+  setAdminCoupon,
   setAdminHotelOrdersData,
   setAdminHotelRequestData,
   setAdminNotifications,
@@ -171,6 +173,27 @@ export function* setAdminNotificationsHandler(payload: any) {
     console.log(err);
   }
 }
+
+export function* setAdminCouponsHandler(payload: {
+  payload: { page: number; limit: number; searchQuery: string | undefined };
+  type: typeof adminPaginate;
+}) {
+  try {
+    const response: SagaReturnType<typeof adminPaginate> = yield call(
+      adminPaginate,
+      "/admin/get/coupon",
+      payload.payload.page,
+      payload.payload.limit,
+      payload.payload.searchQuery
+    );
+    const { data } = response;
+    console.log(data);
+    yield put(setAdminCoupon(data));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export function* watchAdminSync() {
   yield takeLatest(getAdminBannerData.type, setAdminBannerHandler);
   yield takeLatest(getAdminCategoryData.type, setAdminCategoryHandler);
@@ -180,4 +203,5 @@ export function* watchAdminSync() {
   yield takeLatest(getAdminHotelOrdersData.type, setAdminHotelOrdersHandler);
   yield takeLatest(getAdminAllUserData.type, setAdminAllUsersHandler);
   yield takeLatest(getAdminNotifications.type, setAdminNotificationsHandler);
+  yield takeLatest(getAdminCoupon.type, setAdminCouponsHandler);
 }

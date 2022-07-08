@@ -22,11 +22,12 @@ import {
   faUserCircle,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
+
 import "./Navbar.css";
 import { signOut } from "../store/reducers/authReducer";
 import { useAppSelector } from "hooks/useAppSelector";
 import { useAppDispatch } from "hooks/useAppDispatch";
-import { toast } from "react-toastify";
 
 const NavBar = () => {
   const loggedIn = useAppSelector((state) => state.auth.value.loggedIn);

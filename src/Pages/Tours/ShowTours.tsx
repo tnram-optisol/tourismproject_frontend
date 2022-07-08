@@ -105,68 +105,74 @@ export default function ShowTours() {
       <PanelLayout>
         <ToursList>
           {!loading ? (
-            tour.map((data) => (
-              <MyCard key={data.tour_id}>
-                <MyCardHeader title={data.package_name} />
-                <MyCardMedia img={data.tour_image} alt={data.package_name} />
-                <CardContent>
-                  <Typography variant="subtitle1" color="brown">
-                    <LocationOn /> {data.from} --- {data.to}
-                  </Typography>
-                  <MyCardBody
-                    variant={"body1"}
-                    data={` Max Person: ${data.max_person}`}
-                    color={"green"}
-                  />
-                  <MyCardBody
-                    variant={"body1"}
-                    data={` Total Days : ${data.total_days}`}
-                    color={"green"}
-                  />
-                  <MyCardBody
-                    variant={"body1"}
-                    data={`  Booking Start Date : ${new Date(
-                      data.startDate
-                    ).toLocaleDateString()}`}
-                    color={"blue"}
-                  />
-                  <MyCardBody
-                    variant={"body1"}
-                    data={`  Booking End Date: ${new Date(
-                      data.endDate
-                    ).toLocaleDateString()}`}
-                    color={"success"}
-                  />
-                  <AnimatedText
-                    className={"m-2 text-danger"}
-                    data={`₹​  ${data.cost} /person`}
-                  />
-                  <MyCardBody
-                    variant={"body1"}
-                    data={`  Status: ​ ${
-                      data.status ? "Approved" : "Not Approved"
-                    } `}
-                    color={data.status ? "green" : "red"}
-                  />
-                </CardContent>
-                <CardActions>
-                  <Button className="button">
-                    <Link
-                      to={`/add/tours/${data.tour_id}`}
-                      className="nav-link"
+            tour.length > 0 ? (
+              tour.map((data) => (
+                <MyCard key={data.tour_id}>
+                  <MyCardHeader title={data.package_name} />
+                  <MyCardMedia img={data.tour_image} alt={data.package_name} />
+                  <CardContent>
+                    <Typography variant="subtitle1" color="brown">
+                      <LocationOn /> {data.from} --- {data.to}
+                    </Typography>
+                    <MyCardBody
+                      variant={"body1"}
+                      data={` Max Person: ${data.max_person}`}
+                      color={"green"}
+                    />
+                    <MyCardBody
+                      variant={"body1"}
+                      data={` Total Days : ${data.total_days}`}
+                      color={"green"}
+                    />
+                    <MyCardBody
+                      variant={"body1"}
+                      data={`  Booking Start Date : ${new Date(
+                        data.startDate
+                      ).toLocaleDateString()}`}
+                      color={"blue"}
+                    />
+                    <MyCardBody
+                      variant={"body1"}
+                      data={`  Booking End Date: ${new Date(
+                        data.endDate
+                      ).toLocaleDateString()}`}
+                      color={"success"}
+                    />
+                    <AnimatedText
+                      className={"m-2 text-danger"}
+                      data={`₹​  ${data.cost} /person`}
+                    />
+                    <MyCardBody
+                      variant={"body1"}
+                      data={`  Status: ​ ${
+                        data.status ? "Approved" : "Not Approved"
+                      } `}
+                      color={data.status ? "green" : "red"}
+                    />
+                  </CardContent>
+                  <CardActions>
+                    <Button className="button">
+                      <Link
+                        to={`/add/tours/${data.tour_id}`}
+                        className="nav-link"
+                      >
+                        Update
+                      </Link>
+                    </Button>
+                    <Button
+                      className="button"
+                      onClick={() => removePackage(data)}
                     >
-                      Update
-                    </Link>
-                  </Button>
-                  <Button
-                    className="button"
-                    onClick={() => removePackage(data)}
-                  >
-                    Delete
-                  </Button>
-                </CardActions>
-              </MyCard>
-            ))
+                      Delete
+                    </Button>
+                  </CardActions>
+                </MyCard>
+              ))
+            ) : (
+              <h1 className="text-center text-danger">
+                Create a Package to View
+              </h1>
+            )
           ) : (
             <Loader />
           )}
