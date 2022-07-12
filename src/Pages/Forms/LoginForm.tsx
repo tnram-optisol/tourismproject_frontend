@@ -8,13 +8,17 @@ import FormikContainer from "Component/Form/FormikContainer";
 import { LOGIN_FORM_DATA } from "utils/Form/formFields/formFields";
 import { LOGIN_INITIAL_VALUES } from "utils/Form/InitialValues/formInitial";
 import { LOGIN_VALIDATION_SCHEMA } from "utils/Form/ValidationSchema/formValidation";
-import { signIn } from "Services/authService";
+import { signIn, signUp } from "Services/authService";
 import UserLayout from "Component/Wrapper/UserLayout";
 import "./Forms.css";
+import { toast } from "react-toastify";
+import { useAppDispatch } from "hooks/useAppDispatch";
+import * as logIn from "store/reducers/authReducer";
 
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
 
 export default function LoginForm(props: any) {
+  const dispatch = useAppDispatch();
   useEffect(() => {
     function start() {
       gapi.client.init({
@@ -27,6 +31,44 @@ export default function LoginForm(props: any) {
   const navigate = useNavigate();
   const responseGoogle = (response: any) => {
     console.log(response);
+    console.log(response.profileObj);
+    const { profileObj } = response;
+    const name: string = profileObj.name
+      .split(" ")
+      .join("")
+      .split(".")
+      .join("");
+    const email: string = profileObj.email;
+    const values = {
+      email: email,
+      password: "password",
+      name: name,
+      contact: 8765432109,
+      roleId: 4,
+      place: "any",
+      external: true,
+    };
+    signUp(values)
+      .then(async (res: { data: { token: string } }) => {
+        localStorage.setItem("token", res.data.token);
+        toast.success("Logged in Successfully", {
+          theme: "colored",
+        });
+        let user = await JSON.parse(
+          atob(localStorage.getItem("token")!.split(".")[1])
+        );
+        dispatch(
+          logIn.signIn({
+            payload: user.role,
+          })
+        );
+        navigate("/my/profile");
+      })
+      .catch((err: any) => {
+        if (err.response.data) {
+          toast.error(err.response.data);
+        }
+      });
   };
   return (
     <UserLayout>
