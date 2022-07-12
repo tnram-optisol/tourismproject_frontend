@@ -384,3 +384,30 @@ export const COUPON_FORM_DATA = [
     type: "number",
   },
 ];
+
+export const PROFILE_FORM_DATA = [
+  {
+    control: "input",
+    label: "Name",
+    name: "name",
+    type: "text",
+  },
+  {
+    control: "input",
+    label: "Email",
+    name: "email",
+    type: "email",
+  },
+  {
+    control: "input",
+    label: "Contact",
+    name: "contact",
+    type: "number",
+  },
+  {
+    control: "input",
+    label: "Place",
+    name: "place",
+    type: "text",
+  },
+];

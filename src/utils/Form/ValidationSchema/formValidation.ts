@@ -107,3 +107,13 @@ export const COUPON_VALIDATION_SCHEMA = Yup.object({
   coupon: Yup.string().required("Required"),
   percent: Yup.number().min(1).max(100).required("Required"),
 });
+
+export const PROFILE_VALIDATION_SCHEMA = Yup.object({
+  name: Yup.string().required("Required"),
+  email: Yup.string().email("Must be valid").required("Required"),
+  contact: Yup.string()
+    .matches(new RegExp(`[6789]{1}[0-9]{9}`))
+    .length(10, "Minimum length must be 10")
+    .required("Required"),
+  place: Yup.string().required("Required"),
+});

@@ -102,3 +102,10 @@ export const COUPON_INITIAL_VALUES = {
   coupon: "",
   percent: 0,
 };
+
+export const PROFILE_INITIAL_VALUES = {
+  name: "",
+  email: "",
+  place: "",
+  contact: "",
+};
